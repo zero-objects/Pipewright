@@ -326,17 +326,32 @@ async fn connect_docker() -> Result<bollard::Docker, String> {
             return Ok(d);
         }
     }
-    if let Some(home) = std::env::var_os("HOME") {
-        let sock = format!("{}/.docker/run/docker.sock", home.to_string_lossy());
-        if std::path::Path::new(&sock).exists() {
-            if let Ok(d) = Docker::connect_with_unix(&sock, 120, bollard::API_DEFAULT_VERSION) {
-                if d.ping().await.is_ok() {
-                    return Ok(d);
-                }
+    if let Some(d) = docker_desktop_socket().await {
+        return Ok(d);
+    }
+    Err("cannot connect to Docker (is the daemon running? set DOCKER_HOST if it's on a non-default socket)".to_string())
+}
+
+/// Docker Desktop's per-user Unix socket (`~/.docker/run/docker.sock`), a
+/// common macOS/Linux fallback. `connect_with_unix` only exists on Unix, so
+/// this is a no-op on Windows (which uses the named pipe via local defaults).
+#[cfg(unix)]
+async fn docker_desktop_socket() -> Option<bollard::Docker> {
+    let home = std::env::var_os("HOME")?;
+    let sock = format!("{}/.docker/run/docker.sock", home.to_string_lossy());
+    if std::path::Path::new(&sock).exists() {
+        if let Ok(d) = bollard::Docker::connect_with_unix(&sock, 120, bollard::API_DEFAULT_VERSION) {
+            if d.ping().await.is_ok() {
+                return Some(d);
             }
         }
     }
-    Err("cannot connect to Docker (is the daemon running? set DOCKER_HOST if it's on a non-default socket)".to_string())
+    None
+}
+
+#[cfg(not(unix))]
+async fn docker_desktop_socket() -> Option<bollard::Docker> {
+    None
 }
 
 async fn run_async(
