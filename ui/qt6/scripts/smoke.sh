@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Headless end-to-end smoke test of the Qt6 UI: launches the real app offscreen
-# in DRYCLEANER_SMOKE mode, where Main.qml self-checks the FFI bridge + a render
+# in PIPEWRIGHT_SMOKE mode, where Main.qml self-checks the FFI bridge + a render
 # path and Qt.exit()s with a pass/fail code. Catches QML compile/binding errors,
 # FFI linkage breaks, and basic render regressions without a display.
 #
@@ -18,6 +18,6 @@ if [ ! -x "$APP" ]; then
 fi
 
 QT_QPA_PLATFORM=offscreen \
-  DRYCLEANER_SMOKE=1 \
-  DRYCLEANER_SMOKE_FILE="$FIXTURE" \
+  PIPEWRIGHT_SMOKE=1 \
+  PIPEWRIGHT_SMOKE_FILE="$FIXTURE" \
   "$APP"

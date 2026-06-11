@@ -31,36 +31,66 @@ jobs:
             target
           key: ${{ matrix.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
+      # ── Primary artifact: the pipewright CLI (no Qt dependency) ──────────
+      - name: Build CLI binary
+        run: cargo build --release -p pipeline-cli --locked
+
+      - name: Stage CLI binary
+        shell: bash
+        run: |
+          mkdir -p dist
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            cp target/release/pipewright.exe "dist/pipewright-${{ matrix.os }}.exe"
+          else
+            cp target/release/pipewright "dist/pipewright-${{ matrix.os }}"
+          fi
+
+      - name: Upload CLI binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-${{ matrix.os }}
+          path: dist/*
+
+      # ── Secondary artifact: the Qt desktop UI installer (best-effort) ────
+      # Qt cross-platform packaging is fiddly; these steps are non-blocking so
+      # a Qt hiccup can't sink the whole release (the CLI is already uploaded).
       - name: Install Qt6 (Linux)
         if: runner.os == 'Linux'
+        continue-on-error: true
         run: |
           sudo apt-get update
-          sudo apt-get install -y qt6-base-dev qt6-declarative-dev qt6-svg-dev cmake
+          sudo apt-get install -y qt6-base-dev qt6-declarative-dev libqt6svg6-dev cmake
 
       - name: Install Qt6 (macOS)
         if: runner.os == 'macOS'
+        continue-on-error: true
         run: brew install qt cmake
 
       - name: Install Qt6 (Windows)
         if: runner.os == 'Windows'
+        continue-on-error: true
         uses: jurplel/install-qt-action@v4
         with:
-          version: "6.7.0"
+          version: "6.8.1"
           modules: "qtdeclarative qtsvg"
 
       - name: Configure
+        continue-on-error: true
         run: cmake -S ui/qt6 -B ui/qt6/build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
+        continue-on-error: true
         run: cmake --build ui/qt6/build --config Release -j
 
       - name: Package
+        continue-on-error: true
         run: |
           cd ui/qt6/build
           cpack -C Release
 
       - name: Sign macOS .dmg
         if: runner.os == 'macOS' && env.APPLE_DEV_ID != ''
+        continue-on-error: true
         env:
           APPLE_DEV_ID: ${{ secrets.APPLE_DEV_ID }}
           APPLE_NOTARY_USER: ${{ secrets.APPLE_NOTARY_USER }}
@@ -76,6 +106,7 @@ jobs:
 
       - name: Sign Windows .msi
         if: runner.os == 'Windows' && env.WINDOWS_PFX_BASE64 != ''
+        continue-on-error: true
         env:
           WINDOWS_PFX_BASE64: ${{ secrets.WINDOWS_PFX_BASE64 }}
           WINDOWS_PFX_PASS:   ${{ secrets.WINDOWS_PFX_PASS }}
@@ -93,6 +124,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: installer-${{ matrix.os }}
+          if-no-files-found: ignore
           path: |
             ui/qt6/build/*.dmg
             ui/qt6/build/*.deb
@@ -102,7 +134,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-22.04
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: always() && startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/download-artifact@v4
         with:

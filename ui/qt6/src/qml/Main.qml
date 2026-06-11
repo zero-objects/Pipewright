@@ -26,7 +26,7 @@ ApplicationWindow {
     // locale; the UI chrome follows via the Qt translator (see langCombo).
     property string appLocale: "en"
 
-    // Headless smoke self-check (DRYCLEANER_SMOKE=1, set as a context property
+    // Headless smoke self-check (PIPEWRIGHT_SMOKE=1, set as a context property
     // by main.cpp). Exercises the FFI bridge + a render path on the real UI and
     // exits with 0 (pass) / 1 (fail) — an end-to-end smoke test runnable
     // offscreen in CI. No-op in normal runs.
@@ -52,6 +52,19 @@ ApplicationWindow {
                 console.log("SMOKE: exception " + e + " => FAIL")
             }
             Qt.exit(ok ? 0 : 1)
+        }
+    }
+    // Screenshot mode: load the fixture and show the DAG tab, then leave the
+    // window up for a screen capture. No exit. (PIPEWRIGHT_SHOT=1)
+    Timer {
+        interval: 1400
+        running: (typeof shotMode !== "undefined") && shotMode
+        repeat: false
+        onTriggered: {
+            if (typeof smokeFile !== "undefined" && smokeFile && smokeFile.length > 0) {
+                root.loadFile("file://" + smokeFile)
+            }
+            rightTabs.currentIndex = 1   // DAG tab
         }
     }
     property string statusText: qsTr("No pipeline loaded.")
