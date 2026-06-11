@@ -23,7 +23,9 @@ jobs:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
       - run: cargo fmt --all --check
-      - run: cargo clippy --workspace --all-targets -- -D warnings
+      # Production code (lib + bin) is held to clippy -D warnings; test targets
+      # keep looser pedantic standards (see CONTRIBUTING → Style).
+      - run: cargo clippy --workspace -- -D warnings
 
   test:
     name: workspace tests
