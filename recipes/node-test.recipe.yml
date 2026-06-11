@@ -1,0 +1,26 @@
+recipe_id: node-test
+recipe_version: 1.0.0
+description: install dependencies and run the Node.js test suite
+tags: [node, javascript, test, coverage]
+doc: |
+  Two sequential jobs on the `node:20` image: **install** runs `npm ci` for a
+  clean, lockfile-faithful dependency install; **test** runs `npm test` with
+  coverage after install. Wire `source` (a checkout) in; take `coverage` (a
+  test report) out.
+input_ports:
+  - name: source
+    kind: checkout
+output_ports:
+  - name: coverage
+    kind: test-report
+jobs:
+  install:
+    image: node:20
+    steps:
+      - npm ci
+  test:
+    image: node:20
+    needs:
+      - install
+    steps:
+      - npm test -- --coverage

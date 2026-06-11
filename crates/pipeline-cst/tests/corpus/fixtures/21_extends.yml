@@ -1,0 +1,15 @@
+.template:
+  image: alpine:latest
+  before_script:
+    - apk add curl
+
+build:
+  extends: .template
+  script:
+    - curl http://example.com
+
+test:
+  extends:
+    - .template
+  script:
+    - curl http://example.com/test

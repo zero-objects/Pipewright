@@ -1,0 +1,6448 @@
+{
+ "name": "earthly",
+ "description": "Generated TGG ruleset: earthly CST <-> Hub-IR. Bidirectional \u2014 the engine derives CST->IR and IR->CST from this one set (model a).",
+ "rules": [
+  {
+   "name": "R_earthly_job",
+   "rank": 90,
+   "documentation": "earthly: cst:Mapping[construct=job] <-> hub:job",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": []
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     }
+    ],
+    "edges": []
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "name",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline",
+   "rank": 90,
+   "documentation": "earthly: cst:Mapping[construct=pipeline] <-> hub:pipeline",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": []
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     }
+    ],
+    "edges": []
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "name",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_user_comment",
+   "rank": 85,
+   "documentation": "earthly: user `# foo` comment under job <-> hub:comment lexical node",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "UC",
+      "kind": "cst:UserComment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "UC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "HC",
+      "kind": "hub:comment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_comment",
+      "source_node_id": "hubC",
+      "target_node_id": "HC"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "UC",
+     "r_node_id": "HC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline_user_comment",
+   "rank": 85,
+   "documentation": "earthly: user `# foo` comment under pipeline <-> hub:comment lexical node",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "UC",
+      "kind": "cst:UserComment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "UC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "HC",
+      "kind": "hub:comment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_comment",
+      "source_node_id": "hubC",
+      "target_node_id": "HC"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "UC",
+     "r_node_id": "HC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline_jobs_implicit",
+   "rank": 40,
+   "documentation": "earthly: implicit containment pipeline[cst=pipeline].jobs <-> job[cst=job]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_job",
+      "source_node_id": "hubC",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "rk",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_agent_USER",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `USER` <-> hub:job.agent (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "USER"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "agent"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "USER"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:agent",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_artifacts_SAVE_ARTIFACT",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `SAVE ARTIFACT` <-> hub:job.artifacts (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "SAVE ARTIFACT"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "artifacts"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "SAVE ARTIFACT"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:artifact",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_artifacts_SAVE_IMAGE",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `SAVE IMAGE` <-> hub:job.artifacts (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "SAVE IMAGE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "artifacts"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "SAVE IMAGE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:artifact",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_cache_CACHE",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `CACHE` <-> hub:job.cache (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "CACHE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "CACHE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:cache",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_expose_EXPOSE",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `EXPOSE` <-> hub:job.expose (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "EXPOSE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "expose"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "EXPOSE"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_extends_IMPORT",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `IMPORT` <-> hub:job.extends (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "IMPORT"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "extends"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "IMPORT"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_healthcheck_HEALTHCHECK",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `HEALTHCHECK` <-> hub:job.healthcheck (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "HEALTHCHECK"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "healthcheck"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "HEALTHCHECK"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_image_FROM",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `FROM` <-> hub:job.image (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "FROM"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "image"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "FROM"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:image",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_image_FROM_DOCKERFILE",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `FROM DOCKERFILE` <-> hub:job.image (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "FROM DOCKERFILE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "image"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "FROM DOCKERFILE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:image",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_labels_LABEL",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `LABEL` <-> hub:job.labels (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "LABEL"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "labels"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "LABEL"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_name_name",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `name` <-> hub:job.name (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_needs_BUILD",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `BUILD` <-> hub:job.needs (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "BUILD"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "needs"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "BUILD"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:dependency_edge",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_parameters_ARG",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `ARG` <-> hub:job.parameters (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "ARG"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "parameters"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "ARG"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:parameter",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_recipe",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `recipe` <-> hub:job.steps (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "recipe"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "step"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "recipe"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_RUN",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `RUN` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "RUN"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "RUN"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_CMD",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `CMD` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "CMD"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "CMD"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_COPY",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `COPY` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "COPY"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "COPY"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_GIT_CLONE",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `GIT CLONE` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "GIT CLONE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "GIT CLONE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_ENTRYPOINT",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `ENTRYPOINT` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "ENTRYPOINT"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "ENTRYPOINT"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_WITH",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `WITH` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "WITH"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "WITH"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_IF___ELSE",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `IF / ELSE` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "IF / ELSE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "IF / ELSE"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_FOR",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `FOR` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "FOR"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "FOR"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_TRY",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `TRY` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "TRY"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "TRY"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_LET",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `LET` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "LET"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "LET"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_steps_DO",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `DO` <-> hub:job.steps (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "DO"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "DO"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_variables_ENV",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `ENV` <-> hub:job.variables (scalar_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "ENV"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "variables"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "ENV"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:variable",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_volume_VOLUME",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `VOLUME` <-> hub:job.volume (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "VOLUME"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "volume"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "VOLUME"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_job_working_dir_WORKDIR",
+   "rank": 50,
+   "documentation": "earthly: cst[job].key `WORKDIR` <-> hub:job.working_dir (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "WORKDIR"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "working_dir"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "WORKDIR"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline_project_PROJECT",
+   "rank": 50,
+   "documentation": "earthly: cst[pipeline].key `PROJECT` <-> hub:pipeline.project (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "PROJECT"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "project"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "PROJECT"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline_targets_targets",
+   "rank": 50,
+   "documentation": "earthly: cst[pipeline].key `targets` <-> hub:pipeline.targets (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "targets"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "targets"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "targets"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline_targets_base_recipe",
+   "rank": 50,
+   "documentation": "earthly: cst[pipeline].key `base_recipe` <-> hub:pipeline.targets (block_attr) [presence]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "base_recipe"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "targets"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "base_recipe"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline_targets_base_recipe_entry",
+   "rank": 50,
+   "documentation": "earthly: cst[pipeline].key `base_recipe` <-> hub:pipeline.targets (block_attr) [entry]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "base_recipe"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "targets"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "base_recipe"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_earthly_pipeline_version_VERSION",
+   "rank": 50,
+   "documentation": "earthly: cst[pipeline].key `VERSION` <-> hub:pipeline.version (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "VERSION"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "version"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "VERSION"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  }
+ ]
+}

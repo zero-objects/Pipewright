@@ -1,0 +1,57 @@
+# catalog/aws_codepipeline.toml — construct inventory, hand-crafted
+# from the AWS CodePipeline pipeline-structure reference. A pipeline
+# is defined as a JSON document (via the API / CloudFormation /
+# CDK), not a YAML config in the repo; no JSON-Schema is published.
+
+[meta]
+platform = "aws_codepipeline"
+config_file = "(CloudFormation / JSON definition)"
+tier = 3
+source = "hand-crafted"
+
+[pipeline]
+name = { type = "string", required = true }
+roleArn = { type = "string", required = true }
+artifactStore = { type = "artifact_store" }
+artifactStores = { type = "map<artifact_store>" }
+stages = { type = "list<stage>", required = true }
+version = { type = "integer" }
+executionMode = { type = "enum", options = ["QUEUED", "SUPERSEDED", "PARALLEL"] }
+pipelineType = { type = "enum", options = ["V1", "V2"] }
+variables = { type = "list<variable>" }
+triggers = { type = "list<map<string>>" }
+
+[stage]
+name = { type = "string", required = true }
+actions = { type = "list<action>", required = true }
+blockers = { type = "list<map<string>>" }
+onFailure = { type = "map<string>" }
+onSuccess = { type = "map<string>" }
+
+[action]
+name = { type = "string", required = true }
+actionTypeId = { type = "action_type_id", required = true }
+runOrder = { type = "integer" }
+configuration = { type = "map<string>" }
+inputArtifacts = { type = "list<map<string>>" }
+outputArtifacts = { type = "list<map<string>>" }
+roleArn = { type = "string" }
+region = { type = "string" }
+namespace = { type = "string" }
+timeoutInMinutes = { type = "integer" }
+
+[action_type_id]
+category = { type = "enum", options = ["Source", "Build", "Test", "Deploy", "Invoke", "Approval", "Compute"], required = true }
+owner = { type = "enum", options = ["AWS", "ThirdParty", "Custom"], required = true }
+provider = { type = "string", required = true }
+version = { type = "string", required = true }
+
+[artifact_store]
+type = { type = "enum", options = ["S3"], required = true }
+location = { type = "string", required = true }
+encryptionKey = { type = "map<string>" }
+
+[variable]
+name = { type = "string", required = true }
+defaultValue = { type = "string" }
+description = { type = "string" }

@@ -1,0 +1,535 @@
+# catalog/rules/jenkins.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "jenkins"
+rule_count = 88
+
+[[rule]]
+to = "agent.any"
+from = "any"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "agent.docker"
+from = "docker"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.dockerfile"
+from = "dockerfile"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.kubernetes"
+from = "kubernetes"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.label"
+from = "label"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.node"
+from = "node"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.none"
+from = "none"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "condition.before"
+from = "beforeAgent"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "condition.before"
+from = "beforeInput"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "condition.before"
+from = "beforeOptions"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "condition.branch"
+from = "branch"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.change_request"
+from = "changeRequest"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "condition.changes"
+from = "changelog"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.changes"
+from = "changeset"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.combinator"
+from = "allOf"
+shape = "seq_attr"
+type = "list<when>"
+
+[[rule]]
+to = "condition.combinator"
+from = "anyOf"
+shape = "seq_attr"
+type = "list<when>"
+
+[[rule]]
+to = "condition.combinator"
+from = "not"
+shape = "block_attr"
+type = "when"
+
+[[rule]]
+to = "condition.env_match"
+from = "environment"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "condition.expr"
+from = "expression"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.expr"
+from = "equals"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "condition.gate"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.gate"
+from = "message"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.gate"
+from = "ok"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.gate"
+from = "parameters"
+shape = "seq_attr"
+type = "list<parameter>"
+
+[[rule]]
+to = "condition.gate"
+from = "submitter"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.gate"
+from = "submitterParameter"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.tag"
+from = "tag"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.tag"
+from = "buildingTag"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "condition.triggered_by"
+from = "triggeredBy"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "hook.phase"
+from = "aborted"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "always"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "changed"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "cleanup"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "failure"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "fixed"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "regression"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "success"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "unstable"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "hook.phase"
+from = "unsuccessful"
+shape = "seq_attr"
+type = "list<step>"
+
+[[rule]]
+to = "job.agent"
+from = "agent"
+shape = "mapping_node"
+type = "agent"
+
+[[rule]]
+to = "job.condition"
+from = "when"
+shape = "mapping_node"
+type = "when"
+
+[[rule]]
+to = "job.condition"
+from = "input"
+shape = "mapping_node"
+type = "input"
+
+[[rule]]
+to = "job.hooks"
+from = "post"
+shape = "mapping_node"
+type = "post"
+
+[[rule]]
+to = "job.matrix"
+from = "matrix"
+shape = "mapping_node"
+type = "matrix"
+
+[[rule]]
+to = "job.matrix"
+from = "failFast"
+shape = "mapping_node"
+type = "bool"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "options"
+shape = "block_attr"
+type = "options"
+
+[[rule]]
+to = "job.options"
+from = "buildDiscarder"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.options"
+from = "disableConcurrentBuilds"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.options"
+from = "disableResume"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.options"
+from = "newContainerPerStage"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.options"
+from = "overrideIndexTriggers"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.options"
+from = "parallelsAlwaysFailFast"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.options"
+from = "preserveStashes"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.options"
+from = "quietPeriod"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "job.options"
+from = "skipDefaultCheckout"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.options"
+from = "skipStagesAfterUnstable"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.options"
+from = "timestamps"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "job.retry"
+from = "retry"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "job.stage"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<stage>"
+
+[[rule]]
+to = "job.stage"
+from = "parallel"
+shape = "seq_mapping_nodes"
+type = "list<stage>"
+
+[[rule]]
+to = "job.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<step>"
+
+[[rule]]
+to = "job.timeout"
+from = "timeout"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.tools"
+from = "tools"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.variables"
+from = "environment"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "matrix.axes"
+from = "axes"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "matrix.exclude"
+from = "excludes"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "matrix.stages"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<stage>"
+
+[[rule]]
+to = "parameter.default"
+from = "defaultValue"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.type"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.agent"
+from = "agent"
+shape = "mapping_node"
+type = "agent"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "post"
+shape = "mapping_node"
+type = "post"
+
+[[rule]]
+to = "pipeline.libraries"
+from = "libraries"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.options"
+from = "options"
+shape = "block_attr"
+type = "options"
+
+[[rule]]
+to = "pipeline.parameters"
+from = "parameters"
+shape = "seq_mapping_nodes"
+type = "list<parameter>"
+
+[[rule]]
+to = "pipeline.stages"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<stage>"
+
+[[rule]]
+to = "pipeline.tools"
+from = "tools"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "triggers"
+shape = "mapping_node"
+type = "trigger"
+
+[[rule]]
+to = "pipeline.variables"
+from = "environment"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.run"
+from = "sh"
+shape = "block_attr"
+type = "any"
+
+[[rule]]
+to = "step.run"
+from = "bat"
+shape = "block_attr"
+type = "any"
+
+[[rule]]
+to = "step.uses"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.with"
+from = "args"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "trigger.kind"
+from = "cron"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.kind"
+from = "pollSCM"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.kind"
+from = "upstream"
+shape = "map_nodes"
+type = "map<string>"

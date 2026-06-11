@@ -1,0 +1,8 @@
+integration:
+  services:
+    - name: postgres:14
+      alias: pg
+      command: ["postgres", "-c", "fsync=off"]
+    - redis:7
+  script:
+    - PGHOST=pg cargo test --features integration

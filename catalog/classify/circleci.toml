@@ -1,0 +1,12 @@
+# catalog/classify/circleci.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "circleci"
+key_count = 3
+
+[classify]
+jobs = "map:job"
+parameters = "map:parameter"
+steps = "step"

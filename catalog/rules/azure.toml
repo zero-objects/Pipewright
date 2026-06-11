@@ -1,0 +1,907 @@
+# catalog/rules/azure.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "azure"
+rule_count = 150
+
+[[rule]]
+to = "condition.kind"
+from = "type"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "deployment.increments"
+from = "increments"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "deployment.max_parallel"
+from = "maxParallel"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "deployment.strategy_phases"
+from = "deploy"
+shape = "block_attr"
+type = "deployHook"
+
+[[rule]]
+to = "deployment.strategy_phases"
+from = "preDeploy"
+shape = "block_attr"
+type = "preDeployHook"
+
+[[rule]]
+to = "deployment.strategy_phases"
+from = "routeTraffic"
+shape = "block_attr"
+type = "routeTrafficHook"
+
+[[rule]]
+to = "deployment.strategy_phases"
+from = "postRouteTraffic"
+shape = "block_attr"
+type = "postRouteTrafficHook"
+
+[[rule]]
+to = "deployment.triggers"
+from = "on"
+shape = "mapping_node"
+type = "onSuccessOrFailureHook"
+
+[[rule]]
+to = "hook.agent"
+from = "pool"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "hook.phase"
+from = "failure"
+shape = "block_attr"
+type = "onFailureHook"
+
+[[rule]]
+to = "hook.phase"
+from = "success"
+shape = "block_attr"
+type = "onSuccessHook"
+
+[[rule]]
+to = "hook.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<task>"
+
+[[rule]]
+to = "image.docker_socket"
+from = "mapDockerSocket"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.endpoint"
+from = "endpoint"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.endpoint"
+from = "azureSubscription"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.endpoint"
+from = "registry"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.endpoint"
+from = "repository"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.endpoint"
+from = "resourceGroup"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.env"
+from = "env"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "image.kind"
+from = "type"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.local"
+from = "localImage"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.mount_read_only"
+from = "mountReadOnly"
+shape = "block_attr"
+type = "readOnlyMounts"
+
+[[rule]]
+to = "image.name"
+from = "image"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.name"
+from = "container"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.options"
+from = "options"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.ports"
+from = "ports"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "image.trigger"
+from = "trigger"
+shape = "union"
+type = "ciTrigger | string"
+
+[[rule]]
+to = "image.volumes"
+from = "volumes"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "include_exclude_filter.exclude"
+from = "exclude"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "include_exclude_filter.include"
+from = "include"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.name"
+from = "job"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.name"
+from = "deployment"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "clean"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<task>"
+
+[[rule]]
+to = "parameter.default"
+from = "default"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "parameter.description"
+from = "displayName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.options"
+from = "values"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "parameter.type"
+from = "type"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.concurrency"
+from = "lockBehavior"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "jobs"
+shape = "seq_mapping_nodes"
+type = "list<job>"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "phases"
+shape = "seq_mapping_nodes"
+type = "list<task>"
+
+[[rule]]
+to = "pipeline.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.options"
+from = "appendCommitMessageToRunName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.options"
+from = "continueOnError"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "pipeline.options"
+from = "strategy"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.parameters"
+from = "parameters"
+shape = "seq_mapping_nodes"
+type = "list<pipelineTemplateParameter>"
+
+[[rule]]
+to = "pipeline.pull_request"
+from = "pr"
+shape = "union"
+type = "list<string> | ciTrigger | string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "resources"
+shape = "union"
+type = "list<legacyResource> | map<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "container"
+shape = "union"
+type = "string | map<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "pool"
+shape = "union"
+type = "string | map<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "server"
+shape = "union"
+type = "string | map<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "queue"
+shape = "union"
+type = "string | map<string>"
+
+[[rule]]
+to = "pipeline.schedules"
+from = "schedules"
+shape = "seq_mapping_nodes"
+type = "list<schedule>"
+
+[[rule]]
+to = "pipeline.services"
+from = "services"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.stages"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<stage>"
+
+[[rule]]
+to = "pipeline.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<task>"
+
+[[rule]]
+to = "pipeline.templates"
+from = "extends"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "trigger"
+shape = "union"
+type = "list<string> | ciTrigger | string"
+
+[[rule]]
+to = "pipeline.variables"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.workspace"
+from = "workspace"
+shape = "union"
+type = "string | map<string>"
+
+[[rule]]
+to = "pull_request.branch_filter"
+from = "branches"
+shape = "mapping_node"
+type = "includeExcludeFilters"
+
+[[rule]]
+to = "pull_request.path_filter"
+from = "paths"
+shape = "mapping_node"
+type = "includeExcludeFilters"
+
+[[rule]]
+to = "pull_request.tag_filter"
+from = "tags"
+shape = "mapping_node"
+type = "includeExcludeFilters"
+
+[[rule]]
+to = "resource.checkout"
+from = "checkoutOptions"
+shape = "block_attr"
+type = "repositoryCheckoutOptions"
+
+[[rule]]
+to = "resource.checkout"
+from = "clean"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.checkout"
+from = "fetchDepth"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.checkout"
+from = "fetchTags"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.checkout"
+from = "lfs"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.checkout"
+from = "persistCredentials"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.checkout"
+from = "submodules"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.checkout"
+from = "repo"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.connection"
+from = "connection"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.connection"
+from = "endpoint"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.connection"
+from = "azureSubscription"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.connection"
+from = "registry"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.connection"
+from = "resourceGroup"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.connection"
+from = "project"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.connection"
+from = "server"
+shape = "union"
+type = "string | map<string>"
+
+[[rule]]
+to = "resource.container_config"
+from = "env"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "resource.container_config"
+from = "localImage"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.container_config"
+from = "mapDockerSocket"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.container_config"
+from = "mountReadOnly"
+shape = "block_attr"
+type = "readOnlyMounts"
+
+[[rule]]
+to = "resource.container_config"
+from = "options"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.container_config"
+from = "ports"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "resource.container_config"
+from = "volumes"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "resource.filters"
+from = "filters"
+shape = "seq_attr"
+type = "list<webhookFilter>"
+
+[[rule]]
+to = "resource.kind"
+from = "type"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "build"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "package"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "pipeline"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "repository"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "webhook"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "container"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.name"
+from = "image"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.pools"
+from = "pools"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "resource.ref"
+from = "branch"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.ref"
+from = "ref"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.ref"
+from = "version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.ref"
+from = "tag"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.ref"
+from = "tags"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "resource.ref"
+from = "source"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "resource.repositories"
+from = "repositories"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "resource.trigger"
+from = "trigger"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "schedule.always"
+from = "always"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "schedule.batch"
+from = "batch"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "schedule.branch_filter"
+from = "branches"
+shape = "mapping_node"
+type = "includeExcludeFilters"
+
+[[rule]]
+to = "schedule.cron"
+from = "cron"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "schedule.display_name"
+from = "displayName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.jobs"
+from = "jobs"
+shape = "seq_mapping_nodes"
+type = "list<job>"
+
+[[rule]]
+to = "stage.name"
+from = "stage"
+shape = "block_attr"
+type = "any"
+
+[[rule]]
+to = "stage.nested_stages"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<stage>"
+
+[[rule]]
+to = "stage.parameters"
+from = "parameters"
+shape = "union"
+type = "list<templateParameter> | map<string>"
+
+[[rule]]
+to = "step.artifact"
+from = "artifact"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.checkout"
+from = "checkout"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.condition"
+from = "condition"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.continue_on_error"
+from = "continueOnError"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "step.enabled"
+from = "enabled"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.env"
+from = "env"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "displayName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.nested_steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<task>"
+
+[[rule]]
+to = "step.parameters"
+from = "parameters"
+shape = "union"
+type = "list<templateParameter> | map<string>"
+
+[[rule]]
+to = "step.publish"
+from = "publish"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.retry"
+from = "retryCountOnTaskFailure"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "step.run"
+from = "script"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "bash"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "powershell"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "pwsh"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.timeout"
+from = "timeoutInMinutes"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "step.uses"
+from = "task"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.uses"
+from = "target"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "step.with"
+from = "inputs"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "template.body"
+from = "steps"
+shape = "seq_attr"
+type = "list<task>"
+
+[[rule]]
+to = "template.parameters"
+from = "parameters"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "template.ref"
+from = "template"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "template.resources"
+from = "resources"
+shape = "union"
+type = "list<legacyResource> | map<string>"
+
+[[rule]]
+to = "template.triggers"
+from = "trigger"
+shape = "union"
+type = "list<string> | ciTrigger | string"
+
+[[rule]]
+to = "template.variables"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "trigger.branch_filter"
+from = "branches"
+shape = "mapping_node"
+type = "includeExcludeFilters"
+
+[[rule]]
+to = "trigger.path_filter"
+from = "paths"
+shape = "mapping_node"
+type = "includeExcludeFilters"
+
+[[rule]]
+to = "trigger.tag_filter"
+from = "tags"
+shape = "mapping_node"
+type = "includeExcludeFilters"
+
+[[rule]]
+to = "variable.bindings"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "variable.parameters"
+from = "parameters"
+shape = "union"
+type = "list<templateParameter> | map<string>"
+
+[[rule]]
+to = "workspace.clean"
+from = "clean"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.read_only_mounts"
+from = "externals"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.read_only_mounts"
+from = "tasks"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.read_only_mounts"
+from = "tools"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.read_only_mounts"
+from = "work"
+shape = "scalar_attr"
+type = "string"

@@ -1,0 +1,22 @@
+# Bitbucket Pipelines — representative Node.js CI with steps in
+# `default` and a branch-specific deploy.
+image: node:20
+
+pipelines:
+  default:
+    - step:
+        name: Install & Build
+        script:
+          - npm ci
+          - npm run build
+    - step:
+        name: Test
+        script:
+          - npm test
+          - npm run test:integration
+  branches:
+    main:
+      - step:
+          name: Deploy
+          script:
+            - npm run deploy

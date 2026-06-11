@@ -1,0 +1,119 @@
+# catalog/github.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "github"
+config_file = ".github/workflows/*.yml"
+tier = 1
+source = "json-schema"
+
+[concurrency]
+cancel-in-progress = { type = "boolean | string" }
+group = { type = "string", required = true }
+queue = { type = "enum", options = ["single", "max"] }
+
+[defaults]
+run = { type = "map<string>" }
+
+[environment]
+deployment = { type = "boolean | string" }
+name = { type = "string", required = true }
+url = { type = "string" }
+
+[jobContainer]
+credentials = { type = "map<string>" }
+env = { type = "map<boolean | number | string> | string" }
+image = { type = "string", required = true }
+options = { type = "string" }
+ports = { type = "list<number | string>" }
+volumes = { type = "list<string>" }
+
+[normalJob]
+concurrency = { type = "concurrency | string" }
+container = { type = "jobContainer | string" }
+continue-on-error = { type = "boolean | string" }
+defaults = { type = "defaults" }
+env = { type = "map<boolean | number | string> | string" }
+environment = { type = "environment | string" }
+if = { type = "boolean | number | string" }
+name = { type = "string" }
+needs = { type = "list<string> | string" }
+outputs = { type = "map<string>" }
+permissions = { type = "enum | permissions-event" }
+runs-on = { type = "map<string> | string", required = true }
+services = { type = "map<serviceContainer>" }
+snapshot = { type = "map<string> | string" }
+steps = { type = "list<step>" }
+strategy = { type = "map<string>" }
+timeout-minutes = { type = "number | string" }
+
+[permissions-event]
+actions = { type = "enum", options = ["read", "write", "none"] }
+artifact-metadata = { type = "enum", options = ["read", "write", "none"] }
+attestations = { type = "enum", options = ["read", "write", "none"] }
+checks = { type = "enum", options = ["read", "write", "none"] }
+contents = { type = "enum", options = ["read", "write", "none"] }
+deployments = { type = "enum", options = ["read", "write", "none"] }
+discussions = { type = "enum", options = ["read", "write", "none"] }
+id-token = { type = "enum", options = ["read", "write", "none"] }
+issues = { type = "enum", options = ["read", "write", "none"] }
+models = { type = "enum", options = ["read", "none"] }
+packages = { type = "enum", options = ["read", "write", "none"] }
+pages = { type = "enum", options = ["read", "write", "none"] }
+pull-requests = { type = "enum", options = ["read", "write", "none"] }
+repository-projects = { type = "enum", options = ["read", "write", "none"] }
+security-events = { type = "enum", options = ["read", "write", "none"] }
+statuses = { type = "enum", options = ["read", "write", "none"] }
+
+[pipeline]
+concurrency = { type = "concurrency | string" }
+defaults = { type = "defaults" }
+env = { type = "map<boolean | number | string> | string" }
+jobs = { type = "map<normalJob | reusableWorkflowCallJob>", required = true }
+name = { type = "string" }
+on = { type = "enum | list<enum> | map<string>", required = true }
+permissions = { type = "enum | permissions-event" }
+run-name = { type = "string" }
+
+[reusableWorkflowCallJob]
+concurrency = { type = "concurrency | string" }
+if = { type = "boolean | number | string" }
+name = { type = "string" }
+needs = { type = "list<string> | string" }
+permissions = { type = "enum | permissions-event" }
+secrets = { type = "enum | map<boolean | number | string> | string" }
+strategy = { type = "map<string>" }
+uses = { type = "string", required = true }
+with = { type = "map<boolean | number | string> | string" }
+
+[serviceContainer]
+command = { type = "string" }
+credentials = { type = "map<string>" }
+entrypoint = { type = "string" }
+env = { type = "map<boolean | number | string> | string" }
+image = { type = "string", required = true }
+options = { type = "string" }
+ports = { type = "list<number | string>" }
+volumes = { type = "list<string>" }
+
+[step]
+continue-on-error = { type = "boolean | string" }
+env = { type = "map<boolean | number | string> | string" }
+id = { type = "string" }
+if = { type = "boolean | number | string" }
+name = { type = "string" }
+run = { type = "string" }
+shell = { type = "enum | string" }
+timeout-minutes = { type = "number | string" }
+uses = { type = "string" }
+with = { type = "map<boolean | number | string> | string" }
+working-directory = { type = "string" }
+
+[workflowDispatchInput]
+default = { type = "string" }
+deprecationMessage = { type = "string" }
+description = { type = "string" }
+options = { type = "list<string>" }
+required = { type = "boolean" }
+type = { type = "enum", options = ["string", "choice", "boolean", "number", "environment"] }

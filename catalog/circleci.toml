@@ -1,0 +1,65 @@
+# catalog/circleci.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "circleci"
+config_file = ".circleci/config.yml"
+tier = 1
+source = "json-schema"
+
+[pipeline]
+commands = { type = "map<map<string> | string>" }
+display = { type = "map<string>" }
+examples = { type = "map<map<string>>" }
+executors = { type = "map<map<string> | string>" }
+experimental = { type = "map<string>" }
+job-groups = { type = "map<map<string>>" }
+# Job definitions are always objects (the `| string` arm was an artefact of
+# the generic-type sweep — a bare-string job is invalid CircleCI; job NAMES
+# appear as strings only under `workflows:`, not here).
+jobs = { type = "map<job>" }
+orbs = { type = "map<map<string> | string>" }
+parameters = { type = "map<map<string>>" }
+version = { type = "enum", options = ["2.1", "2.1"], required = true }
+workflows = { type = "map<map<string>>" }
+
+# A CircleCI job: the executor (docker images / executor-ref) + an ordered
+# step list, plus environment / parallelism / resource sizing.
+[job]
+docker = { type = "list<docker_image>" }
+executor = { type = "string" }
+environment = { type = "map<string>" }
+steps = { type = "list<step>" }
+parallelism = { type = "integer" }
+resource_class = { type = "string" }
+working_directory = { type = "string" }
+shell = { type = "string" }
+
+[docker_image]
+image = { type = "string", required = true }
+auth = { type = "map<string>" }
+environment = { type = "map<string>" }
+
+[step]
+run = { type = "string" }
+checkout = { type = "map<string>" }
+name = { type = "string" }
+# Built-in / orb step types — each is its own step variant (a distinct field,
+# captured as a presence block so even a list-only body like
+# `restore_cache: {keys: […]}` round-trips) so they don't collide.
+restore_cache = { type = "step_block" }
+save_cache = { type = "step_block" }
+store_test_results = { type = "step_block" }
+store_artifacts = { type = "step_block" }
+persist_to_workspace = { type = "step_block" }
+attach_workspace = { type = "step_block" }
+"codecov/upload" = { type = "step_block" }
+
+# Opaque body of a built-in/orb step — its scalar keys (key, path, file, …)
+# round-trip; list bodies (keys, paths) are captured by presence.
+[step_block]
+key = { type = "string" }
+path = { type = "string" }
+file = { type = "string" }
+root = { type = "string" }

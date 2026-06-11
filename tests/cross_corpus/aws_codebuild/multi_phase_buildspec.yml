@@ -1,0 +1,77 @@
+version: 0.2
+
+env:
+  shell: bash
+  variables:
+    CARGO_HOME: /codebuild/.cargo
+    RUST_BACKTRACE: full
+    RUST_VERSION: '1.75'
+  parameter-store:
+    REGISTRY_TOKEN: '/ci/crates-token'
+  secrets-manager:
+    DOCKER_PASSWORD: 'docker/password'
+  exported-variables:
+    - RUST_VERSION
+
+phases:
+  install:
+    runtime-versions:
+      rust: latest
+    commands:
+      - rustup install ${RUST_VERSION}
+      - rustup default ${RUST_VERSION}
+    finally:
+      - rustc --version
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - cargo fmt --check
+      - cargo clippy --all-targets -- -D warnings
+    finally:
+      - echo lint done
+  build:
+    on-failure: CONTINUE
+    commands:
+      - cargo test --workspace --release
+      - cargo build --release --workspace
+    finally:
+      - cargo --version > target/build-info.txt
+  post_build:
+    commands:
+      - if [ "$CODEBUILD_BUILD_SUCCEEDING" = "1" ]; then
+          cargo publish --token $REGISTRY_TOKEN ;
+        fi
+
+reports:
+  test-reports:
+    files:
+      - target/test-results/junit.xml
+    file-format: JUNITXML
+    base-directory: '.'
+    discard-paths: false
+  coverage-report:
+    files:
+      - target/coverage.xml
+    file-format: CLOVERXML
+
+artifacts:
+  files:
+    - target/release/*
+    - target/build-info.txt
+  base-directory: '.'
+  discard-paths: false
+  name: build-output-${CODEBUILD_RESOLVED_SOURCE_VERSION}
+  exclude-paths:
+    - target/release/build/**
+
+cache:
+  paths:
+    - /codebuild/.cargo/registry/**
+    - target/**
+
+batch:
+  build-graph:
+    - identifier: linux_build
+    - identifier: macos_build
+      depend-on:
+        - linux_build

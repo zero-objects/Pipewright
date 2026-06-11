@@ -1,0 +1,23 @@
+name: rust-release-module
+sdk: go
+source: ./dagger
+engineVersion: v0.12.0
+include:
+  - 'src/**'
+  - 'tests/**'
+  - 'Cargo.toml'
+  - 'Cargo.lock'
+exclude:
+  - '**/.git'
+  - 'target/**'
+  - 'docs/**'
+codegenIgnore:
+  - 'src/generated/**'
+dependencies:
+  - name: rust
+    source: github.com/dagger/dagger/sdk/go/dagger/cmd/rust
+  - name: golang
+    source: github.com/dagger/dagger/sdk/go/dagger/cmd/golang
+    pin: 'v0.5.0'
+  - name: docker
+    source: github.com/dagger/dagger/sdk/go/dagger/cmd/docker

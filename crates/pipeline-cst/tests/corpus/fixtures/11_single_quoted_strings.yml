@@ -1,0 +1,6 @@
+job:
+  variables:
+    DOLLARS: '$1.50'
+    QUOTES: 'a quote'' inside'
+  script:
+    - echo 'plain literal'

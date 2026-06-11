@@ -1,0 +1,113 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    name: build / package on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, ubuntu-22.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ matrix.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install Qt6 (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qt6-base-dev qt6-declarative-dev qt6-svg-dev cmake
+
+      - name: Install Qt6 (macOS)
+        if: runner.os == 'macOS'
+        run: brew install qt cmake
+
+      - name: Install Qt6 (Windows)
+        if: runner.os == 'Windows'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.7.0"
+          modules: "qtdeclarative qtsvg"
+
+      - name: Configure
+        run: cmake -S ui/qt6 -B ui/qt6/build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build ui/qt6/build --config Release -j
+
+      - name: Package
+        run: |
+          cd ui/qt6/build
+          cpack -C Release
+
+      - name: Sign macOS .dmg
+        if: runner.os == 'macOS' && env.APPLE_DEV_ID != ''
+        env:
+          APPLE_DEV_ID: ${{ secrets.APPLE_DEV_ID }}
+          APPLE_NOTARY_USER: ${{ secrets.APPLE_NOTARY_USER }}
+          APPLE_NOTARY_PWD: ${{ secrets.APPLE_NOTARY_PWD }}
+        run: |
+          cd ui/qt6/build
+          for dmg in *.dmg; do
+            codesign --force --deep --sign "$APPLE_DEV_ID" "$dmg"
+            xcrun notarytool submit "$dmg" --apple-id "$APPLE_NOTARY_USER" \
+                --password "$APPLE_NOTARY_PWD" --team-id "$APPLE_TEAM_ID" --wait
+            xcrun stapler staple "$dmg"
+          done
+
+      - name: Sign Windows .msi
+        if: runner.os == 'Windows' && env.WINDOWS_PFX_BASE64 != ''
+        env:
+          WINDOWS_PFX_BASE64: ${{ secrets.WINDOWS_PFX_BASE64 }}
+          WINDOWS_PFX_PASS:   ${{ secrets.WINDOWS_PFX_PASS }}
+        shell: pwsh
+        run: |
+          $pfx = [Convert]::FromBase64String($env:WINDOWS_PFX_BASE64)
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP/cert.pfx", $pfx)
+          Get-ChildItem ui/qt6/build/*.msi | ForEach-Object {
+            & "C:/Program Files (x86)/Windows Kits/10/bin/x64/signtool.exe" sign `
+              /f "$env:RUNNER_TEMP/cert.pfx" /p $env:WINDOWS_PFX_PASS `
+              /tr http://timestamp.digicert.com /td sha256 /fd sha256 $_.FullName
+          }
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.os }}
+          path: |
+            ui/qt6/build/*.dmg
+            ui/qt6/build/*.deb
+            ui/qt6/build/*.rpm
+            ui/qt6/build/*.msi
+
+  release:
+    needs: build
+    runs-on: ubuntu-22.04
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true

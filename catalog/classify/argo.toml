@@ -1,0 +1,15 @@
+# catalog/classify/argo.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "argo"
+key_count = 6
+
+[classify]
+artifacts = "artifact"
+image = "image"
+parameters = "parameter"
+resources = "map:resource"
+steps = "step"
+templates = "job"

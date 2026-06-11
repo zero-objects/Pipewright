@@ -1,0 +1,8 @@
+variables:
+  REGISTRY: registry.example.com
+  IMAGE: my-app
+  TAG: latest
+
+build:
+  script:
+    - echo "$REGISTRY/$IMAGE:$TAG"

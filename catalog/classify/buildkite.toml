@@ -1,0 +1,17 @@
+# catalog/classify/buildkite.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "buildkite"
+key_count = 8
+
+[classify]
+cache = "map:cache"
+concurrency = "concurrency"
+depends_on = "map:dependency_edge"
+image = "image"
+matrix = "matrix"
+retry = "map:retry"
+secrets = "map:secret"
+steps = "step"

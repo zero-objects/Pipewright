@@ -1,0 +1,28 @@
+recipe_id: docker-publish
+recipe_version: 1.0.0
+description: build a container image and push it to a registry
+tags: [docker, container, registry, publish, deploy]
+doc: |
+  Two sequential jobs on the `docker:25` image: **image-build** runs
+  `docker build`; **image-push** pushes the built tag to a registry after the
+  build. Requires a Docker-capable target. Wire `artifact` (a build artifact)
+  in; take `image` (the published container image) out.
+input_ports:
+  - name: artifact
+    kind: build-artifact
+output_ports:
+  - name: image
+    kind: container-image
+platform_requirements:
+  - docker
+jobs:
+  image-build:
+    image: docker:25
+    steps:
+      - docker build -t app:latest .
+  image-push:
+    image: docker:25
+    needs:
+      - image-build
+    steps:
+      - docker push app:latest

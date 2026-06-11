@@ -1,0 +1,121 @@
+# catalog/rules/dagger.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "dagger"
+rule_count = 19
+
+[[rule]]
+to = "job.artifacts"
+from = "returns"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.parameters"
+from = "args"
+shape = "seq_mapping_nodes"
+type = "list<map<string>>"
+
+[[rule]]
+to = "pipeline.dependencies"
+from = "dependencies"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "pipeline.dependencies"
+from = "include"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.dependencies"
+from = "exclude"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.dependencies"
+from = "codegenIgnore"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.version"
+from = "engineVersion"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.version"
+from = "sdk"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.version"
+from = "source"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.env"
+from = "withEnvVariable"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.image"
+from = "from"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "withExec"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.volume_mounts"
+from = "withDirectory"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.volume_mounts"
+from = "withMountedCache"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.volume_mounts"
+from = "withServiceBinding"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.working_dir"
+from = "withWorkdir"
+shape = "scalar_attr"
+type = "string"

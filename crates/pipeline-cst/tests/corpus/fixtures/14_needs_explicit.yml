@@ -1,0 +1,15 @@
+build:
+  script:
+    - echo build
+
+test:
+  needs:
+    - build
+  script:
+    - echo test
+
+deploy:
+  needs:
+    - test
+  script:
+    - echo deploy

@@ -1,0 +1,134 @@
+# catalog/concepts.toml — semantic concept mappings.
+#
+# A "concept" is one IR sub-graph shape that lives at a specific
+# path under a hub-construct. Each platform expresses it through
+# a different CST path; the per-platform mapping declares the
+# path → concept correspondence so gen_ruleset.py can emit
+# convergence TGG rules without hand-coding.
+#
+# ── Two modes ──────────────────────────────────────────────────────
+#
+# **IR-extending mode** (preferred). Set `target_construct`,
+# `target_field`, optional `discriminator_attr` /
+# `discriminator_value`, and `edge`. The concept rule then writes
+# the canonical IR subgraph
+#
+#   hub:<parent> --<edge>--> hub:<target_construct>[<disc>=<val>]
+#       hub:<target_construct> --has_attr--> hub:attr[name=<field>, value=<scalar>]
+#
+# This matches the shape native field rules already produce (e.g.
+# `R_azure_trigger_branches_include` → hub:trigger -> hub:attr),
+# so the two paths converge on the same IR. The
+# `discriminator_attr` (`kind=branch|tag|path|schedule`) keeps
+# sibling concepts from collapsing onto one GhostId.
+#
+# **Satellite mode (legacy)** — only `satellite_name` is set. The
+# rule emits hub:<parent>.has_attr[name=<satellite_name>] directly.
+# Kept ONLY for concepts whose canonical IR construct/field
+# isn't yet wired up (no `target_construct` to land on), or
+# whose target hub-schema attribute coincides with what native
+# rules already write under the same name (so the two paths
+# merge naturally without IR duplication). Avoid adding new
+# satellite concepts — every regression we shipped in this
+# session came from satellite mode colliding with native field
+# rules that use SOURCE-key naming (`name="image"`) while the
+# concept used IR-canonical naming (`name="step_image"`).
+#
+# ── Three path iterators ───────────────────────────────────────────
+#
+# `[concept.<name>.platform_path]` per-platform paths. Tokens:
+#   * `key`     — literal map navigation
+#   * `key[]`   — sequence iteration (one match per item)
+#   * `<>`      — anonymous map-entry iteration (one match per
+#                 entry, useful where the map key is itself the
+#                 semantic content's *position*, e.g.
+#                 `phases.<>.commands`)
+
+# ══════════════════════════════════════════════════════════════════
+# TRIGGER FAMILY — IR-extending. hub:pipeline -> hub:trigger[kind=…]
+# ══════════════════════════════════════════════════════════════════
+
+[concept.trigger_branch_match]
+parent = "pipeline"
+edge = "has_trigger"
+target_construct = "trigger"
+target_field = "branches"
+discriminator_attr = "kind"
+discriminator_value = "branch"
+
+[concept.trigger_branch_match.platform_path]
+drone = "trigger.branch.include"
+github = "on.push.branches"
+woodpecker = "when.branch.include"
+travis = "branches.only"
+
+[concept.trigger_tag_match]
+parent = "pipeline"
+edge = "has_trigger"
+target_construct = "trigger"
+# hub:trigger has no dedicated `tags` field in the current schema;
+# the pattern value goes into `branches` and the `kind=tag`
+# discriminator separates it from the branch concept.
+target_field = "branches"
+discriminator_attr = "kind"
+discriminator_value = "tag"
+
+[concept.trigger_tag_match.platform_path]
+drone = "trigger.event.include"
+github = "on.push.tags"
+woodpecker = "when.event.include"
+
+[concept.trigger_path_match]
+parent = "pipeline"
+edge = "has_trigger"
+target_construct = "trigger"
+target_field = "paths"
+discriminator_attr = "kind"
+discriminator_value = "path"
+
+[concept.trigger_path_match.platform_path]
+drone = "trigger.paths.include"
+github = "on.push.paths"
+woodpecker = "when.path.include"
+
+[concept.trigger_cron]
+parent = "pipeline"
+edge = "has_trigger"
+target_construct = "trigger"
+target_field = "schedule"
+discriminator_attr = "kind"
+discriminator_value = "schedule"
+leaf_shape = "scalar"
+[concept.trigger_cron.platform_path]
+github = "on.schedule[].cron"
+drone = "cron"
+jenkins = "triggers.cron"
+woodpecker = "when.cron"
+
+# ══════════════════════════════════════════════════════════════════
+# REMOVED in cleanup pass (would have stayed satellite-mode and
+# competed with native field rules — recipe for IR divergence):
+#   * pipeline_default_image / step_image:
+#       native [pipeline.field.image] / [job.field.image] rules
+#       already write hub:image satellites with SOURCE-key naming
+#       (e.g. `name="image"`). A satellite concept with
+#       `name="step_image"` would land on hub:<parent>.has_attr
+#       instead of hub:image, duplicating content. Fix needs a
+#       gen_ruleset.py refactor (native rules → IR-canonical attr
+#       names) before re-introducing.
+#   * step_working_dir:
+#       [step.field.working_dir] covers github/tekton/argo/dagger/
+#       google_cloudbuild/circleci natively; satellite concept
+#       was redundant for those and ambiguous for the others.
+#   * job_runs_on:
+#       github's `runs-on:`, gitlab's `tags:`, travis's `os:` are
+#       semantically `hub:job.has_agent -> hub:agent.labels` — needs
+#       proper hub:agent extension, not a flat satellite.
+#   * pipeline_env_var_value:
+#       `<>` syntax demo only; conflicted with native map<string>
+#       rules.
+#   * module_sdk / module_engine_version:
+#       dagger-specific scalars; until hub:module is in the
+#       schema, native carrier-comment fallback covers them.
+# Re-add via IR-extending mode once the target construct/field
+# is in `hub_schema.toml`.

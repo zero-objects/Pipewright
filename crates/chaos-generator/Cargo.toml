@@ -1,0 +1,25 @@
+[package]
+name = "chaos-generator"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_yaml.workspace = true
+indexmap.workspace = true
+thiserror.workspace = true
+rand = "0.8"
+rand_chacha = "0.3"
+toml = "0.8"
+seesaw-core.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true
+pipeline-cst = { path = "../pipeline-cst" }
+pipeline-earthfile-cst = { path = "../pipeline-earthfile-cst" }
+pipeline-jenkinsfile-cst = { path = "../pipeline-jenkinsfile-cst" }
+pipeline-tgg-seeder = { path = "../pipeline-tgg-seeder" }
+pipeline-render = { path = "../pipeline-render" }
+serde_json.workspace = true

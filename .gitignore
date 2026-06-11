@@ -1,0 +1,9 @@
+/target
+**/*.rs.bk
+ui/qt6/build/
+ui/qt6/build-*/
+.env
+.env.local
+.env.*.local
+.DS_Store
+**/.DS_Store

@@ -1,0 +1,238 @@
+# catalog/buildkite.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "buildkite"
+config_file = ".buildkite/pipeline.yml"
+tier = 2
+source = "json-schema"
+
+[automaticRetry]
+exit_status = { type = "enum | integer | list<integer>" }
+limit = { type = "integer" }
+signal = { type = "string" }
+signal_reason = { type = "enum", options = ["*", "none", "agent_incompatible", "agent_refused", "agent_stop", "cancel", "process_run_error", "signature_rejected", "stack_error"] }
+
+[blockStep]
+allow_dependency_failure = { type = "enum", options = ["True", "False", "true", "false"] }
+allowed_teams = { type = "list<string> | string" }
+# block is the gate KEY of a block step: either a bare label string
+# (`block: "Approve?"`) or a full nested block object (`block: {prompt, …}`).
+# Union so expand_union emits both a scalar_attr (label) and a block_attr
+# (object) arm — without the object arm `block: {}` is lost (scalar_attr
+# can't match an empty mapping).
+block = { type = "string | blockStep" }
+blocked_state = { type = "enum", options = ["passed", "failed", "running"] }
+branches = { type = "list<string> | string" }
+depends_on = { type = "list<map<string> | string> | null | string" }
+fields = { type = "list<selectField | textField>" }
+id = { type = "string" }
+identifier = { type = "string" }
+if = { type = "string" }
+key = { type = "string" }
+label = { type = "string" }
+name = { type = "string" }
+prompt = { type = "string" }
+type = { type = "enum", options = ["block"] }
+
+[commandStep]
+agents = { type = "list<string> | map<string>" }
+allow_dependency_failure = { type = "enum", options = ["True", "False", "true", "false"] }
+artifact_paths = { type = "list<string> | string" }
+branches = { type = "list<string> | string" }
+cache = { type = "list<string> | map<string> | string" }
+cancel_on_build_failing = { type = "enum", options = ["True", "False", "true", "false"] }
+command = { type = "list<string> | string" }
+commands = { type = "list<string> | string" }
+concurrency = { type = "integer" }
+concurrency_group = { type = "string" }
+concurrency_method = { type = "enum", options = ["ordered", "eager"] }
+depends_on = { type = "list<map<string> | string> | null | string" }
+env = { type = "map<string>" }
+id = { type = "string" }
+identifier = { type = "string" }
+if = { type = "string" }
+if_changed = { type = "list<string> | map<string> | string" }
+image = { type = "string" }
+key = { type = "string" }
+label = { type = "string" }
+matrix = { type = "list<boolean | integer | string> | matrixObject" }
+name = { type = "string" }
+notify = { type = "list<enum | notifyBasecamp | notifyGithubCheck | notifyGithubCommitStatus | notifySlack>" }
+parallelism = { type = "integer" }
+plugins = { type = "list<map<string> | string> | map<string>" }
+priority = { type = "integer" }
+retry = { type = "map<string>" }
+secrets = { type = "list<string> | map<string>" }
+signature = { type = "map<string>" }
+skip = { type = "boolean | string" }
+soft_fail = { type = "enum | list<softFailObject>" }
+timeout_in_minutes = { type = "integer" }
+type = { type = "enum", options = ["script", "command", "commands"] }
+
+[commandStepManualRetryObject]
+allowed = { type = "enum", options = ["True", "False", "true", "false"] }
+permit_on_passed = { type = "enum", options = ["True", "False", "true", "false"] }
+reason = { type = "string" }
+
+[groupStep]
+allow_dependency_failure = { type = "enum", options = ["True", "False", "true", "false"] }
+depends_on = { type = "list<map<string> | string> | null | string" }
+group = { type = "string", required = true }
+id = { type = "string" }
+identifier = { type = "string" }
+if = { type = "string" }
+if_changed = { type = "list<string> | map<string> | string" }
+key = { type = "string" }
+label = { type = "string" }
+name = { type = "string" }
+notify = { type = "list<enum | notifyBasecamp | notifyEmail | notifyGithubCheck | notifyGithubCommitStatus | notifyPagerduty | notifySlack | notifyWebhook>" }
+skip = { type = "boolean | string" }
+steps = { type = "list<blockStep | commandStep | enum | inputStep | nestedBlockStep | nestedCommandStep | nestedInputStep | nestedTriggerStep | nestedWaitStep | triggerStep | waitStep>", required = true }
+
+[inputStep]
+allow_dependency_failure = { type = "enum", options = ["True", "False", "true", "false"] }
+allowed_teams = { type = "list<string> | string" }
+blocked_state = { type = "enum", options = ["passed", "failed", "running"] }
+branches = { type = "list<string> | string" }
+depends_on = { type = "list<map<string> | string> | null | string" }
+fields = { type = "list<selectField | textField>" }
+id = { type = "string" }
+identifier = { type = "string" }
+if = { type = "string" }
+input = { type = "string | inputStep" }
+key = { type = "string" }
+label = { type = "string" }
+name = { type = "string" }
+prompt = { type = "string" }
+type = { type = "enum", options = ["input"] }
+
+[matrixAdjustments]
+skip = { type = "boolean | string" }
+soft_fail = { type = "enum | list<softFailObject>" }
+with = { type = "list<boolean | integer | string> | map<string>", required = true }
+
+[matrixObject]
+adjustments = { type = "list<matrixAdjustments>" }
+setup = { type = "list<boolean | integer | string> | map<list<boolean | integer | string>>", required = true }
+
+[nestedBlockStep]
+block = { type = "blockStep" }
+
+[nestedCommandStep]
+# command/commands/script ALWAYS hold the shell to run (a string or list of
+# strings), never a nested object — typing them `commandStep` let the chaos
+# generator emit `script: {}` / `command: {}` (an empty object), which no
+# command rule matches. They are scalar/list everywhere.
+command = { type = "list<string> | string" }
+commands = { type = "list<string> | string" }
+script = { type = "list<string> | string" }
+
+[nestedInputStep]
+input = { type = "inputStep" }
+
+[nestedTriggerStep]
+trigger = { type = "triggerStep" }
+
+[nestedWaitStep]
+wait = { type = "waitStep" }
+waiter = { type = "waitStep" }
+
+[notifyBasecamp]
+basecamp_campfire = { type = "string" }
+if = { type = "string" }
+
+[notifyEmail]
+email = { type = "string" }
+if = { type = "string" }
+
+[notifyGithubCheck]
+github_check = { type = "map<string>" }
+
+[notifyGithubCommitStatus]
+github_commit_status = { type = "map<string>" }
+if = { type = "string" }
+
+[notifyPagerduty]
+if = { type = "string" }
+pagerduty_change_event = { type = "string" }
+
+[notifySlack]
+if = { type = "string" }
+slack = { type = "notifySlackObject | string" }
+
+[notifySlackObject]
+channels = { type = "list<string>" }
+message = { type = "string" }
+
+[notifyWebhook]
+if = { type = "string" }
+webhook = { type = "string" }
+
+[pipeline]
+agents = { type = "list<string> | map<string>" }
+env = { type = "map<string>" }
+image = { type = "string" }
+notify = { type = "list<enum | notifyBasecamp | notifyEmail | notifyGithubCheck | notifyGithubCommitStatus | notifyPagerduty | notifySlack | notifyWebhook>" }
+priority = { type = "integer" }
+secrets = { type = "list<string> | map<string>" }
+steps = { type = "list<blockStep | commandStep | enum | groupStep | inputStep | nestedBlockStep | nestedCommandStep | nestedInputStep | nestedTriggerStep | nestedWaitStep | triggerStep | waitStep>", required = true }
+
+[selectField]
+default = { type = "list<string> | string" }
+hint = { type = "string" }
+key = { type = "string", required = true }
+multiple = { type = "enum", options = ["True", "False", "true", "false"] }
+options = { type = "list<selectFieldOption>", required = true }
+required = { type = "enum", options = ["True", "False", "true", "false"] }
+select = { type = "string" }
+
+[selectFieldOption]
+hint = { type = "string" }
+label = { type = "string", required = true }
+required = { type = "enum", options = ["True", "False", "true", "false"] }
+value = { type = "string", required = true }
+
+[softFailObject]
+exit_status = { type = "enum | integer" }
+
+[textField]
+default = { type = "string" }
+format = { type = "string" }
+hint = { type = "string" }
+key = { type = "string", required = true }
+required = { type = "enum", options = ["True", "False", "true", "false"] }
+text = { type = "string" }
+
+[triggerStep]
+allow_dependency_failure = { type = "enum", options = ["True", "False", "true", "false"] }
+async = { type = "enum", options = ["True", "False", "true", "false"] }
+branches = { type = "list<string> | string" }
+build = { type = "map<string>" }
+depends_on = { type = "list<map<string> | string> | null | string" }
+id = { type = "string" }
+identifier = { type = "string" }
+if = { type = "string" }
+if_changed = { type = "list<string> | map<string> | string" }
+key = { type = "string" }
+label = { type = "string" }
+name = { type = "string" }
+skip = { type = "boolean | string" }
+soft_fail = { type = "enum | list<softFailObject>" }
+trigger = { type = "string", required = true }
+type = { type = "enum", options = ["trigger"] }
+
+[waitStep]
+allow_dependency_failure = { type = "enum", options = ["True", "False", "true", "false"] }
+branches = { type = "list<string> | string" }
+continue_on_failure = { type = "enum", options = ["True", "False", "true", "false"] }
+depends_on = { type = "list<map<string> | string> | null | string" }
+id = { type = "string" }
+identifier = { type = "string" }
+if = { type = "string" }
+key = { type = "string" }
+label = { type = "string" }
+name = { type = "string" }
+type = { type = "enum", options = ["wait", "waiter"] }
+wait = { type = "string" }

@@ -1,0 +1,799 @@
+# catalog/rules/bitbucket.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "bitbucket"
+rule_count = 132
+
+[[rule]]
+to = "agent.config"
+from = "overrides"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.config"
+from = "path"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.config"
+from = "config"
+shape = "block_attr"
+type = "agent_config"
+
+[[rule]]
+to = "agent.config"
+from = "provider"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "agent.permissions"
+from = "permissions"
+shape = "mapping_node"
+type = "agent_permissions"
+
+[[rule]]
+to = "agent.permissions"
+from = "prompt"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "agent.platform"
+from = "arch"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "agent.platform"
+from = "atlassian-ip-ranges"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "agent.platform"
+from = "instance-type"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.platform"
+from = "version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.resources"
+from = "cpu"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "agent.resources"
+from = "memory"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "agent.resources"
+from = "storage"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.resources"
+from = "volumes"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "agent.selector"
+from = "cloud"
+shape = "block_attr"
+type = "cloud"
+
+[[rule]]
+to = "agent.selector"
+from = "self-hosted"
+shape = "block_attr"
+type = "self-hosted"
+
+[[rule]]
+to = "artifact.depth"
+from = "depth"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "artifact.direction"
+from = "download"
+shape = "union"
+type = "boolean | list<string>"
+
+[[rule]]
+to = "artifact.direction"
+from = "upload"
+shape = "union"
+type = "list<artifacts_upload> | list<string>"
+
+[[rule]]
+to = "artifact.exclude"
+from = "ignore-paths"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "artifact.kind"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "artifact.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "paths"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "artifact.when"
+from = "capture-on"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "cache.key"
+from = "key"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "cache.paths"
+from = "path"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.changes"
+from = "changesets"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "condition.state"
+from = "state"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "hook.agent"
+from = "runs-on"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "hook.agent"
+from = "runtime"
+shape = "mapping_node"
+type = "runtime"
+
+[[rule]]
+to = "hook.agent"
+from = "size"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "hook.job"
+from = "name"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "hook.job"
+from = "image"
+shape = "union"
+type = "image_aws_auth | image_basic_auth | image_no_auth | string"
+
+[[rule]]
+to = "hook.job"
+from = "services"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "hook.job"
+from = "caches"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "hook.job"
+from = "artifacts"
+shape = "union"
+type = "artifacts_expanded | list<string>"
+
+[[rule]]
+to = "hook.job"
+from = "clone"
+shape = "mapping_node"
+type = "clone"
+
+[[rule]]
+to = "hook.job"
+from = "deployment"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "hook.job"
+from = "environment"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "hook.job"
+from = "trigger"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "hook.job"
+from = "type"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "hook.job"
+from = "oidc"
+shape = "scalar_node"
+type = "boolean"
+
+[[rule]]
+to = "hook.job"
+from = "auth"
+shape = "mapping_node"
+type = "step_auth"
+
+[[rule]]
+to = "hook.job"
+from = "input-variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "hook.job"
+from = "max-time"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "hook.job"
+from = "concurrency-group"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "hook.job"
+from = "custom"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "hook.job"
+from = "fail-fast"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "hook.nested"
+from = "final"
+shape = "block_attr"
+type = "final_step"
+
+[[rule]]
+to = "hook.steps"
+from = "script"
+shape = "seq_mapping_nodes"
+type = "list<agent_task | pipe | string>"
+
+[[rule]]
+to = "hook.steps"
+from = "after-script"
+shape = "seq_mapping_nodes"
+type = "list<agent_task | pipe | string>"
+
+[[rule]]
+to = "image.credentials"
+from = "password"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.credentials"
+from = "username"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.credentials"
+from = "aws"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "image.credentials"
+from = "system"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "image.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.run_as"
+from = "run-as-user"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "job.after_steps"
+from = "after-script"
+shape = "seq_mapping_nodes"
+type = "list<agent_task | pipe | string>"
+
+[[rule]]
+to = "job.agent"
+from = "runs-on"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.agent"
+from = "runtime"
+shape = "mapping_node"
+type = "runtime"
+
+[[rule]]
+to = "job.agent"
+from = "size"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "job.artifacts"
+from = "artifacts"
+shape = "union"
+type = "artifacts_expanded | list<string>"
+
+[[rule]]
+to = "job.cache"
+from = "caches"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.condition"
+from = "condition"
+shape = "mapping_node"
+type = "condition"
+
+[[rule]]
+to = "job.deployment"
+from = "deployment"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.deployment"
+from = "environment"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.image"
+from = "image"
+shape = "union"
+type = "image_aws_auth | image_basic_auth | image_no_auth | string"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "clone"
+shape = "block_attr"
+type = "clone"
+
+[[rule]]
+to = "job.options"
+from = "custom"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "concurrency-group"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "fail-fast"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "job.parameters"
+from = "input-variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.secrets"
+from = "auth"
+shape = "mapping_node"
+type = "step_auth"
+
+[[rule]]
+to = "job.secrets"
+from = "oidc"
+shape = "scalar_node"
+type = "boolean"
+
+[[rule]]
+to = "job.services"
+from = "services"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.steps"
+from = "script"
+shape = "seq_mapping_nodes"
+type = "list<agent_task | pipe | string>"
+
+[[rule]]
+to = "job.steps"
+from = "step"
+shape = "mapping_node"
+type = "step"
+
+[[rule]]
+to = "job.timeout"
+from = "max-time"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "job.trigger"
+from = "trigger"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "job.uses"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.prompt"
+from = "on-ask"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.agent"
+from = "labels"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.clone"
+from = "clone"
+shape = "block_attr"
+type = "clone"
+
+[[rule]]
+to = "pipeline.definitions"
+from = "definitions"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.export"
+from = "export"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "pipeline.image"
+from = "image"
+shape = "union"
+type = "image_aws_auth | image_basic_auth | image_no_auth | string"
+
+[[rule]]
+to = "pipeline.options"
+from = "options"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.pipelines"
+from = "pipelines"
+shape = "mapping_node"
+type = "pipeline"
+
+[[rule]]
+to = "pipeline.services"
+from = "services"
+shape = "map_nodes"
+type = "map<service>"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "triggers"
+shape = "map_nodes"
+type = "map<list<trigger_configuration>>"
+
+[[rule]]
+to = "resource.checkout"
+from = "depth"
+shape = "union"
+type = "enum | integer"
+
+[[rule]]
+to = "resource.checkout"
+from = "enabled"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "resource.checkout"
+from = "lfs"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "resource.checkout"
+from = "skip-ssl-verify"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "secret.backend"
+from = "system"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "secret.backend"
+from = "access-key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.backend"
+from = "secret-key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.backend"
+from = "bucket"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.backend"
+from = "oidc-role"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.backend"
+from = "region"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.backend"
+from = "key-file"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "service.env"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "service.image"
+from = "image"
+shape = "union"
+type = "image_aws_auth | image_basic_auth | image_no_auth | string"
+
+[[rule]]
+to = "service.kind"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "service.options"
+from = "memory"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "stage.condition"
+from = "condition"
+shape = "mapping_node"
+type = "condition"
+
+[[rule]]
+to = "stage.deployment"
+from = "deployment"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "stage.deployment"
+from = "environment"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "stage.fail_fast"
+from = "fail-fast"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "stage.jobs"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<map<string>>"
+
+[[rule]]
+to = "stage.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.nested_stage"
+from = "stage"
+shape = "mapping_node"
+type = "stage"
+
+[[rule]]
+to = "stage.nested_stage"
+from = "parallel"
+shape = "union"
+type = "list<step_item> | parallel_expanded"
+
+[[rule]]
+to = "stage.trigger"
+from = "trigger"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "step.agent"
+from = "agent"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.gate"
+from = "prompt"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.permissions"
+from = "permissions"
+shape = "mapping_node"
+type = "agent_permissions"
+
+[[rule]]
+to = "step.run"
+from = "script"
+shape = "seq_attr"
+type = "list<agent_task | pipe | string>"
+
+[[rule]]
+to = "step.uses"
+from = "pipe"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.uses"
+from = "provider"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.with"
+from = "variables"
+shape = "map_nodes"
+type = "map<list<string> | string>"
+
+[[rule]]
+to = "step.with"
+from = "config"
+shape = "block_attr"
+type = "agent_config"
+
+[[rule]]
+to = "template.parameters"
+from = "variables"
+shape = "seq_mapping_nodes"
+type = "list<map<string>>"
+
+[[rule]]
+to = "template.ref"
+from = "import"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.condition"
+from = "condition"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "trigger.kind"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "trigger.parent"
+from = "parent_pipeline_run_uuid"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.parent"
+from = "parent_pipeline_uuid"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.parent"
+from = "parent_step_uuid"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.target_pipeline"
+from = "pipelines"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "variable.bindings"
+from = "variables"
+shape = "seq_attr"
+type = "list<map<string>>"

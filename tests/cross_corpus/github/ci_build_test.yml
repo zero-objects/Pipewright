@@ -1,0 +1,14 @@
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CARGO_HOME: .cargo
+    steps:
+      - run: cargo build --release
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: cargo test

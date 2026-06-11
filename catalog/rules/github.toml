@@ -1,0 +1,493 @@
+# catalog/rules/github.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "github"
+rule_count = 81
+
+[[rule]]
+to = "concurrency.cancel_in_progress"
+from = "cancel-in-progress"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "concurrency.group"
+from = "group"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "concurrency.queue"
+from = "queue"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "deployment.deployment"
+from = "deployment"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "deployment.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "deployment.url"
+from = "url"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.credentials"
+from = "credentials"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "image.env"
+from = "env"
+shape = "union"
+type = "map<boolean | number | string> | string"
+
+[[rule]]
+to = "image.name"
+from = "image"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.options"
+from = "options"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "image.ports"
+from = "ports"
+shape = "seq_attr"
+type = "list<number | string>"
+
+[[rule]]
+to = "image.volumes"
+from = "volumes"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.agent"
+from = "runs-on"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "job.allow_failure"
+from = "continue-on-error"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "job.artifacts"
+from = "outputs"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.concurrency"
+from = "concurrency"
+shape = "union"
+type = "concurrency | string"
+
+[[rule]]
+to = "job.condition"
+from = "if"
+shape = "union"
+type = "boolean | number | string"
+
+[[rule]]
+to = "job.defaults"
+from = "defaults"
+shape = "block_attr"
+type = "defaults"
+
+[[rule]]
+to = "job.deployment"
+from = "environment"
+shape = "union"
+type = "environment | string"
+
+[[rule]]
+to = "job.image"
+from = "container"
+shape = "union"
+type = "jobContainer | string"
+
+[[rule]]
+to = "job.matrix"
+from = "strategy"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.needs"
+from = "needs"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.options"
+from = "snapshot"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "job.options"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.parameters"
+from = "with"
+shape = "union"
+type = "map<boolean | number | string> | string"
+
+[[rule]]
+to = "job.permissions"
+from = "permissions"
+shape = "union"
+type = "enum | permissions-event"
+
+[[rule]]
+to = "job.secrets"
+from = "secrets"
+shape = "union"
+type = "enum | map<boolean | number | string> | string"
+
+[[rule]]
+to = "job.services"
+from = "services"
+shape = "map_nodes"
+type = "map<serviceContainer>"
+
+[[rule]]
+to = "job.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<step>"
+
+[[rule]]
+to = "job.timeout"
+from = "timeout-minutes"
+shape = "union"
+type = "number | string"
+
+[[rule]]
+to = "job.uses"
+from = "uses"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.variables"
+from = "env"
+shape = "union"
+type = "map<boolean | number | string> | string"
+
+[[rule]]
+to = "parameter.default"
+from = "default"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.deprecated"
+from = "deprecationMessage"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.options"
+from = "options"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "parameter.required"
+from = "required"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "parameter.type"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "actions"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "artifact-metadata"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "attestations"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "checks"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "contents"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "deployments"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "discussions"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "id-token"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "issues"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "models"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "packages"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "pages"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "pull-requests"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "repository-projects"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "security-events"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "permissions.scopes"
+from = "statuses"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.concurrency"
+from = "concurrency"
+shape = "union"
+type = "concurrency | string"
+
+[[rule]]
+to = "pipeline.defaults"
+from = "defaults"
+shape = "block_attr"
+type = "defaults"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "jobs"
+shape = "map_nodes"
+type = "map<normalJob | reusableWorkflowCallJob>"
+
+[[rule]]
+to = "pipeline.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.name"
+from = "run-name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.permissions"
+from = "permissions"
+shape = "union"
+type = "enum | permissions-event"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "on"
+shape = "union"
+type = "enum | list<enum> | map<string>"
+
+[[rule]]
+to = "pipeline.variables"
+from = "env"
+shape = "union"
+type = "map<boolean | number | string> | string"
+
+[[rule]]
+to = "service.command"
+from = "command"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "service.command"
+from = "entrypoint"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "service.credentials"
+from = "credentials"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "service.env"
+from = "env"
+shape = "union"
+type = "map<boolean | number | string> | string"
+
+[[rule]]
+to = "service.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "service.options"
+from = "options"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "service.ports"
+from = "ports"
+shape = "seq_attr"
+type = "list<number | string>"
+
+[[rule]]
+to = "service.volumes"
+from = "volumes"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.condition"
+from = "if"
+shape = "union"
+type = "boolean | number | string"
+
+[[rule]]
+to = "step.continue_on_error"
+from = "continue-on-error"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "step.env"
+from = "env"
+shape = "union"
+type = "map<boolean | number | string> | string"
+
+[[rule]]
+to = "step.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "run"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.shell"
+from = "shell"
+shape = "union"
+type = "enum | string"
+
+[[rule]]
+to = "step.timeout"
+from = "timeout-minutes"
+shape = "union"
+type = "number | string"
+
+[[rule]]
+to = "step.uses"
+from = "uses"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.with"
+from = "with"
+shape = "union"
+type = "map<boolean | number | string> | string"
+
+[[rule]]
+to = "step.working_dir"
+from = "working-directory"
+shape = "scalar_attr"
+type = "string"

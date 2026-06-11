@@ -1,0 +1,97 @@
+name: rust-app-release
+roleArn: 'arn:aws:iam::123456789012:role/CodePipelineRole'
+pipelineType: V2
+executionMode: QUEUED
+artifactStore:
+  type: S3
+  location: my-pipeline-artifacts
+variables:
+  - name: ENV
+    defaultValue: staging
+    description: target environment
+stages:
+  - name: Source
+    actions:
+      - name: GitHubSource
+        actionTypeId:
+          category: Source
+          owner: ThirdParty
+          provider: GitHub
+          version: '1'
+        runOrder: 1
+        outputArtifacts:
+          - name: source_output
+        configuration:
+          Owner: example
+          Repo: rust-app
+          Branch: main
+          OAuthToken: '{{resolve:secretsmanager:github/token}}'
+  - name: Build
+    actions:
+      - name: BuildAndTest
+        actionTypeId:
+          category: Build
+          owner: AWS
+          provider: CodeBuild
+          version: '1'
+        runOrder: 1
+        inputArtifacts:
+          - name: source_output
+        outputArtifacts:
+          - name: build_output
+        configuration:
+          ProjectName: rust-build
+        timeoutInMinutes: 60
+        region: us-east-1
+  - name: Approval
+    actions:
+      - name: ManualApproval
+        actionTypeId:
+          category: Approval
+          owner: AWS
+          provider: Manual
+          version: '1'
+        runOrder: 1
+        configuration:
+          NotificationArn: 'arn:aws:sns:us-east-1:123:approvals'
+          CustomData: please review the build
+  - name: Deploy
+    actions:
+      - name: DeployStaging
+        actionTypeId:
+          category: Deploy
+          owner: AWS
+          provider: ECS
+          version: '1'
+        runOrder: 1
+        inputArtifacts:
+          - name: build_output
+        configuration:
+          ClusterName: staging-cluster
+          ServiceName: app-service
+          FileName: imagedefinitions.json
+        namespace: deploy-staging
+      - name: DeployProduction
+        actionTypeId:
+          category: Deploy
+          owner: AWS
+          provider: ECS
+          version: '1'
+        runOrder: 2
+        inputArtifacts:
+          - name: build_output
+        configuration:
+          ClusterName: prod-cluster
+          ServiceName: app-service
+triggers:
+  - providerType: CodeStarSourceConnection
+    gitConfiguration:
+      pull: []
+      push:
+        - branches:
+            includes:
+              - main
+          tags:
+            includes:
+              - 'v*'
+      sourceActionName: GitHubSource

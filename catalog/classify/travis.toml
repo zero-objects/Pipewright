@@ -1,0 +1,20 @@
+# catalog/classify/travis.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "travis"
+key_count = 6
+
+[classify]
+cache = "map:cache"
+jobs = "map:job"
+matrix = "map:matrix"
+notifications = "map:notification"
+services = "service"
+stages = "map:stage"
+
+# keys whose value-mapping construct is context-dependent:
+#   before_cache: ['cache', 'hook']
+#   branches: ['condition', 'trigger']
+#   git: ['agent', 'resource']

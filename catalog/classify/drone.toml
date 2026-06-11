@@ -1,0 +1,14 @@
+# catalog/classify/drone.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "drone"
+key_count = 5
+
+[classify]
+concurrency = "concurrency"
+depends_on = "dependency_edge"
+image = "image"
+services = "service"
+steps = "step"

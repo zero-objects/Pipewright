@@ -1,0 +1,61 @@
+# CircleCI — representative Node.js CI: jobs + a fan-out/fan-in
+# workflow DAG via requires.
+version: 2.1
+
+orbs:
+  node: circleci/node@5.2.0
+
+jobs:
+  install:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - run: npm ci
+      - run:
+          name: Persist node_modules
+          command: echo "cached"
+
+  lint:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - run: npm run lint
+
+  test:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - run:
+          name: Unit tests
+          command: npm test -- --coverage
+      - run: npm run test:e2e
+
+  build:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - run: npm run build
+      - run:
+          name: Bundle size report
+          command: |
+            npx bundlesize
+            echo "build complete"
+
+workflows:
+  ci:
+    jobs:
+      - install
+      - lint:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
+      - build:
+          requires:
+            - lint
+            - test

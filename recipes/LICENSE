@@ -1,0 +1,12 @@
+CC0 1.0 Universal (Public Domain Dedication)
+
+The recipe definitions in this directory (*.recipe.yml) are dedicated to the
+public domain. To the extent possible under law, the authors have waived all
+copyright and related or neighboring rights to these recipe snippets, so you
+may copy, modify, distribute and use them, even for commercial purposes, all
+without asking permission.
+
+These are short, factual CI/CD configuration fragments; the dedication keeps
+them frictionless to reuse and to publish as a standalone recipe repository.
+
+Full text: https://creativecommons.org/publicdomain/zero/1.0/

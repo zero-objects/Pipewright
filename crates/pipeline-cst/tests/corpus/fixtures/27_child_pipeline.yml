@@ -1,0 +1,11 @@
+trigger_child:
+  trigger:
+    include:
+      - local: .gitlab/ci/child.yml
+    strategy: depend
+
+upstream:
+  trigger:
+    project: group/other-project
+    branch: main
+    strategy: depend

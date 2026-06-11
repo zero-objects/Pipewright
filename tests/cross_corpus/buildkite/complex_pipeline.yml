@@ -1,0 +1,92 @@
+env:
+  CARGO_TERM_COLOR: always
+  RUST_LOG: info
+
+agents:
+  queue: builds
+
+steps:
+  - label: ":mag: lint"
+    key: lint
+    command: |
+      cargo fmt --check
+      cargo clippy --all-targets -- -D warnings
+    plugins:
+      - docker#v5.10.0:
+          image: rust:1.75
+          environment:
+            - CARGO_HOME=/cache/cargo
+          volumes:
+            - /cache/cargo:/cache/cargo
+    timeout_in_minutes: 10
+
+  - label: ":test_tube: test"
+    key: test
+    command: cargo test --workspace --release
+    depends_on:
+      - lint
+    matrix:
+      setup:
+        os:
+          - linux
+          - macos
+        rust:
+          - stable
+          - "1.75"
+      adjustments:
+        - with:
+            os: linux
+            rust: nightly
+          soft_fail: true
+    plugins:
+      - docker#v5.10.0:
+          image: rust:${MATRIX_RUST}
+    artifact_paths:
+      - target/test-results/**/*
+    retry:
+      automatic:
+        - exit_status: -1
+          limit: 2
+        - exit_status: 137
+          limit: 1
+
+  - wait: ~
+    continue_on_failure: false
+
+  - block: ":rocket: deploy?"
+    key: approve-deploy
+    branches: main release/*
+    if: build.tag != null
+    prompt: "approve release?"
+    fields:
+      - select: environment
+        key: environment
+        options:
+          - label: staging
+            value: staging
+          - label: production
+            value: production
+
+  - label: ":package: build artifact"
+    key: build
+    command: cargo build --release --workspace
+    depends_on:
+      - approve-deploy
+    branches: main
+    artifact_paths:
+      - target/release/*
+
+  - trigger: deploy-pipeline
+    key: deploy
+    label: ":rocket: trigger deploy"
+    depends_on:
+      - build
+    branches: main
+    build:
+      env:
+        SOURCE_PIPELINE: $BUILDKITE_PIPELINE_SLUG
+        SOURCE_BUILD: $BUILDKITE_BUILD_NUMBER
+
+notify:
+  - slack: "#ci-alerts"
+    if: build.state == "failed"

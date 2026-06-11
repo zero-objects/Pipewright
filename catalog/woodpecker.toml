@@ -1,0 +1,150 @@
+# catalog/woodpecker.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "woodpecker"
+config_file = ".woodpecker.yml"
+tier = 2
+source = "json-schema"
+
+[clone_settings]
+depth = { type = "number" }
+lfs = { type = "boolean" }
+partial = { type = "boolean" }
+recursive = { type = "boolean" }
+tags = { type = "boolean" }
+
+[commands_step]
+backend_options = { type = "step_backend_options" }
+commands = { type = "list<string> | string" }
+depends_on = { type = "list<string> | string" }
+detach = { type = "boolean" }
+directory = { type = "string" }
+dns = { type = "list<string> | string" }
+dns_search = { type = "list<string> | string" }
+entrypoint = { type = "list<string> | string" }
+environment = { type = "map<boolean | string | number | array | map<string>>" }
+failure = { type = "enum", options = ["fail", "ignore", "cancel"] }
+image = { type = "string", required = true }
+name = { type = "string" }
+privileged = { type = "boolean" }
+pull = { type = "boolean" }
+volumes = { type = "list<string>" }
+when = { type = "list<step_when_condition> | step_when_condition" }
+
+[matrix]
+include = { type = "list<map<string>>" }
+
+[pipeline]
+"$schema" = { type = "string" }
+clone = { type = "list<commands_step | plugin_step> | map<string>" }
+depends_on = { type = "list<string>" }
+labels = { type = "map<boolean | string | number>" }
+matrix = { type = "matrix" }
+runs_on = { type = "list<string>" }
+services = { type = "list<service> | map<service>" }
+skip_clone = { type = "boolean" }
+steps = { type = "list<commands_step | plugin_step> | map<commands_step | plugin_step>", required = true }
+variables = { type = "string" }
+when = { type = "list<workflow_when_condition> | workflow_when_condition" }
+workspace = { type = "map<string>" }
+
+[plugin_step]
+backend_options = { type = "step_backend_options" }
+depends_on = { type = "list<string> | string" }
+detach = { type = "boolean" }
+directory = { type = "string" }
+failure = { type = "enum", options = ["fail", "ignore"] }
+image = { type = "string", required = true }
+name = { type = "string" }
+privileged = { type = "boolean" }
+pull = { type = "boolean" }
+settings = { type = "map<boolean | string | number | array | map<string>>" }
+volumes = { type = "list<string>" }
+when = { type = "list<step_when_condition> | step_when_condition" }
+
+[service]
+backend_options = { type = "step_backend_options" }
+commands = { type = "list<string> | string" }
+directory = { type = "string" }
+entrypoint = { type = "list<string> | string" }
+environment = { type = "map<boolean | string | number | array | map<string>>" }
+failure = { type = "enum", options = ["fail", "ignore"] }
+image = { type = "string", required = true }
+name = { type = "string" }
+ports = { type = "list<number | string>" }
+privileged = { type = "boolean" }
+pull = { type = "boolean" }
+settings = { type = "map<boolean | string | number | array | map<string>>" }
+volumes = { type = "list<string>" }
+when = { type = "list<step_when_condition> | step_when_condition" }
+
+[step_backend_kubernetes]
+annotations = { type = "map<boolean | string | number>" }
+labels = { type = "map<boolean | string | number>" }
+runtimeClassName = { type = "string" }
+secrets = { type = "list<step_kubernetes_secret>" }
+securityContext = { type = "step_backend_kubernetes_security_context" }
+tolerations = { type = "list<step_backend_kubernetes_toleration_object>" }
+
+[step_backend_kubernetes_resources]
+limits = { type = "map<string>" }
+requests = { type = "map<string>" }
+
+[step_backend_kubernetes_secprofile]
+localhostProfile = { type = "string" }
+type = { type = "string" }
+
+[step_backend_kubernetes_security_context]
+apparmorProfile = { type = "step_backend_kubernetes_secprofile" }
+fsGroup = { type = "number" }
+privileged = { type = "boolean" }
+runAsGroup = { type = "number" }
+runAsNonRoot = { type = "boolean" }
+runAsUser = { type = "number" }
+seccompProfile = { type = "step_backend_kubernetes_secprofile" }
+
+[step_backend_kubernetes_service_account]
+limits = { type = "map<string>" }
+requests = { type = "map<string>" }
+
+[step_backend_kubernetes_toleration_object]
+effect = { type = "string" }
+key = { type = "string" }
+operator = { type = "string" }
+tolerationSeconds = { type = "integer" }
+value = { type = "string" }
+
+[step_backend_options]
+kubernetes = { type = "step_backend_kubernetes" }
+
+[step_kubernetes_secret]
+key = { type = "string" }
+name = { type = "string" }
+target = { type = "map<string>" }
+
+[step_when_condition]
+branch = { type = "list<string> | map<string> | string" }
+cron = { type = "list<string> | map<string> | string" }
+evaluate = { type = "string" }
+event = { type = "enum | list<enum>" }
+instance = { type = "list<string> | map<string> | string" }
+matrix = { type = "map<boolean | string | number>" }
+path = { type = "list<string> | map<string> | string" }
+platform = { type = "list<string> | map<string> | string" }
+ref = { type = "list<string> | map<string> | string" }
+repo = { type = "list<string> | map<string> | string" }
+status = { type = "enum | list<enum>" }
+
+[workflow_when_condition]
+branch = { type = "list<string> | map<string> | string" }
+cron = { type = "list<string> | map<string> | string" }
+evaluate = { type = "string" }
+event = { type = "enum | list<enum>" }
+instance = { type = "list<string> | map<string> | string" }
+path = { type = "list<string> | map<string> | string" }
+platform = { type = "list<string> | map<string> | string" }
+ref = { type = "list<string> | map<string> | string" }
+repo = { type = "list<string> | map<string> | string" }
+status = { type = "enum | list<enum>" }

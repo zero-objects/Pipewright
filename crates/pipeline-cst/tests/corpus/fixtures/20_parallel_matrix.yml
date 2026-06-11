@@ -1,0 +1,8 @@
+test:
+  parallel:
+    matrix:
+      - OS: [ubuntu, macos]
+        RUSTC: ["1.80", "1.85", "1.88"]
+  script:
+    - rustup default $RUSTC
+    - cargo test

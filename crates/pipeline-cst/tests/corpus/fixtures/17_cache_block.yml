@@ -1,0 +1,9 @@
+build:
+  cache:
+    key: cache-${CI_COMMIT_REF_SLUG}
+    paths:
+      - .cargo/registry/
+      - target/
+    policy: pull-push
+  script:
+    - cargo build

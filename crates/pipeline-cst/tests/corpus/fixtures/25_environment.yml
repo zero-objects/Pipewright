@@ -1,0 +1,17 @@
+deploy_staging:
+  stage: deploy
+  script:
+    - deploy.sh
+  environment:
+    name: staging
+    url: https://staging.example.com
+    on_stop: stop_staging
+
+stop_staging:
+  stage: deploy
+  script:
+    - undeploy.sh
+  when: manual
+  environment:
+    name: staging
+    action: stop

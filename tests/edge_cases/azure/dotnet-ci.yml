@@ -1,0 +1,52 @@
+# Azure Pipelines — representative .NET CI with stages, a build
+# matrix, task steps, and cross-stage dependsOn.
+trigger:
+  - main
+  - release/*
+
+pr:
+  - main
+
+variables:
+  buildConfiguration: Release
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Compile
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: UseDotNet@2
+          - script: dotnet restore
+          - script: dotnet build --configuration $(buildConfiguration)
+          - script: dotnet pack --output $(Build.ArtifactStagingDirectory)
+
+  - stage: Test
+    jobs:
+      - job: UnitTests
+        pool:
+          vmImage: ubuntu-latest
+        dependsOn: Compile
+        steps:
+          - checkout: self
+          - script: dotnet test --configuration $(buildConfiguration) --logger trx
+          - bash: |
+              echo "collecting coverage"
+              dotnet test --collect:"XPlat Code Coverage"
+      - job: Lint
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: dotnet format --verify-no-changes
+
+  - stage: Deploy
+    jobs:
+      - job: Publish
+        pool:
+          vmImage: ubuntu-latest
+        dependsOn: UnitTests
+        steps:
+          - task: NuGetCommand@2
+          - pwsh: Write-Host "Publishing release $(buildConfiguration)"
+          - script: dotnet nuget push "*.nupkg"

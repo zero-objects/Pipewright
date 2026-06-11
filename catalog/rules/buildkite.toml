@@ -1,0 +1,925 @@
+# catalog/rules/buildkite.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "buildkite"
+rule_count = 153
+
+[[rule]]
+to = "dependency_edge.branches"
+from = "branches"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "dependency_edge.condition"
+from = "if"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.depends_on"
+from = "depends_on"
+shape = "union"
+type = "list<map<string> | string> | null | string"
+
+[[rule]]
+to = "dependency_edge.depends_on"
+from = "wait"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.depends_on"
+from = "waiter"
+shape = "mapping_node"
+type = "waitStep"
+
+[[rule]]
+to = "dependency_edge.fail_fast"
+from = "continue_on_failure"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "dependency_edge.fail_fast"
+from = "allow_dependency_failure"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "dependency_edge.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.id"
+from = "identifier"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.id"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.kind"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "dependency_edge.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.name"
+from = "label"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.agent"
+from = "agents"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "job.agent"
+from = "priority"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "job.allow_failure"
+from = "soft_fail"
+shape = "union"
+type = "enum | list<softFailObject>"
+
+[[rule]]
+to = "job.artifacts"
+from = "artifact_paths"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.cache"
+from = "cache"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "job.concurrency"
+from = "concurrency"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "job.concurrency"
+from = "concurrency_group"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.concurrency"
+from = "concurrency_method"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "job.concurrency"
+from = "cancel_on_build_failing"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "job.condition"
+from = "if"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.condition"
+from = "if_changed"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "job.condition"
+from = "branches"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.condition"
+from = "skip"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "job.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.id"
+from = "identifier"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.id"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.matrix"
+from = "matrix"
+shape = "union"
+type = "list<boolean | integer | string> | matrixObject"
+
+[[rule]]
+to = "job.matrix"
+from = "parallelism"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.name"
+from = "label"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.needs"
+from = "depends_on"
+shape = "union"
+type = "list<map<string> | string> | null | string"
+
+[[rule]]
+to = "job.options"
+from = "notify"
+shape = "seq_attr"
+type = "list<enum | notifyBasecamp | notifyGithubCheck | notifyGithubCommitStatus | notifySlack>"
+
+[[rule]]
+to = "job.options"
+from = "signature"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.retry"
+from = "retry"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.secrets"
+from = "secrets"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "job.steps"
+from = "command"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.steps"
+from = "commands"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.steps"
+from = "script"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.timeout"
+from = "timeout_in_minutes"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "job.uses"
+from = "plugins"
+shape = "union"
+type = "list<map<string> | string> | map<string>"
+
+[[rule]]
+to = "job.uses"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.variables"
+from = "env"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "matrix.adjustments"
+from = "adjustments"
+shape = "seq_attr"
+type = "list<matrixAdjustments>"
+
+[[rule]]
+to = "matrix.adjustments"
+from = "with"
+shape = "union"
+type = "list<boolean | integer | string> | map<string>"
+
+[[rule]]
+to = "matrix.axes"
+from = "setup"
+shape = "union"
+type = "list<boolean | integer | string> | map<list<boolean | integer | string>>"
+
+[[rule]]
+to = "matrix.skip"
+from = "skip"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "matrix.soft_fail"
+from = "soft_fail"
+shape = "union"
+type = "enum | list<softFailObject>"
+
+[[rule]]
+to = "notification.channel"
+from = "slack"
+shape = "union"
+type = "notifySlackObject | string"
+
+[[rule]]
+to = "notification.channel"
+from = "channels"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "notification.channel"
+from = "email"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "notification.channel"
+from = "webhook"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "notification.channel"
+from = "github_check"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "notification.channel"
+from = "github_commit_status"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "notification.channel"
+from = "pagerduty_change_event"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "notification.channel"
+from = "basecamp_campfire"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "notification.condition"
+from = "if"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "notification.message"
+from = "message"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.constraint"
+from = "format"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.default"
+from = "default"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.description"
+from = "hint"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.gate"
+from = "allow_dependency_failure"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "parameter.gate"
+from = "allowed_teams"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "parameter.gate"
+from = "blocked_state"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "parameter.gate"
+from = "branches"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "parameter.gate"
+from = "depends_on"
+shape = "union"
+type = "list<map<string> | string> | null | string"
+
+[[rule]]
+to = "parameter.gate"
+from = "fields"
+shape = "seq_attr"
+type = "list<selectField | textField>"
+
+[[rule]]
+to = "parameter.gate"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.gate"
+from = "identifier"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.gate"
+from = "if"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.gate"
+from = "input"
+shape = "union"
+type = "string | inputStep"
+
+[[rule]]
+to = "parameter.gate"
+from = "prompt"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.multiple"
+from = "multiple"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "parameter.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "label"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "text"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "select"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.options"
+from = "options"
+shape = "seq_attr"
+type = "list<selectFieldOption>"
+
+[[rule]]
+to = "parameter.required"
+from = "required"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "parameter.type"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "parameter.value"
+from = "value"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.agent"
+from = "agents"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "pipeline.agent"
+from = "priority"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "pipeline.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.notifications"
+from = "notify"
+shape = "seq_mapping_nodes"
+type = "list<enum | notifyBasecamp | notifyEmail | notifyGithubCheck | notifyGithubCommitStatus | notifyPagerduty | notifySlack | notifyWebhook>"
+
+[[rule]]
+to = "pipeline.secrets"
+from = "secrets"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "pipeline.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<blockStep | commandStep | enum | groupStep | inputStep | nestedBlockStep | nestedCommandStep | nestedInputStep | nestedTriggerStep | nestedWaitStep | triggerStep | waitStep>"
+
+[[rule]]
+to = "pipeline.variables"
+from = "env"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "retry.exit_status"
+from = "exit_status"
+shape = "union"
+type = "enum | integer | list<integer>"
+
+[[rule]]
+to = "retry.limit"
+from = "limit"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "retry.signal"
+from = "signal"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "retry.signal_reason"
+from = "signal_reason"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "stage.condition"
+from = "if"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "stage.condition"
+from = "if_changed"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "stage.depends_on"
+from = "depends_on"
+shape = "union"
+type = "list<map<string> | string> | null | string"
+
+[[rule]]
+to = "stage.group"
+from = "group"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.id"
+from = "identifier"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.id"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.name"
+from = "label"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "stage.notify"
+from = "notify"
+shape = "seq_attr"
+type = "list<enum | notifyBasecamp | notifyEmail | notifyGithubCheck | notifyGithubCommitStatus | notifyPagerduty | notifySlack | notifyWebhook>"
+
+[[rule]]
+to = "stage.skip"
+from = "skip"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "step.branches"
+from = "branches"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.condition"
+from = "if"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.continue_on_error"
+from = "allow_dependency_failure"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.continue_on_error"
+from = "soft_fail"
+shape = "union"
+type = "enum | list<softFailObject>"
+
+[[rule]]
+to = "step.depends_on"
+from = "depends_on"
+shape = "union"
+type = "list<map<string> | string> | null | string"
+
+[[rule]]
+to = "step.env"
+from = "env"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.gate"
+from = "block"
+shape = "union"
+type = "string | blockStep"
+
+[[rule]]
+to = "step.gate"
+from = "blocked_state"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.gate"
+from = "prompt"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.gate"
+from = "fields"
+shape = "seq_attr"
+type = "list<selectField | textField>"
+
+[[rule]]
+to = "step.gate"
+from = "input"
+shape = "union"
+type = "string | inputStep"
+
+[[rule]]
+to = "step.gate"
+from = "wait"
+shape = "block_attr"
+type = "waitStep"
+
+[[rule]]
+to = "step.gate"
+from = "waiter"
+shape = "block_attr"
+type = "waitStep"
+
+[[rule]]
+to = "step.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.id"
+from = "identifier"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.id"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.kind"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "label"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "group"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.nested_steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<blockStep | commandStep | enum | inputStep | nestedBlockStep | nestedCommandStep | nestedInputStep | nestedTriggerStep | nestedWaitStep | triggerStep | waitStep>"
+
+[[rule]]
+to = "step.options"
+from = "concurrency_group"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.options"
+from = "concurrency_method"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.options"
+from = "cancel_on_build_failing"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.retry"
+from = "allowed"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "step.retry"
+from = "permit_on_passed"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "step.retry"
+from = "reason"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "command"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.run"
+from = "commands"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.secrets"
+from = "secrets"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "step.teams"
+from = "allowed_teams"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "trigger.async"
+from = "async"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "trigger.branches"
+from = "branches"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "trigger.condition"
+from = "if"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "trigger.condition"
+from = "if_changed"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "trigger.depends_on"
+from = "depends_on"
+shape = "union"
+type = "list<map<string> | string> | null | string"
+
+[[rule]]
+to = "trigger.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.id"
+from = "identifier"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.id"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.kind"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "trigger.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.name"
+from = "label"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "trigger.skip"
+from = "skip"
+shape = "union"
+type = "boolean | string"
+
+[[rule]]
+to = "trigger.soft_fail"
+from = "soft_fail"
+shape = "union"
+type = "enum | list<softFailObject>"
+
+[[rule]]
+to = "trigger.target_pipeline"
+from = "trigger"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "trigger.target_pipeline"
+from = "build"
+shape = "map_nodes"
+type = "map<string>"

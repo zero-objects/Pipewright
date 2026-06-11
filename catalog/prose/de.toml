@@ -1,0 +1,33 @@
+# catalog/prose/de.toml — deutsches Runbook-Wording + Grammatik.
+# Spiegelt die Schlüssel von en.toml; nur die Strings sind übersetzt.
+
+[pipeline]
+named = "Die Pipeline {name} definiert {count} {jobs_word}{stages}.{triggers}"
+unnamed = "Diese Pipeline definiert {count} {jobs_word}{stages}.{triggers}"
+
+[job]
+context = "Der Job {name}{verb}{needs}{condition}."
+one_step = "Er führt {command} aus."
+many_intro = "Er führt der Reihe nach die folgenden Kommandos aus:"
+no_steps = "Seine einzelnen Schritte sind im IR nicht erfasst — sie existieren nur in der Originalquelle."
+
+[grammar]
+job_singular = "Job"
+job_plural = "Jobs"
+conj_and = " und "
+conj_comma = ", "
+across_stages = " über die Stages {stages}"
+triggered_by = " Sie wird ausgelöst durch {triggers}."
+runs = " läuft"
+runs_in_stage = " läuft in der Stage {stage}"
+runs_in_container = " läuft im Container {image}"
+runs_in_stage_and_container = " läuft in der Stage {stage}, im Container {image}"
+needs_one = " nachdem {jobs} abgeschlossen ist"
+needs_many = " nachdem {jobs} abgeschlossen sind"
+condition = ", aber nur wenn {expr}"
+params_lead = "Er "
+env_one = "setzt die Umgebungsvariable {vars}"
+env_many = "setzt die Umgebungsvariablen {vars}"
+artifacts = "veröffentlicht seine Artefakte unter {paths}"
+set_other = "setzt {key} auf {value}"
+sentence_end = "."

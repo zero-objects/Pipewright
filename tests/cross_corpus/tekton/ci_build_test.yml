@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+spec:
+  tasks:
+    - name: build
+      taskRef:
+        name: rust-build
+    - name: test
+      runAfter:
+        - build
+      taskRef:
+        name: rust-test

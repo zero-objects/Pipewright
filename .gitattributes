@@ -1,0 +1,4 @@
+# The per-platform TGG rule sets are generated from catalog/*.toml by
+# catalog/gen_ruleset.py — committed for reviewability, not hand-edited.
+catalog/rules/*.ruleset.json linguist-generated=true
+docs/interop-matrix.md       linguist-generated=true

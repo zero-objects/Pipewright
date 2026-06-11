@@ -1,0 +1,16 @@
+[package]
+name = "pipeline-render"
+description = "Hub-IR → human-readable (HTML/Markdown) + DAG diagram (SVG with a layered layout). The diagram elements carry the source hub GhostIds so a TGG-reverse editor can map edits back to the IR."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+seesaw-core.workspace = true
+pipeline-hub-ir = { path = "../pipeline-hub-ir" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml = "0.8"
+
+[lints]
+workspace = true

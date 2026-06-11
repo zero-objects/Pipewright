@@ -1,0 +1,171 @@
+# catalog/travis.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "travis"
+config_file = ".travis.yml"
+tier = 1
+source = "json-schema"
+
+[deployment]
+on = { type = "map<string>" }
+
+[job]
+addons = { type = "map<string>" }
+after_deploy = { type = "boolean | enum | list<string> | string" }
+after_failure = { type = "boolean | enum | list<string> | string" }
+after_script = { type = "boolean | enum | list<string> | string" }
+after_success = { type = "boolean | enum | list<string> | string" }
+android = { type = "map<string>" }
+apt_packages = { type = "list<string>" }
+arch = { type = "enum | list<enum>" }
+before_cache = { type = "boolean | enum | list<string> | string" }
+before_deploy = { type = "boolean | enum | list<string> | string" }
+before_install = { type = "boolean | enum | list<string> | string" }
+before_script = { type = "boolean | enum | list<string> | string" }
+bioc_packages = { type = "list<string>" }
+branches = { type = "map<string>" }
+brew_packages = { type = "list<string>" }
+bundler_args = { type = "string" }
+cache = { type = "enum | list<enum | map<string>> | map<string>" }
+compiler = { type = "enum | list<enum>" }
+cran = { type = "string" }
+crystal = { type = "list<string>" }
+d = { type = "list<string>" }
+dart = { type = "list<string>" }
+dart_task = { type = "list<map<string>>" }
+deploy = { type = "deployment | list<deployment>" }
+dist = { type = "enum", options = ["precise", "trusty", "xenial", "bionic", "focal", "jammy", "noble"] }
+elixir = { type = "list<string> | string" }
+elm = { type = "list<string> | string" }
+elm-format = { type = "string" }
+elm-test = { type = "string" }
+env = { type = "list<map<string> | string> | map<string> | string | map<string>" }
+erlang = { type = "list<string> | string" }
+gemfile = { type = "list<string> | string" }
+ghc = { type = "list<string>" }
+git = { type = "map<string>" }
+go = { type = "list<string> | string" }
+haxe = { type = "list<string>" }
+hxml = { type = "list<string>" }
+install = { type = "boolean | enum | list<string> | string" }
+jdk = { type = "list<string> | string" }
+julia = { type = "list<number | string> | number | string" }
+language = { type = "enum", options = ["android", "bash", "c", "c++", "clojure", "cpp", "crystal", "csharp", "d", "dart", "dartlang", "elixir", "elm", "erlang", "generic", "go", "golang", "groovy", "haskell", "haxe", "java", "javascript", "julia", "jvm", "matlab", "minimal", "nix", "node", "node.js", "node_js", "nodejs", "obj-c", "obj_c", "objective-c", "objective_c", "perl", "perl6", "php", "python", "r", "ruby", "rust", "scala", "sh", "shell", "smalltalk"] }
+lein = { type = "string" }
+matlab = { type = "list<string> | string" }
+mono = { type = "enum | list<string>" }
+neko = { type = "string" }
+node_js = { type = "list<number | string> | number | string" }
+opt_release = { type = "list<string> | string" }
+os = { type = "enum | list<enum>" }
+osx_image = { type = "enum | list<enum>" }
+pandoc_version = { type = "string" }
+perl = { type = "list<string>" }
+perl6 = { type = "list<string>" }
+php = { type = "list<number | string> | number | string" }
+podfile = { type = "string" }
+python = { type = "list<number | string> | number | string" }
+r = { type = "list<string> | string" }
+r_binary_packages = { type = "list<string>" }
+r_github_packages = { type = "list<string>" }
+r_packages = { type = "list<string>" }
+repos = { type = "map<string>" }
+rust = { type = "list<string> | number | string" }
+rvm = { type = "list<number | string> | number | string" }
+sbt_args = { type = "string" }
+scala = { type = "list<string>" }
+script = { type = "boolean | enum | list<string> | string" }
+services = { type = "enum | list<enum>" }
+smalltalk = { type = "list<string>" }
+solution = { type = "string" }
+sudo = { type = "enum", options = ["True", "False", "", "required", "enabled"] }
+xcode_project = { type = "string" }
+xcode_scheme = { type = "string" }
+xcode_sdk = { type = "string" }
+xcode_workspace = { type = "string" }
+
+[pipeline]
+addons = { type = "map<string>" }
+after_deploy = { type = "boolean | enum | list<string> | string" }
+after_failure = { type = "boolean | enum | list<string> | string" }
+after_script = { type = "boolean | enum | list<string> | string" }
+after_success = { type = "boolean | enum | list<string> | string" }
+android = { type = "map<string>" }
+apt_packages = { type = "list<string>" }
+arch = { type = "enum | list<enum>" }
+before_cache = { type = "boolean | enum | list<string> | string" }
+before_deploy = { type = "boolean | enum | list<string> | string" }
+before_install = { type = "boolean | enum | list<string> | string" }
+before_script = { type = "boolean | enum | list<string> | string" }
+bioc_packages = { type = "list<string>" }
+branches = { type = "map<string>" }
+brew_packages = { type = "list<string>" }
+bundler_args = { type = "string" }
+cache = { type = "enum | list<enum | map<string>> | map<string>" }
+compiler = { type = "enum | list<enum>" }
+cran = { type = "string" }
+crystal = { type = "list<string>" }
+d = { type = "list<string>" }
+dart = { type = "list<string>" }
+dart_task = { type = "list<map<string>>" }
+deploy = { type = "deployment | list<deployment>" }
+dist = { type = "enum", options = ["precise", "trusty", "xenial", "bionic", "focal", "jammy", "noble"] }
+elixir = { type = "list<string> | string" }
+elm = { type = "list<string> | string" }
+elm-format = { type = "string" }
+elm-test = { type = "string" }
+env = { type = "list<map<string> | string> | map<string> | string | map<string>" }
+erlang = { type = "list<string> | string" }
+gemfile = { type = "list<string> | string" }
+ghc = { type = "list<string>" }
+git = { type = "map<string>" }
+go = { type = "list<string> | string" }
+haxe = { type = "list<string>" }
+hxml = { type = "list<string>" }
+import = { type = "list<map<string> | string> | map<string> | string" }
+install = { type = "boolean | enum | list<string> | string" }
+jdk = { type = "list<string> | string" }
+jobs = { type = "map<job>" }
+julia = { type = "list<number | string> | number | string" }
+language = { type = "enum", options = ["android", "bash", "c", "c++", "clojure", "cpp", "crystal", "csharp", "d", "dart", "dartlang", "elixir", "elm", "erlang", "generic", "go", "golang", "groovy", "haskell", "haxe", "java", "javascript", "julia", "jvm", "matlab", "minimal", "nix", "node", "node.js", "node_js", "nodejs", "obj-c", "obj_c", "objective-c", "objective_c", "perl", "perl6", "php", "python", "r", "ruby", "rust", "scala", "sh", "shell", "smalltalk"] }
+lein = { type = "string" }
+matlab = { type = "list<string> | string" }
+matrix = { type = "map<string>" }
+mono = { type = "enum | list<string>" }
+neko = { type = "string" }
+node_js = { type = "list<number | string> | number | string" }
+notifications = { type = "map<string>" }
+opt_release = { type = "list<string> | string" }
+os = { type = "enum | list<enum>" }
+osx_image = { type = "enum | list<enum>" }
+pandoc_version = { type = "string" }
+perl = { type = "list<string>" }
+perl6 = { type = "list<string>" }
+php = { type = "list<number | string> | number | string" }
+podfile = { type = "string" }
+python = { type = "list<number | string> | number | string" }
+r = { type = "list<string> | string" }
+r_binary_packages = { type = "list<string>" }
+r_github_packages = { type = "list<string>" }
+r_packages = { type = "list<string>" }
+repos = { type = "map<string>" }
+rust = { type = "list<string> | number | string" }
+rvm = { type = "list<number | string> | number | string" }
+sbt_args = { type = "string" }
+scala = { type = "list<string>" }
+script = { type = "boolean | enum | list<string> | string" }
+services = { type = "enum | list<enum>" }
+smalltalk = { type = "list<string>" }
+solution = { type = "string" }
+stages = { type = "list<map<string> | string>" }
+sudo = { type = "enum", options = ["True", "False", "", "required", "enabled"] }
+version = { type = "string" }
+xcode_project = { type = "string" }
+xcode_scheme = { type = "string" }
+xcode_sdk = { type = "string" }
+xcode_workspace = { type = "string" }
+
+[secretString]
+secure = { type = "string" }

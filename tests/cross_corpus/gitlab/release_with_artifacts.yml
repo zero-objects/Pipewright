@@ -1,0 +1,84 @@
+stages:
+  - lint
+  - test
+  - build
+  - publish
+
+variables:
+  CARGO_HOME: $CI_PROJECT_DIR/.cargo
+  RUST_BACKTRACE: full
+
+default:
+  image: rust:1.75
+  cache:
+    key: cargo-$CI_COMMIT_REF_SLUG
+    paths:
+      - .cargo/
+      - target/
+  before_script:
+    - rustc --version
+    - cargo --version
+  timeout: 30m
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_TAG'
+
+fmt:
+  stage: lint
+  script:
+    - cargo fmt --check
+  allow_failure: false
+
+clippy:
+  stage: lint
+  needs:
+    - fmt
+  script:
+    - cargo clippy --all-targets -- -D warnings
+
+test:
+  stage: test
+  needs:
+    - clippy
+  parallel:
+    matrix:
+      - RUST: ['stable', '1.75']
+        OS: ['linux']
+  script:
+    - cargo test --workspace --release
+  artifacts:
+    when: always
+    paths:
+      - target/test-results/
+    reports:
+      junit: target/test-results/junit.xml
+    expire_in: 7 days
+
+build:
+  stage: build
+  needs:
+    - test
+  script:
+    - cargo build --release --workspace
+  artifacts:
+    paths:
+      - target/release/*
+    expire_in: 1 week
+  only:
+    - main
+    - tags
+
+publish:
+  stage: publish
+  needs:
+    - build
+  script:
+    - cargo publish --token $CARGO_REGISTRY_TOKEN
+  rules:
+    - if: '$CI_COMMIT_TAG'
+  environment:
+    name: production
+    url: https://crates.io

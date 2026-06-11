@@ -1,0 +1,14 @@
+.defaults: &defaults
+  image: alpine:latest
+  before_script:
+    - apk add curl
+
+build:
+  <<: *defaults
+  script:
+    - echo "build"
+
+test:
+  <<: *defaults
+  script:
+    - echo "test"

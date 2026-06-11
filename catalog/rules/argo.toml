@@ -1,0 +1,391 @@
+# catalog/rules/argo.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "argo"
+rule_count = 64
+
+[[rule]]
+to = "artifact.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "path"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.source"
+from = "from"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.source"
+from = "git"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "artifact.source"
+from = "http"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "artifact.source"
+from = "s3"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "dependency_edge.arguments"
+from = "arguments"
+shape = "block_attr"
+type = "arguments"
+
+[[rule]]
+to = "dependency_edge.condition"
+from = "when"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.depends_expr"
+from = "depends"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.depends_on"
+from = "dependencies"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "dependency_edge.fail_fast"
+from = "failFast"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "dependency_edge.fan_out"
+from = "withItems"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "dependency_edge.fan_out"
+from = "withParam"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.fan_out"
+from = "withSequence"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "dependency_edge.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.parameters"
+from = "parameters"
+shape = "seq_mapping_nodes"
+type = "list<parameter>"
+
+[[rule]]
+to = "dependency_edge.tasks"
+from = "tasks"
+shape = "seq_attr"
+type = "list<dag_task>"
+
+[[rule]]
+to = "dependency_edge.template_ref"
+from = "template"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "dependency_edge.template_ref"
+from = "templateRef"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "dependency_edge.template_ref"
+from = "target"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.agent"
+from = "nodeSelector"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.artifacts"
+from = "artifacts"
+shape = "seq_mapping_nodes"
+type = "list<artifact>"
+
+[[rule]]
+to = "job.container"
+from = "container"
+shape = "block_attr"
+type = "container"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.needs"
+from = "tasks"
+shape = "seq_mapping_nodes"
+type = "list<dag_task>"
+
+[[rule]]
+to = "job.options"
+from = "suspend"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.parameters"
+from = "parameters"
+shape = "seq_mapping_nodes"
+type = "list<parameter>"
+
+[[rule]]
+to = "job.retry"
+from = "retryStrategy"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.script"
+from = "script"
+shape = "block_attr"
+type = "script"
+
+[[rule]]
+to = "job.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<list<workflow_step>>"
+
+[[rule]]
+to = "job.timeout"
+from = "activeDeadlineSeconds"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "job.uses"
+from = "resource"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "parameter.artifacts"
+from = "artifacts"
+shape = "seq_mapping_nodes"
+type = "list<artifact>"
+
+[[rule]]
+to = "parameter.default"
+from = "default"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.parameters"
+from = "parameters"
+shape = "seq_mapping_nodes"
+type = "list<parameter>"
+
+[[rule]]
+to = "parameter.result"
+from = "result"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.value"
+from = "value"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.value"
+from = "valueFrom"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.agent"
+from = "serviceAccountName"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.artifacts"
+from = "artifacts"
+shape = "seq_mapping_nodes"
+type = "list<artifact>"
+
+[[rule]]
+to = "pipeline.concurrency"
+from = "parallelism"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "pipeline.entrypoint"
+from = "entrypoint"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "onExit"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "templates"
+shape = "seq_mapping_nodes"
+type = "list<template>"
+
+[[rule]]
+to = "pipeline.options"
+from = "suspend"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "pipeline.parameters"
+from = "parameters"
+shape = "seq_mapping_nodes"
+type = "list<parameter>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "podGC"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.templates"
+from = "workflowTemplateRef"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.timeout"
+from = "ttlStrategy"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.version"
+from = "apiVersion"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.version"
+from = "kind"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.volumes"
+from = "volumes"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "pipeline.volumes"
+from = "volumeClaimTemplates"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "step.depends_on"
+from = "dependencies"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "step.env"
+from = "env"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "step.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.resources"
+from = "resources"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.run"
+from = "command"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.run"
+from = "args"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.run"
+from = "source"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.volume_mounts"
+from = "volumeMounts"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "step.working_dir"
+from = "workingDir"
+shape = "scalar_attr"
+type = "string"

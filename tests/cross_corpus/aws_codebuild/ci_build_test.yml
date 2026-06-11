@@ -1,0 +1,8 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - cargo build --release
+  post_build:
+    commands:
+      - cargo test

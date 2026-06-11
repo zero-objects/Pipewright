@@ -1,0 +1,7 @@
+job:
+  script:
+    - |
+      multi
+      line
+      literal
+      block

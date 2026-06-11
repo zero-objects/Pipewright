@@ -1,0 +1,15 @@
+build:
+  image: rust:1.75
+  variables:
+    CARGO_HOME: ".cargo"
+  script:
+    - cargo build --release
+  artifacts:
+    paths:
+      - target/release/my-app
+
+test:
+  needs:
+    - build
+  script:
+    - cargo test

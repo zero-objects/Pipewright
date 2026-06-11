@@ -1,0 +1,11 @@
+steps:
+  - id: build
+    name: rust:1.75
+    args: [cargo, build, --release]
+    env:
+      - CARGO_HOME=.cargo
+  - id: test
+    name: rust:1.75
+    args: [cargo, test]
+    waitFor:
+      - build

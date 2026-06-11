@@ -1,0 +1,11 @@
+default:
+  image: rust:1.88
+  tags:
+    - docker
+  before_script:
+    - rustc --version
+  retry: 1
+
+build:
+  script:
+    - cargo build

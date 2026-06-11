@@ -1,0 +1,211 @@
+# catalog/rules/aws_codebuild.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "aws_codebuild"
+rule_count = 34
+
+[[rule]]
+to = "artifact.base_directory"
+from = "base-directory"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.discard_paths"
+from = "discard-paths"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "artifact.exclude"
+from = "exclude-paths"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "artifact.kind"
+from = "file-format"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "artifact.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "files"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "artifact.prefix"
+from = "s3-prefix"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.secondary"
+from = "secondary-artifacts"
+shape = "map_nodes"
+type = "map<artifacts>"
+
+[[rule]]
+to = "artifact.symlinks"
+from = "enable-symlinks"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "cache.paths"
+from = "paths"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.allow_failure"
+from = "on-failure"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.hooks"
+from = "finally"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.options"
+from = "run-as"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "runtime-versions"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.steps"
+from = "commands"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.steps"
+from = "build"
+shape = "mapping_node"
+type = "phase"
+
+[[rule]]
+to = "job.steps"
+from = "install"
+shape = "mapping_node"
+type = "phase"
+
+[[rule]]
+to = "job.steps"
+from = "post_build"
+shape = "mapping_node"
+type = "phase"
+
+[[rule]]
+to = "job.steps"
+from = "pre_build"
+shape = "mapping_node"
+type = "phase"
+
+[[rule]]
+to = "pipeline.artifacts"
+from = "artifacts"
+shape = "mapping_node"
+type = "artifacts"
+
+[[rule]]
+to = "pipeline.artifacts"
+from = "reports"
+shape = "map_nodes"
+type = "map<report>"
+
+[[rule]]
+to = "pipeline.cache"
+from = "cache"
+shape = "mapping_node"
+type = "cache"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "phases"
+shape = "map_nodes"
+type = "map<job>"
+
+[[rule]]
+to = "pipeline.options"
+from = "batch"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.options"
+from = "proxy"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.variables"
+from = "env"
+shape = "mapping_node"
+type = "env"
+
+[[rule]]
+to = "pipeline.version"
+from = "version"
+shape = "scalar_attr"
+type = "number"
+
+[[rule]]
+to = "pipeline.version"
+from = "run-as"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "variable.bindings"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "variable.exported"
+from = "exported-variables"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "variable.from_store"
+from = "parameter-store"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "variable.from_store"
+from = "secrets-manager"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "variable.git_credentials"
+from = "git-credential-helper"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "variable.shell"
+from = "shell"
+shape = "scalar_attr"
+type = "string"

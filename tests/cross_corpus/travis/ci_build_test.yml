@@ -1,0 +1,6 @@
+language: rust
+env:
+  - CARGO_HOME=.cargo
+script:
+  - cargo build --release
+  - cargo test

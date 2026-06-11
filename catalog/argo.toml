@@ -1,0 +1,112 @@
+# catalog/argo.toml — construct inventory, hand-crafted from the
+# Argo Workflows API reference. The upstream CRD JSON-Schema is
+# ~4 MB of inline-nested k8s machinery; this curates the
+# workflow-relevant constructs. The k8s envelope (apiVersion, kind,
+# metadata) is omitted.
+
+[meta]
+platform = "argo"
+config_file = "(k8s CRD: Workflow)"
+tier = 3
+source = "hand-crafted"
+
+[workflow]
+# Kubernetes envelope keys, hoisted by the seeder to top-level
+# workflow fields so they survive roundtrip.
+apiVersion = { type = "string" }
+kind = { type = "string" }
+# Workflow.spec
+entrypoint = { type = "string" }
+templates = { type = "list<template>", required = true }
+arguments = { type = "arguments" }
+serviceAccountName = { type = "string" }
+volumes = { type = "list<map<string>>" }
+volumeClaimTemplates = { type = "list<map<string>>" }
+ttlStrategy = { type = "map<string>" }
+podGC = { type = "map<string>" }
+parallelism = { type = "integer" }
+suspend = { type = "bool" }
+workflowTemplateRef = { type = "map<string>" }
+onExit = { type = "string" }
+
+[template]
+name = { type = "string", required = true }
+container = { type = "container" }
+script = { type = "script" }
+dag = { type = "dag_template" }
+steps = { type = "list<list<workflow_step>>" }
+resource = { type = "map<string>" }
+suspend = { type = "map<string>" }
+inputs = { type = "inputs" }
+outputs = { type = "outputs" }
+nodeSelector = { type = "map<string>" }
+retryStrategy = { type = "map<string>" }
+activeDeadlineSeconds = { type = "integer" }
+
+[container]
+image = { type = "string", required = true }
+command = { type = "list<string>" }
+args = { type = "list<string>" }
+env = { type = "list<map<string>>" }
+resources = { type = "map<string>" }
+volumeMounts = { type = "list<map<string>>" }
+workingDir = { type = "string" }
+
+[script]
+image = { type = "string", required = true }
+command = { type = "list<string>" }
+source = { type = "string", required = true }
+env = { type = "list<map<string>>" }
+
+[dag_template]
+tasks = { type = "list<dag_task>", required = true }
+target = { type = "string" }
+failFast = { type = "bool" }
+
+[dag_task]
+name = { type = "string", required = true }
+template = { type = "string" }
+templateRef = { type = "map<string>" }
+dependencies = { type = "list<string>" }
+depends = { type = "string" }
+arguments = { type = "arguments" }
+when = { type = "string" }
+withItems = { type = "list<string>" }
+withParam = { type = "string" }
+withSequence = { type = "map<string>" }
+
+[workflow_step]
+name = { type = "string", required = true }
+template = { type = "string" }
+templateRef = { type = "map<string>" }
+arguments = { type = "arguments" }
+when = { type = "string" }
+withItems = { type = "list<string>" }
+withParam = { type = "string" }
+
+[arguments]
+parameters = { type = "list<parameter>" }
+artifacts = { type = "list<artifact>" }
+
+[parameter]
+name = { type = "string", required = true }
+value = { type = "string" }
+default = { type = "string" }
+valueFrom = { type = "map<string>" }
+
+[artifact]
+name = { type = "string", required = true }
+path = { type = "string" }
+from = { type = "string" }
+s3 = { type = "map<string>" }
+git = { type = "map<string>" }
+http = { type = "map<string>" }
+
+[inputs]
+parameters = { type = "list<parameter>" }
+artifacts = { type = "list<artifact>" }
+
+[outputs]
+parameters = { type = "list<parameter>" }
+artifacts = { type = "list<artifact>" }
+result = { type = "string" }

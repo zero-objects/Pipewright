@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+spec:
+  entrypoint: ci
+  templates:
+    - name: build
+      container:
+        image: rust:1.75
+        command: [cargo, build, --release]
+    - name: test
+      container:
+        image: rust:1.75
+        command: [cargo, test]

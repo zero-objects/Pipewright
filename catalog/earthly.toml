@@ -1,0 +1,59 @@
+# catalog/earthly.toml — construct inventory, hand-crafted from the
+# Earthfile reference. An Earthfile is a command-based DSL (a
+# Dockerfile dialect), not a key/value tree — so a "construct" here
+# is a target, and its "keys" are the commands a recipe admits. The
+# pipeline shape is the BUILD graph between targets.
+
+[meta]
+platform = "earthly"
+config_file = "Earthfile"
+tier = 4
+source = "hand-crafted"
+
+[earthfile]
+# file-level
+VERSION = { type = "string", required = true }
+PROJECT = { type = "string" }
+# the base recipe (commands before the first target) + named targets.
+# `targets` is `required` for the CHAOS CORPUS: an Earthfile whose point is its
+# build targets must generate at least one, else the fixpoint trip has nothing
+# to migrate (a bare `VERSION` line is a degenerate input, not a test).
+base_recipe = { type = "recipe" }
+targets = { type = "map<target>", required = true }
+
+[target]
+# a named target `name:` followed by an indented recipe
+name = { type = "string", required = true }
+recipe = { type = "recipe", required = true }
+
+[recipe]
+# commands a recipe admits; each is a build step. `RUN` is `required` for the
+# CHAOS CORPUS so every generated recipe carries at least one build step (a
+# command-less recipe forwards to a step-less job — a degenerate input, not a
+# test). Real recipes overwhelmingly contain a RUN/FROM; this shapes the corpus.
+RUN = { type = "string", required = true }
+FROM = { type = "string" }
+"FROM DOCKERFILE" = { type = "string" }
+COPY = { type = "string" }
+ARG = { type = "string" }
+ENV = { type = "string" }
+WORKDIR = { type = "string" }
+"SAVE ARTIFACT" = { type = "string" }
+"SAVE IMAGE" = { type = "string" }
+BUILD = { type = "string" }
+"GIT CLONE" = { type = "string" }
+CACHE = { type = "string" }
+LABEL = { type = "string" }
+EXPOSE = { type = "string" }
+VOLUME = { type = "string" }
+ENTRYPOINT = { type = "string" }
+CMD = { type = "string" }
+USER = { type = "string" }
+HEALTHCHECK = { type = "string" }
+WITH = { type = "string" }
+"IF / ELSE" = { type = "string" }
+FOR = { type = "string" }
+TRY = { type = "string" }
+LET = { type = "string" }
+"DO" = { type = "string" }
+IMPORT = { type = "string" }

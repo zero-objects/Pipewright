@@ -1,0 +1,8502 @@
+{
+ "name": "aws_codebuild",
+ "description": "Generated TGG ruleset: aws_codebuild CST <-> Hub-IR. Bidirectional \u2014 the engine derives CST->IR and IR->CST from this one set (model a).",
+ "rules": [
+  {
+   "name": "R_aws_codebuild_artifact",
+   "rank": 90,
+   "documentation": "aws_codebuild: cst:Mapping[construct=artifact] <-> hub:artifact",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": []
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     }
+    ],
+    "edges": []
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "name",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_cache",
+   "rank": 90,
+   "documentation": "aws_codebuild: cst:Mapping[construct=cache] <-> hub:cache",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": []
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:cache",
+      "constraints": []
+     }
+    ],
+    "edges": []
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "name",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_cache_name_from_parent_key",
+   "rank": 47,
+   "documentation": "aws_codebuild: parent map-entry key <-> hub:cache.name (cst=cache)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:cache",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job",
+   "rank": 90,
+   "documentation": "aws_codebuild: cst:Mapping[construct=job] <-> hub:job",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": []
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     }
+    ],
+    "edges": []
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "name",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_name_from_parent_key",
+   "rank": 47,
+   "documentation": "aws_codebuild: parent map-entry key <-> hub:job.name (cst=job)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline",
+   "rank": 90,
+   "documentation": "aws_codebuild: cst:Mapping[construct=pipeline] <-> hub:pipeline",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": []
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     }
+    ],
+    "edges": []
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "name",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable",
+   "rank": 90,
+   "documentation": "aws_codebuild: cst:Mapping[construct=variable] <-> hub:variable",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": []
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     }
+    ],
+    "edges": []
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "name",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_name_from_parent_key",
+   "rank": 47,
+   "documentation": "aws_codebuild: parent map-entry key <-> hub:variable.name (cst=variable)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_user_comment",
+   "rank": 85,
+   "documentation": "aws_codebuild: user `# foo` comment under artifact <-> hub:comment lexical node",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "UC",
+      "kind": "cst:UserComment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "UC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "HC",
+      "kind": "hub:comment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_comment",
+      "source_node_id": "hubC",
+      "target_node_id": "HC"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "UC",
+     "r_node_id": "HC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_cache_user_comment",
+   "rank": 85,
+   "documentation": "aws_codebuild: user `# foo` comment under cache <-> hub:comment lexical node",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       }
+      ]
+     },
+     {
+      "id": "UC",
+      "kind": "cst:UserComment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "UC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:cache",
+      "constraints": []
+     },
+     {
+      "id": "HC",
+      "kind": "hub:comment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_comment",
+      "source_node_id": "hubC",
+      "target_node_id": "HC"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "UC",
+     "r_node_id": "HC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_user_comment",
+   "rank": 85,
+   "documentation": "aws_codebuild: user `# foo` comment under job <-> hub:comment lexical node",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "UC",
+      "kind": "cst:UserComment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "UC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "HC",
+      "kind": "hub:comment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_comment",
+      "source_node_id": "hubC",
+      "target_node_id": "HC"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "UC",
+     "r_node_id": "HC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_user_comment",
+   "rank": 85,
+   "documentation": "aws_codebuild: user `# foo` comment under pipeline <-> hub:comment lexical node",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "UC",
+      "kind": "cst:UserComment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "UC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "HC",
+      "kind": "hub:comment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_comment",
+      "source_node_id": "hubC",
+      "target_node_id": "HC"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "UC",
+     "r_node_id": "HC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_user_comment",
+   "rank": 85,
+   "documentation": "aws_codebuild: user `# foo` comment under variable <-> hub:comment lexical node",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "UC",
+      "kind": "cst:UserComment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "UC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "HC",
+      "kind": "hub:comment",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_comment",
+      "source_node_id": "hubC",
+      "target_node_id": "HC"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "UC",
+     "r_node_id": "HC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_base_directory_base_directory",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `base-directory` <-> hub:artifact.base_directory (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "base-directory"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "base_directory"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "base-directory"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_discard_paths_discard_paths",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `discard-paths` <-> hub:artifact.discard_paths (block_attr) [presence]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "discard-paths"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "discard_paths"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "discard-paths"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_discard_paths_discard_paths_entry",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `discard-paths` <-> hub:artifact.discard_paths (block_attr) [entry]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "discard-paths"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "discard_paths"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "discard-paths"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_exclude_exclude_paths",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `exclude-paths` <-> hub:artifact.exclude (seq_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "exclude-paths"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SEQ",
+      "kind": "cst:Sequence",
+      "constraints": []
+     },
+     {
+      "id": "IT",
+      "kind": "cst:SequenceItem",
+      "constraints": []
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SEQ"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "SEQ",
+      "target_node_id": "IT"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "IT",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "exclude"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "exclude-paths"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:value",
+      "constraints": []
+     },
+     {
+      "id": "leaf",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "rk",
+      "target_node_id": "leaf"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SEQ",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IT",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "leaf",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_kind_file_format",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `file-format` <-> hub:artifact.kind (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "file-format"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "kind"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "file-format"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_name_name",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `name` <-> hub:artifact.name (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_paths_files",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `files` <-> hub:artifact.paths (seq_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "files"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SEQ",
+      "kind": "cst:Sequence",
+      "constraints": []
+     },
+     {
+      "id": "IT",
+      "kind": "cst:SequenceItem",
+      "constraints": []
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SEQ"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "SEQ",
+      "target_node_id": "IT"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "IT",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "paths"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "files"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:value",
+      "constraints": []
+     },
+     {
+      "id": "leaf",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "rk",
+      "target_node_id": "leaf"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SEQ",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IT",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "leaf",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_prefix_s3_prefix",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `s3-prefix` <-> hub:artifact.prefix (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "s3-prefix"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "prefix"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "s3-prefix"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_secondary_secondary_artifacts",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `secondary-artifacts` <-> hub:artifact.secondary (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "secondary-artifacts"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "secondary"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "secondary-artifacts"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_symlinks_enable_symlinks",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `enable-symlinks` <-> hub:artifact.symlinks (block_attr) [presence]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "enable-symlinks"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "symlinks"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "enable-symlinks"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_artifact_symlinks_enable_symlinks_entry",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[artifact].key `enable-symlinks` <-> hub:artifact.symlinks (block_attr) [entry]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "enable-symlinks"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "symlinks"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "enable-symlinks"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_cache_paths_paths",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[cache].key `paths` <-> hub:cache.paths (seq_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "paths"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SEQ",
+      "kind": "cst:Sequence",
+      "constraints": []
+     },
+     {
+      "id": "IT",
+      "kind": "cst:SequenceItem",
+      "constraints": []
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SEQ"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "SEQ",
+      "target_node_id": "IT"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "IT",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:cache",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "paths"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "paths"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:value",
+      "constraints": []
+     },
+     {
+      "id": "leaf",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "rk",
+      "target_node_id": "leaf"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SEQ",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IT",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "leaf",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_allow_failure_on_failure",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `on-failure` <-> hub:job.allow_failure (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "on-failure"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "allow_failure"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "on-failure"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_hooks_finally",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `finally` <-> hub:job.hooks (seq_scalar_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "finally"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SEQ",
+      "kind": "cst:Sequence",
+      "constraints": []
+     },
+     {
+      "id": "IT",
+      "kind": "cst:SequenceItem",
+      "constraints": []
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SEQ"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "SEQ",
+      "target_node_id": "IT"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "IT",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "hooks"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "finally"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:hook",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "finally"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "rk",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SEQ",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IT",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "parent_key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_options_run_as",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `run-as` <-> hub:job.options (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "run-as"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "options"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "run-as"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_options_runtime_versions",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `runtime-versions` <-> hub:job.options (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "runtime-versions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "options"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "runtime-versions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_steps_commands",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `commands` <-> hub:job.steps (seq_scalar_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "commands"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SEQ",
+      "kind": "cst:Sequence",
+      "constraints": []
+     },
+     {
+      "id": "IT",
+      "kind": "cst:SequenceItem",
+      "constraints": []
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SEQ"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "SEQ",
+      "target_node_id": "IT"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "IT",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "commands"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "commands"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "rk",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SEQ",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IT",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "parent_key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_steps_build",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `build` <-> hub:job.steps (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "build"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "step"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "build"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_steps_install",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `install` <-> hub:job.steps (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "install"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "step"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "install"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_steps_post_build",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `post_build` <-> hub:job.steps (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "post_build"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "step"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "post_build"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_job_steps_pre_build",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[job].key `pre_build` <-> hub:job.steps (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "pre_build"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "step"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "steps"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "pre_build"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:step",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_artifacts_artifacts",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `artifacts` <-> hub:pipeline.artifacts (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "artifacts"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "artifacts"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "artifacts"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:artifact",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_artifacts_reports",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `reports` <-> hub:pipeline.artifacts (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "reports"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "artifact"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "artifacts"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "reports"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "map"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:artifact",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "rk",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_cache_cache",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `cache` <-> hub:pipeline.cache (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "cache"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:cache",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_jobs_phases",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `phases` <-> hub:pipeline.jobs (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "phases"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "job"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "jobs"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "phases"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "map"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:job",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "name"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "rk",
+      "target_node_id": "a"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "value",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_options_batch",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `batch` <-> hub:pipeline.options (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "batch"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "options"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "batch"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_options_proxy",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `proxy` <-> hub:pipeline.options (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "proxy"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "options"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "proxy"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_variables_env",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `env` <-> hub:pipeline.variables (mapping_node)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "env"
+        }
+       }
+      ]
+     },
+     {
+      "id": "IM",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "IM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "variables"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "env"
+        }
+       }
+      ]
+     },
+     {
+      "id": "rk",
+      "kind": "hub:variable",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "rk"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IM",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_version_version",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `version` <-> hub:pipeline.version (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "version"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "version"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "version"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_pipeline_version_run_as",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[pipeline].key `run-as` <-> hub:pipeline.version (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "pipeline"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "run-as"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:pipeline",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "version"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "run-as"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_bindings_variables",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[variable].key `variables` <-> hub:variable.bindings (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "variables"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "bindings"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "variables"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_exported_exported_variables",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[variable].key `exported-variables` <-> hub:variable.exported (seq_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "exported-variables"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SEQ",
+      "kind": "cst:Sequence",
+      "constraints": []
+     },
+     {
+      "id": "IT",
+      "kind": "cst:SequenceItem",
+      "constraints": []
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SEQ"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "SEQ",
+      "target_node_id": "IT"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "IT",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "exported"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "exported-variables"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "rk",
+      "kind": "hub:value",
+      "constraints": []
+     },
+     {
+      "id": "leaf",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "rk"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "rk",
+      "target_node_id": "leaf"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SEQ",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "IT",
+     "r_node_id": "rk",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "leaf",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_from_store_parameter_store",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[variable].key `parameter-store` <-> hub:variable.from_store (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "parameter-store"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "from_store"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "parameter-store"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_from_store_secrets_manager",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[variable].key `secrets-manager` <-> hub:variable.from_store (map_nodes)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "secrets-manager"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "from_store"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "secrets-manager"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_git_credentials_git_credential_helper",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[variable].key `git-credential-helper` <-> hub:variable.git_credentials (block_attr) [presence]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "git-credential-helper"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "git_credentials"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "git-credential-helper"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_git_credentials_git_credential_helper_entry",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[variable].key `git-credential-helper` <-> hub:variable.git_credentials (block_attr) [entry]",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "git-credential-helper"
+        }
+       }
+      ]
+     },
+     {
+      "id": "MM",
+      "kind": "cst:Mapping",
+      "constraints": []
+     },
+     {
+      "id": "ME",
+      "kind": "cst:MappingEntry",
+      "constraints": []
+     },
+     {
+      "id": "MSC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "MM"
+     },
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MM",
+      "target_node_id": "ME"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "ME",
+      "target_node_id": "MSC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "git_credentials"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "git-credential-helper"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "block"
+        }
+       }
+      ]
+     },
+     {
+      "id": "coll",
+      "kind": "hub:collection",
+      "constraints": []
+     },
+     {
+      "id": "a",
+      "kind": "hub:attr",
+      "constraints": []
+     },
+     {
+      "id": "v",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "coll"
+     },
+     {
+      "kind": "hub:has_item",
+      "source_node_id": "coll",
+      "target_node_id": "a"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "a",
+      "target_node_id": "v"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "MM",
+     "r_node_id": "coll",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "ME",
+     "r_node_id": "a",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "key",
+       "r_attr_name": "name",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "MSC",
+     "r_node_id": "v",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  },
+  {
+   "name": "R_aws_codebuild_variable_shell_shell",
+   "rank": 50,
+   "documentation": "aws_codebuild: cst[variable].key `shell` <-> hub:variable.shell (scalar_attr)",
+   "l_pattern": {
+    "nodes": [
+     {
+      "id": "MC",
+      "kind": "cst:Mapping",
+      "constraints": [
+       {
+        "name": "construct",
+        "matcher": {
+         "type": "literal",
+         "value": "variable"
+        }
+       }
+      ]
+     },
+     {
+      "id": "S",
+      "kind": "cst:MappingEntry",
+      "constraints": [
+       {
+        "name": "key",
+        "matcher": {
+         "type": "literal",
+         "value": "shell"
+        }
+       }
+      ]
+     },
+     {
+      "id": "SC",
+      "kind": "cst:Scalar",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "cst:has_child",
+      "source_node_id": "MC",
+      "target_node_id": "S"
+     },
+     {
+      "kind": "cst:value_of",
+      "source_node_id": "S",
+      "target_node_id": "SC"
+     }
+    ]
+   },
+   "r_pattern": {
+    "nodes": [
+     {
+      "id": "hubC",
+      "kind": "hub:variable",
+      "constraints": []
+     },
+     {
+      "id": "attr",
+      "kind": "hub:attr",
+      "constraints": [
+       {
+        "name": "name",
+        "matcher": {
+         "type": "literal",
+         "value": "shell"
+        }
+       },
+       {
+        "name": "prov_key",
+        "matcher": {
+         "type": "literal",
+         "value": "shell"
+        }
+       },
+       {
+        "name": "vkind",
+        "matcher": {
+         "type": "literal",
+         "value": "scalar"
+        }
+       }
+      ]
+     },
+     {
+      "id": "val",
+      "kind": "hub:value",
+      "constraints": []
+     }
+    ],
+    "edges": [
+     {
+      "kind": "hub:has_attr",
+      "source_node_id": "hubC",
+      "target_node_id": "attr"
+     },
+     {
+      "kind": "hub:has_value",
+      "source_node_id": "attr",
+      "target_node_id": "val"
+     }
+    ]
+   },
+   "correspondence_links": [
+    {
+     "l_node_id": "MC",
+     "r_node_id": "hubC",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ],
+     "role": "References"
+    },
+    {
+     "l_node_id": "S",
+     "r_node_id": "attr",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    },
+    {
+     "l_node_id": "SC",
+     "r_node_id": "val",
+     "kind": "tgg:refines",
+     "attribute_bindings": [
+      {
+       "l_attr_name": "text",
+       "r_attr_name": "text",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_start",
+       "r_attr_name": "prov_byte_start",
+       "transformation": "identity"
+      },
+      {
+       "l_attr_name": "span_end",
+       "r_attr_name": "prov_byte_end",
+       "transformation": "identity"
+      }
+     ]
+    }
+   ],
+   "nacs": []
+  }
+ ]
+}

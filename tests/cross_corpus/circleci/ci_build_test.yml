@@ -1,0 +1,21 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: rust:1.75
+    environment:
+      CARGO_HOME: .cargo
+    steps:
+      - run: cargo build --release
+  test:
+    docker:
+      - image: rust:1.75
+    steps:
+      - run: cargo test
+workflows:
+  ci:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

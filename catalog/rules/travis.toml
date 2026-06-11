@@ -1,0 +1,937 @@
+# catalog/rules/travis.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "travis"
+rule_count = 155
+
+[[rule]]
+to = "deployment.triggers"
+from = "on"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.agent"
+from = "git"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.cache"
+from = "cache"
+shape = "union"
+type = "enum | list<enum | map<string>> | map<string>"
+
+[[rule]]
+to = "job.cache"
+from = "before_cache"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.condition"
+from = "branches"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.deployment"
+from = "deploy"
+shape = "union"
+type = "deployment | list<deployment>"
+
+[[rule]]
+to = "job.hooks"
+from = "after_deploy"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "after_failure"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "after_script"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "after_success"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "before_cache"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "before_deploy"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "before_install"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "before_script"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.hooks"
+from = "install"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.options"
+from = "sudo"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.services"
+from = "services"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "job.steps"
+from = "script"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "addons"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "android"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "apt_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "arch"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "job.toolchain"
+from = "bioc_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "brew_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "bundler_args"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "compiler"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "job.toolchain"
+from = "cran"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "crystal"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "d"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "dart"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "dart_task"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "job.toolchain"
+from = "dist"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.toolchain"
+from = "elixir"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "elm"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "elm-format"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "elm-test"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "erlang"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "gemfile"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "ghc"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "go"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "haxe"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "hxml"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "jdk"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "julia"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "language"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.toolchain"
+from = "lein"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "matlab"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "mono"
+shape = "union"
+type = "enum | list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "neko"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "node_js"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "opt_release"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "os"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "job.toolchain"
+from = "osx_image"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "job.toolchain"
+from = "pandoc_version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "perl"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "perl6"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "php"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "podfile"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "python"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "r"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "r_binary_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "r_github_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "r_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "repos"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "rust"
+shape = "union"
+type = "list<string> | number | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "rvm"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "job.toolchain"
+from = "sbt_args"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "scala"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "smalltalk"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.toolchain"
+from = "solution"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "xcode_project"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "xcode_scheme"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "xcode_sdk"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.toolchain"
+from = "xcode_workspace"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.variables"
+from = "env"
+shape = "union"
+type = "list<map<string> | string> | map<string> | string | map<string>"
+
+[[rule]]
+to = "pipeline.cache"
+from = "cache"
+shape = "union"
+type = "enum | list<enum | map<string>> | map<string>"
+
+[[rule]]
+to = "pipeline.clone"
+from = "git"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.deployments"
+from = "deploy"
+shape = "union"
+type = "deployment | list<deployment>"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "after_deploy"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "after_failure"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "after_script"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "after_success"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "before_cache"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "before_deploy"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "before_install"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "before_script"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "install"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.includes"
+from = "import"
+shape = "union"
+type = "list<map<string> | string> | map<string> | string"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "jobs"
+shape = "map_nodes"
+type = "map<job>"
+
+[[rule]]
+to = "pipeline.matrix"
+from = "matrix"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.notifications"
+from = "notifications"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.options"
+from = "sudo"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.services"
+from = "services"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "pipeline.stages"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<map<string> | string>"
+
+[[rule]]
+to = "pipeline.steps"
+from = "script"
+shape = "union"
+type = "boolean | enum | list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "addons"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "android"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "apt_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "arch"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "bioc_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "brew_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "bundler_args"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "compiler"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "cran"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "crystal"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "d"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "dart"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "dart_task"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "dist"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "elixir"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "elm"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "elm-format"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "elm-test"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "erlang"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "gemfile"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "ghc"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "go"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "haxe"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "hxml"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "jdk"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "julia"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "language"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "lein"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "matlab"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "mono"
+shape = "union"
+type = "enum | list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "neko"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "node_js"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "opt_release"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "os"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "osx_image"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "pandoc_version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "perl"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "perl6"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "php"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "podfile"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "python"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "r"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "r_binary_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "r_github_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "r_packages"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "repos"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "rust"
+shape = "union"
+type = "list<string> | number | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "rvm"
+shape = "union"
+type = "list<number | string> | number | string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "sbt_args"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "scala"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "smalltalk"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "solution"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "xcode_project"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "xcode_scheme"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "xcode_sdk"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.toolchain"
+from = "xcode_workspace"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "branches"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.variables"
+from = "env"
+shape = "union"
+type = "list<map<string> | string> | map<string> | string | map<string>"
+
+[[rule]]
+to = "pipeline.version"
+from = "version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.value"
+from = "secure"
+shape = "scalar_attr"
+type = "string"

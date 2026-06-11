@@ -1,0 +1,12 @@
+deploy:
+  script:
+    - |
+      echo "multi-line"
+      echo "literal block"
+    - >
+      this is a folded
+      block scalar
+  variables:
+    NESTED:
+      KEY1: value1
+      KEY2: value2

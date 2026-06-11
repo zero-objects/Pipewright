@@ -1,0 +1,96 @@
+# catalog/google_cloudbuild.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "google_cloudbuild"
+config_file = "cloudbuild.yaml"
+tier = 3
+source = "json-schema"
+
+[ArtifactObjects]
+location = { type = "string" }
+paths = { type = "list<string>" }
+
+[Artifacts]
+goModules = { type = "list<GoModules>" }
+mavenArtifacts = { type = "list<MavenArtifacts>" }
+npmPackages = { type = "list<NpmPackages>" }
+objects = { type = "ArtifactObjects" }
+pythonPackages = { type = "list<PythonPackages>" }
+
+[BuildOptions]
+automapSubstitutions = { type = "boolean" }
+defaultLogsBucketBehavior = { type = "enum", options = ["DEFAULT_LOGS_BUCKET_BEHAVIOR_UNSPECIFIED", "REGIONAL_USER_OWNED_BUCKET"] }
+diskSizeGb = { type = "integer | string" }
+dynamicSubstitutions = { type = "boolean" }
+env = { type = "list<string>" }
+logStreamingOption = { type = "enum", options = ["STREAM_DEFAULT", "STREAM_ON", "STREAM_OFF"] }
+logging = { type = "enum", options = ["LOGGING_UNSPECIFIED", "LEGACY", "GCS_ONLY", "CLOUD_LOGGING_ONLY", "NONE"] }
+machineType = { type = "enum", options = ["E2_HIGHCPU_8", "E2_HIGHCPU_32", "E2_MEDIUM", "N1_HIGHCPU_8", "N1_HIGHCPU_32", "UNSPECIFIED"] }
+pool = { type = "map<string>" }
+requestedVerifyOption = { type = "enum", options = ["NOT_VERIFIED", "VERIFIED"] }
+secretEnv = { type = "list<string>" }
+sourceProvenanceHash = { type = "list<enum>" }
+substitutionOption = { type = "enum", options = ["MUST_MATCH", "ALLOW_LOOSE"] }
+volumes = { type = "list<Volume>" }
+
+[BuildStep]
+allowExitCodes = { type = "list<integer>" }
+allowFailure = { type = "boolean" }
+args = { type = "list<string>" }
+automapSubstitutions = { type = "boolean" }
+dir = { type = "string" }
+entrypoint = { type = "string" }
+env = { type = "list<string>" }
+id = { type = "string" }
+name = { type = "string" }
+script = { type = "string" }
+secretEnv = { type = "list<string>" }
+timeout = { type = "string" }
+volumes = { type = "list<Volume>" }
+waitFor = { type = "list<string>" }
+
+[GoModules]
+modulePath = { type = "string", required = true }
+moduleVersion = { type = "string", required = true }
+repositoryLocation = { type = "string", required = true }
+repositoryName = { type = "string", required = true }
+repositoryProject_id = { type = "string", required = true }
+sourcePath = { type = "string", required = true }
+
+[MavenArtifacts]
+artifactId = { type = "string", required = true }
+groupId = { type = "string", required = true }
+path = { type = "string", required = true }
+repository = { type = "string", required = true }
+version = { type = "string", required = true }
+
+[NpmPackages]
+packagePath = { type = "string", required = true }
+repository = { type = "string", required = true }
+
+[PythonPackages]
+paths = { type = "list<string>", required = true }
+repository = { type = "string", required = true }
+
+[Secret]
+kmsKeyName = { type = "string" }
+secretEnv = { type = "map<string>" }
+
+[Volume]
+name = { type = "string" }
+path = { type = "string" }
+
+[pipeline]
+artifacts = { type = "Artifacts" }
+images = { type = "list<string>" }
+logsBucket = { type = "string" }
+options = { type = "BuildOptions" }
+queueTtl = { type = "string" }
+secrets = { type = "list<Secret>" }
+serviceAccount = { type = "string" }
+steps = { type = "list<BuildStep>", required = true }
+substitutions = { type = "map<string>" }
+tags = { type = "list<string>" }
+timeout = { type = "string" }

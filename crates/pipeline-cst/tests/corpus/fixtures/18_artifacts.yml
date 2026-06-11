@@ -1,0 +1,10 @@
+build:
+  script:
+    - cargo build --release
+  artifacts:
+    name: "build-${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - target/release/my-binary
+    expire_in: 1 week
+    reports:
+      junit: junit.xml

@@ -1,0 +1,21 @@
+[package]
+name = "pipeline-forward"
+description = "The forward path as a library: a platform's surface YAML/DSL → Hub-IR TypedGraph (parse → seed → forward TGG cascade). The rulesets are embedded, so callers need no on-disk catalog."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+seesaw-core.workspace = true
+pipeline-cst = { path = "../pipeline-cst" }
+pipeline-earthfile-cst = { path = "../pipeline-earthfile-cst" }
+pipeline-jenkinsfile-cst = { path = "../pipeline-jenkinsfile-cst" }
+pipeline-tgg-seeder = { path = "../pipeline-tgg-seeder" }
+pipeline-render = { path = "../pipeline-render" }
+serde_json = { workspace = true }
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+proptest.workspace = true

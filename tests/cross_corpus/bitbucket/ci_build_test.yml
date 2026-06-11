@@ -1,0 +1,12 @@
+pipelines:
+  default:
+    - step:
+        name: build
+        image: rust:1.75
+        script:
+          - cargo build --release
+    - step:
+        name: test
+        image: rust:1.75
+        script:
+          - cargo test

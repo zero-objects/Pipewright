@@ -1,0 +1,13 @@
+steps:
+  build:
+    image: rust:1.75
+    environment:
+      CARGO_HOME: .cargo
+    commands:
+      - cargo build --release
+  test:
+    image: rust:1.75
+    depends_on:
+      - build
+    commands:
+      - cargo test

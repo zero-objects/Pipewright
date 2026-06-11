@@ -1,0 +1,388 @@
+# catalog/azure.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "azure"
+config_file = "azure-pipelines.yml"
+tier = 1
+source = "json-schema"
+
+[buildResource]
+branch = { type = "string" }
+build = { type = "string", required = true }
+connection = { type = "string", required = true }
+source = { type = "string", required = true }
+trigger = { type = "string" }
+type = { type = "string", required = true }
+version = { type = "string" }
+
+[canaryDeploymentStrategy]
+deploy = { type = "deployHook" }
+increments = { type = "list<string>" }
+on = { type = "onSuccessOrFailureHook" }
+postRouteTraffic = { type = "postRouteTrafficHook" }
+preDeploy = { type = "preDeployHook" }
+routeTraffic = { type = "routeTrafficHook" }
+
+[check]
+type = { type = "string" }
+
+[containerBase]
+endpoint = { type = "string" }
+env = { type = "map<string>" }
+image = { type = "string", required = true }
+mapDockerSocket = { type = "string" }
+mountReadOnly = { type = "readOnlyMounts" }
+options = { type = "string" }
+ports = { type = "list<string>" }
+volumes = { type = "list<string>" }
+
+[containerResource]
+azureSubscription = { type = "string" }
+container = { type = "string", required = true }
+endpoint = { type = "string" }
+env = { type = "map<string>" }
+image = { type = "string", required = true }
+localImage = { type = "string" }
+mapDockerSocket = { type = "string" }
+mountReadOnly = { type = "readOnlyMounts" }
+options = { type = "string" }
+ports = { type = "list<string>" }
+registry = { type = "string" }
+repository = { type = "string" }
+resourceGroup = { type = "string" }
+trigger = { type = "ciTrigger | string" }
+type = { type = "string" }
+volumes = { type = "list<string>" }
+
+[deployHook]
+pool = { type = "map<string> | string" }
+steps = { type = "list<task>" }
+
+[explicitResources]
+pools = { type = "list<string>" }
+repositories = { type = "list<string>" }
+
+[extends]
+parameters = { type = "map<string>" }
+template = { type = "string" }
+
+[extendsTemplateBase]
+parameters = { type = "list<templateParameter>" }
+resources = { type = "list<legacyResource> | map<string>" }
+trigger = { type = "list<string> | ciTrigger | string" }
+variables = { type = "map<string>" }
+
+[ciTrigger]
+batch = { type = "boolean" }
+branches = { type = "includeExcludeFilters" }
+paths = { type = "includeExcludeFilters" }
+tags = { type = "includeExcludeFilters" }
+
+[includeExcludeFilters]
+exclude = { type = "list<string>" }
+include = { type = "list<string>" }
+
+[jobDecoratorSteps]
+steps = { type = "list<task>" }
+
+[jobWorkspace]
+clean = { type = "string" }
+
+[legacyResource]
+clean = { type = "string" }
+fetchDepth = { type = "string" }
+lfs = { type = "string" }
+repo = { type = "string" }
+
+[onFailureHook]
+pool = { type = "map<string> | string" }
+steps = { type = "list<task>" }
+
+[onSuccessHook]
+pool = { type = "map<string> | string" }
+steps = { type = "list<task>" }
+
+[onSuccessOrFailureHook]
+failure = { type = "onFailureHook" }
+success = { type = "onSuccessHook" }
+
+[packageResource]
+connection = { type = "string", required = true }
+name = { type = "string", required = true }
+package = { type = "string", required = true }
+tag = { type = "string" }
+trigger = { type = "string" }
+type = { type = "string", required = true }
+version = { type = "string" }
+
+[phaseTargetWorkspace]
+clean = { type = "string" }
+
+[pipelineAnyBase]
+appendCommitMessageToRunName = { type = "boolean" }
+container = { type = "string | map<string>" }
+continueOnError = { type = "boolean" }
+extends = { type = "map<string>" }
+jobs = { type = "list<job>" }
+lockBehavior = { type = "string" }
+name = { type = "string" }
+parameters = { type = "list<templateParameter> | map<string>" }
+phases = { type = "list<task>" }
+pool = { type = "string | map<string>" }
+pr = { type = "string | list<string> | ciTrigger" }
+queue = { type = "string | map<string>" }
+resources = { type = "map<string>" }
+schedules = { type = "list<schedule>" }
+server = { type = "string | map<string>" }
+services = { type = "map<string>" }
+stages = { type = "list<stage>" }
+steps = { type = "list<task>" }
+strategy = { type = "map<string>" }
+trigger = { type = "string | list<string> | ciTrigger" }
+variables = { type = "map<string>" }
+workspace = { type = "string | map<string>" }
+
+[pipelineBase]
+appendCommitMessageToRunName = { type = "string" }
+lockBehavior = { type = "string" }
+name = { type = "string" }
+parameters = { type = "list<pipelineTemplateParameter>" }
+pr = { type = "list<string> | ciTrigger | string" }
+resources = { type = "list<legacyResource> | map<string>" }
+schedules = { type = "list<schedule>" }
+trigger = { type = "list<string> | ciTrigger | string" }
+variables = { type = "map<string>" }
+
+[pipelinePR]
+appendCommitMessageToRunName = { type = "boolean" }
+container = { type = "string | map<string>" }
+continueOnError = { type = "boolean" }
+extends = { type = "map<string>" }
+jobs = { type = "list<job>" }
+lockBehavior = { type = "string" }
+name = { type = "string" }
+parameters = { type = "list<templateParameter> | map<string>" }
+phases = { type = "list<task>" }
+pool = { type = "string | map<string>" }
+pr = { type = "list<string> | ciTrigger | string" }
+queue = { type = "string | map<string>" }
+resources = { type = "map<string>" }
+schedules = { type = "list<schedule>" }
+server = { type = "string | map<string>" }
+services = { type = "map<string>" }
+stages = { type = "list<stage>" }
+steps = { type = "list<task>" }
+strategy = { type = "map<string>" }
+trigger = { type = "string | list<string> | ciTrigger" }
+variables = { type = "map<string>" }
+workspace = { type = "string | map<string>" }
+
+[pipelineParameters]
+appendCommitMessageToRunName = { type = "boolean" }
+container = { type = "string | map<string>" }
+continueOnError = { type = "boolean" }
+extends = { type = "map<string>" }
+jobs = { type = "list<job>" }
+lockBehavior = { type = "string" }
+name = { type = "string" }
+parameters = { type = "list<pipelineTemplateParameter>" }
+phases = { type = "list<task>" }
+pool = { type = "string | map<string>" }
+pr = { type = "string | list<string> | ciTrigger" }
+queue = { type = "string | map<string>" }
+resources = { type = "map<string>" }
+schedules = { type = "list<schedule>" }
+server = { type = "string | map<string>" }
+services = { type = "map<string>" }
+stages = { type = "list<stage>" }
+steps = { type = "list<task>" }
+strategy = { type = "map<string>" }
+trigger = { type = "string | list<string> | ciTrigger" }
+variables = { type = "map<string>" }
+workspace = { type = "string | map<string>" }
+
+[pipelineResource]
+branch = { type = "string" }
+pipeline = { type = "string", required = true }
+project = { type = "string" }
+source = { type = "string" }
+tags = { type = "list<string>" }
+trigger = { type = "ciTrigger | string" }
+version = { type = "string" }
+
+[pipelineSchedules]
+appendCommitMessageToRunName = { type = "boolean" }
+container = { type = "string | map<string>" }
+continueOnError = { type = "boolean" }
+extends = { type = "map<string>" }
+jobs = { type = "list<job>" }
+lockBehavior = { type = "string" }
+name = { type = "string" }
+parameters = { type = "list<templateParameter> | map<string>" }
+phases = { type = "list<task>" }
+pool = { type = "string | map<string>" }
+pr = { type = "string | list<string> | ciTrigger" }
+queue = { type = "string | map<string>" }
+resources = { type = "map<string>" }
+schedules = { type = "list<schedule>" }
+server = { type = "string | map<string>" }
+services = { type = "map<string>" }
+stages = { type = "list<stage>" }
+steps = { type = "list<task>" }
+strategy = { type = "map<string>" }
+trigger = { type = "string | list<string> | ciTrigger" }
+variables = { type = "map<string>" }
+workspace = { type = "string | map<string>" }
+
+[pipelineTemplateParameter]
+default = { type = "map<string>" }
+displayName = { type = "string" }
+name = { type = "string" }
+type = { type = "string" }
+values = { type = "list<string>" }
+
+[pipelineTrigger]
+appendCommitMessageToRunName = { type = "boolean" }
+container = { type = "string | map<string>" }
+continueOnError = { type = "boolean" }
+extends = { type = "map<string>" }
+jobs = { type = "list<job>" }
+lockBehavior = { type = "string" }
+name = { type = "string" }
+parameters = { type = "list<templateParameter> | map<string>" }
+phases = { type = "list<task>" }
+pool = { type = "string | map<string>" }
+pr = { type = "string | list<string> | ciTrigger" }
+queue = { type = "string | map<string>" }
+resources = { type = "map<string>" }
+schedules = { type = "list<schedule>" }
+server = { type = "string | map<string>" }
+services = { type = "map<string>" }
+stages = { type = "list<stage>" }
+steps = { type = "list<task>" }
+strategy = { type = "map<string>" }
+trigger = { type = "list<string> | ciTrigger | string" }
+variables = { type = "map<string>" }
+workspace = { type = "string | map<string>" }
+
+[postRouteTrafficHook]
+pool = { type = "map<string> | string" }
+steps = { type = "list<task>" }
+
+[preDeployHook]
+pool = { type = "map<string> | string" }
+steps = { type = "list<task>" }
+
+[readOnlyMounts]
+externals = { type = "string" }
+tasks = { type = "string" }
+tools = { type = "string" }
+work = { type = "string" }
+
+[repositoryCheckoutOptions]
+clean = { type = "string" }
+fetchDepth = { type = "string" }
+fetchTags = { type = "string" }
+lfs = { type = "string" }
+persistCredentials = { type = "string" }
+submodules = { type = "string" }
+
+[repositoryResource]
+checkoutOptions = { type = "repositoryCheckoutOptions" }
+endpoint = { type = "string" }
+name = { type = "string" }
+ref = { type = "string" }
+repository = { type = "string", required = true }
+trigger = { type = "list<string> | ciTrigger | string" }
+type = { type = "string" }
+
+[rollingDeploymentStrategy]
+deploy = { type = "deployHook" }
+maxParallel = { type = "string" }
+on = { type = "onSuccessOrFailureHook" }
+postRouteTraffic = { type = "postRouteTrafficHook" }
+preDeploy = { type = "preDeployHook" }
+routeTraffic = { type = "routeTrafficHook" }
+
+[routeTrafficHook]
+pool = { type = "map<string> | string" }
+steps = { type = "list<task>" }
+
+[runOnceDeploymentStrategy]
+deploy = { type = "deployHook" }
+on = { type = "onSuccessOrFailureHook" }
+postRouteTraffic = { type = "postRouteTrafficHook" }
+preDeploy = { type = "preDeployHook" }
+routeTraffic = { type = "routeTrafficHook" }
+
+[schedule]
+always = { type = "string" }
+batch = { type = "string" }
+branches = { type = "includeExcludeFilters" }
+cron = { type = "string" }
+displayName = { type = "string" }
+
+[stagesTemplate]
+parameters = { type = "list<templateParameter> | map<string>" }
+stages = { type = "list<stage>" }
+
+[stepsTemplate]
+parameters = { type = "list<templateParameter> | map<string>" }
+steps = { type = "list<task>" }
+
+[task]
+condition = { type = "string" }
+continueOnError = { type = "boolean" }
+displayName = { type = "string" }
+enabled = { type = "string" }
+env = { type = "map<string>" }
+inputs = { type = "map<string>" }
+name = { type = "string" }
+retryCountOnTaskFailure = { type = "integer" }
+task = { type = "enum" }
+timeoutInMinutes = { type = "integer" }
+# Shorthand step forms: `- script: cmd` / `- bash: cmd` / `- pwsh: cmd` /
+# `- powershell: cmd` are scalar command strings (→ step.run), not blocks.
+# Without an explicit string type they default to `any` → block_attr, which
+# never matches the scalar value and silently drops the command.
+script = { type = "string" }
+bash = { type = "string" }
+pwsh = { type = "string" }
+powershell = { type = "string" }
+checkout = { type = "string" }
+artifact = { type = "string" }
+publish = { type = "string" }
+
+[taskBase]
+condition = { type = "string" }
+continueOnError = { type = "string" }
+displayName = { type = "string" }
+enabled = { type = "string" }
+env = { type = "map<string>" }
+name = { type = "string" }
+retryCountOnTaskFailure = { type = "string" }
+target = { type = "map<string> | string" }
+timeoutInMinutes = { type = "string" }
+
+[templateParameter]
+default = { type = "map<string>" }
+displayName = { type = "string" }
+name = { type = "string" }
+type = { type = "string" }
+values = { type = "list<string>" }
+
+[variablesTemplate]
+parameters = { type = "list<templateParameter> | map<string>" }
+variables = { type = "map<string>" }
+
+[webhookFilter]
+path = { type = "string", required = true }
+value = { type = "string", required = true }
+
+[webhookResource]
+connection = { type = "string", required = true }
+filters = { type = "list<webhookFilter>" }
+type = { type = "string" }
+webhook = { type = "string", required = true }

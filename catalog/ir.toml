@@ -1,0 +1,2427 @@
+# catalog/ir.toml — the normalized IR construct catalog. DRAFT.
+#
+# The "common discriminator": each [section] is one neutral pipeline
+# concept synthesized from the 17 per-target inventories. The bar is
+# COMPLETENESS — every construct section of every catalog/<platform>
+# .toml must be accounted for, either:
+#   * mapped — listed under some [<construct>.maps].<platform>, or
+#   * folded — listed in [folds] with a written reason (a section
+#     that is a field-of, an auth/variant of, or schema-decomposition
+#     noise of, another construct).
+# `catalog/check_ir_coverage.py` verifies this and fails on any gap.
+# An unaccounted section is a hole the IR would have to paper over
+# with `opaque` — exactly the doubling this catalog exists to avoid.
+#
+# TERMINOLOGY: `job` = a unit of work on one agent; `step` = one
+# command inside a job. Platforms disagree on the word "step" — the
+# maps translate each platform's word into this.
+
+[meta]
+kind = "ir-catalog-draft"
+derived_from = "catalog/<platform>.toml (17 targets)"
+
+# ── structural spine ────────────────────────────────────────────
+
+[pipeline]
+doc = "The whole pipeline definition — one config file / object."
+
+[pipeline.maps]
+github = ["pipeline"]
+gitlab = ["pipeline"]
+jenkins = ["pipeline"]
+azure = ["pipelineBase", "pipelineAnyBase", "pipelinePR", "pipelineTrigger", "pipelineSchedules", "pipelineParameters"]
+circleci = ["pipeline"]
+travis = ["pipeline"]
+bitbucket = ["pipelines_configuration", "pipeline"]
+buildkite = ["pipeline"]
+drone = ["pipeline", "kind_pipeline", "pipeline_docker", "pipeline_kubernetes", "pipeline_exec", "pipeline_ssh", "pipeline_vm", "pipeline_digitalocean", "pipeline_macstadium"]
+woodpecker = ["pipeline"]
+google_cloudbuild = ["pipeline", "BuildOptions"]
+tekton = ["pipeline"]
+argo = ["workflow"]
+aws_codebuild = ["buildspec"]
+aws_codepipeline = ["pipeline"]
+earthly = ["earthfile"]
+dagger = ["module"]
+
+[pipeline.field.name]
+doc = "Pipeline name / run-name."
+github = ["name", "run-name"]
+azure = ["name"]
+circleci = ["display"]
+drone = ["name"]
+aws_codepipeline = ["name"]
+dagger = ["name"]
+
+[pipeline.field.version]
+doc = "Schema / format version, engine version, kind discriminator."
+gitlab = ["$schema"]
+circleci = ["version"]
+travis = ["version"]
+woodpecker = ["$schema"]
+drone = ["kind", "type"]
+aws_codebuild = ["version", "run-as"]
+aws_codepipeline = ["version", "pipelineType"]
+dagger = ["engineVersion", "sdk", "source"]
+# Kubernetes-style platforms (tekton, argo) carry their schema
+# discriminator in two top-level fields: `apiVersion:` (the API
+# group + version) and `kind:` (the resource kind). Both round-trip
+# through pipeline.version so the K8s metadata survives.
+tekton = ["apiVersion", "kind"]
+argo = ["apiVersion", "kind"]
+earthly = ["VERSION"]
+
+[pipeline.field.jobs]
+doc = "The pipeline's jobs."
+github = ["jobs"]
+azure = ["jobs", "phases"]
+circleci = ["jobs", "job-groups"]
+travis = ["jobs"]
+argo = ["templates"]
+tekton = ["tasks"]
+# aws_codebuild buildspec: `phases:` is a map<job> (install / pre_build /
+# build / post_build), each phase a job whose `commands:` are its steps.
+aws_codebuild = ["phases"]
+
+[pipeline.field.stages]
+doc = "Ordered stage groups."
+gitlab = ["stages"]
+jenkins = ["stages"]
+azure = ["stages"]
+travis = ["stages"]
+aws_codepipeline = ["stages"]
+
+[pipeline.field.steps]
+doc = "Top-level step / task list (platforms with no job layer)."
+azure = ["steps"]
+buildkite = ["steps"]
+drone = ["steps"]
+woodpecker = ["steps"]
+google_cloudbuild = ["steps"]
+travis = ["script"]
+
+[pipeline.field.workflows]
+doc = "Named workflows orchestrating jobs."
+circleci = ["workflows"]
+
+[pipeline.field.triggers]
+doc = "What starts the pipeline."
+github = ["on"]
+gitlab = ["workflow"]
+jenkins = ["triggers"]
+azure = ["trigger"]
+travis = ["branches"]
+bitbucket = ["triggers"]
+drone = ["trigger"]
+woodpecker = ["when"]
+aws_codepipeline = ["triggers"]
+
+[pipeline.field.variables]
+doc = "Pipeline-scoped variables / environment."
+github = ["env"]
+gitlab = ["variables"]
+jenkins = ["environment"]
+azure = ["variables"]
+travis = ["env"]
+buildkite = ["env"]
+drone = ["environment"]
+woodpecker = ["variables"]
+google_cloudbuild = ["substitutions", "env"]
+aws_codebuild = ["env"]
+aws_codepipeline = ["variables"]
+
+[pipeline.field.parameters]
+doc = "Typed inputs to the pipeline."
+gitlab = ["spec"]
+jenkins = ["parameters"]
+azure = ["parameters"]
+circleci = ["parameters"]
+tekton = ["params", "results"]
+# argo: the seeder hoists the transparent `arguments:` wrapper, so its
+# `parameters:` / `artifacts:` lists land as direct pipeline children.
+argo = ["parameters"]
+
+[pipeline.field.concurrency]
+doc = "Concurrency limits / cancel policy."
+github = ["concurrency"]
+azure = ["lockBehavior"]
+drone = ["concurrency"]
+argo = ["parallelism"]
+
+[pipeline.field.defaults]
+doc = "Defaults inherited by every job / step."
+github = ["defaults"]
+gitlab = ["default"]
+
+[pipeline.field.permissions]
+doc = "Token / identity scopes for the run."
+github = ["permissions"]
+
+[pipeline.field.image]
+doc = "Default container image for jobs."
+gitlab = ["image"]
+bitbucket = ["image"]
+buildkite = ["image"]
+
+[pipeline.field.cache]
+doc = "Pipeline-level cache declaration."
+gitlab = ["cache"]
+travis = ["cache"]
+aws_codebuild = ["cache"]
+
+[pipeline.field.services]
+doc = "Side-containers shared by jobs."
+gitlab = ["services"]
+azure = ["services"]
+travis = ["services"]
+drone = ["services"]
+woodpecker = ["services"]
+# bitbucket: hoisted out of the transparent `definitions:` wrapper.
+bitbucket = ["services"]
+
+[pipeline.field.hooks]
+doc = "Pipeline-level lifecycle hooks."
+gitlab = ["before_script", "after_script"]
+jenkins = ["post"]
+travis = ["after_deploy", "after_failure", "after_script", "after_success", "before_cache", "before_deploy", "before_install", "before_script", "install"]
+tekton = ["finally"]
+argo = ["onExit"]
+
+[pipeline.field.includes]
+doc = "Other config files merged into this pipeline."
+gitlab = ["include"]
+travis = ["import"]
+
+[pipeline.field.templates]
+doc = "Reusable templates extended / referenced."
+azure = ["extends"]
+argo = ["workflowTemplateRef"]
+
+# resources was a junk-drawer collapsing several distinct concepts onto one
+# hub field name (see docs/concept-superset-analysis.md §3/§7). The SHARED
+# concepts — used by more than one platform — are split out below so their
+# round-trip is unambiguous; platform-SPECIFIC placement keys (drone's
+# Kubernetes settings, azure's container/pool/server/queue) stay here for now,
+# since being single-platform they neither collide cross-platform nor drift.
+[pipeline.field.resources]
+doc = "Genuine external-resource declarations + platform-specific placement."
+azure = ["resources", "container", "pool", "server", "queue"]
+drone = ["platform", "node", "metadata", "node_selector", "dns_config", "host_aliases", "tolerations", "image_pull_secrets", "service_account_name", "token", "server", "pool"]
+argo = ["podGC"]
+
+[pipeline.field.workspace]
+doc = "Shared working directory / workspace declaration."
+scalar = true
+azure = ["workspace"]
+drone = ["workspace"]
+woodpecker = ["workspace"]
+tekton = ["workspaces"]
+
+[pipeline.field.clone]
+doc = "Source checkout / clone configuration."
+scalar = true
+drone = ["clone"]
+woodpecker = ["clone"]
+bitbucket = ["clone"]
+travis = ["git"]
+
+[pipeline.field.volumes]
+doc = "Volume / volume-claim declarations."
+scalar = true
+drone = ["volumes"]
+google_cloudbuild = ["volumes"]
+argo = ["volumes", "volumeClaimTemplates"]
+
+[pipeline.field.definitions]
+doc = "Reusable definitions (executors / orbs / commands / shared blocks)."
+scalar = true
+circleci = ["executors", "orbs", "commands", "examples"]
+bitbucket = ["definitions"]
+
+[pipeline.field.agent]
+doc = "Default runner / agent selection."
+jenkins = ["agent"]
+buildkite = ["agents", "priority"]
+woodpecker = ["runs_on", "labels"]
+bitbucket = ["labels"]
+google_cloudbuild = ["pool", "machineType", "diskSizeGb", "serviceAccount"]
+argo = ["serviceAccountName"]
+
+[pipeline.field.tools]
+doc = "Tool installations (jenkins `tools { maven 'M3' }`)."
+jenkins = ["tools"]
+
+[pipeline.field.libraries]
+doc = "Shared library imports (jenkins `libraries { 'lib' }`)."
+jenkins = ["libraries"]
+
+[pipeline.field.artifacts]
+doc = "Pipeline-level artifact / page outputs."
+gitlab = ["pages"]
+google_cloudbuild = ["artifacts", "images"]
+aws_codebuild = ["artifacts", "reports"]
+# argo: hoisted out of the transparent `arguments:` wrapper (see
+# pipeline.field.parameters).
+argo = ["artifacts"]
+
+[pipeline.field.secrets]
+doc = "Secret declarations."
+buildkite = ["secrets"]
+google_cloudbuild = ["secrets", "secretEnv"]
+
+[pipeline.field.notifications]
+doc = "Outcome notifications."
+travis = ["notifications"]
+buildkite = ["notify"]
+
+[pipeline.field.matrix]
+doc = "Pipeline-level fan-out matrix."
+travis = ["matrix"]
+woodpecker = ["matrix"]
+
+[pipeline.field.options]
+doc = "Run options / behaviour flags."
+jenkins = ["options"]
+azure = ["appendCommitMessageToRunName", "continueOnError", "strategy"]
+bitbucket = ["options"]
+travis = ["sudo"]
+woodpecker = ["skip_clone"]
+aws_codebuild = ["batch", "proxy"]
+argo = ["suspend"]
+google_cloudbuild = ["options", "automapSubstitutions", "defaultLogsBucketBehavior", "dynamicSubstitutions", "logStreamingOption", "logging", "requestedVerifyOption", "sourceProvenanceHash", "substitutionOption"]
+
+[pipeline.field.toolchain]
+doc = "Travis language / SDK / package selection — the language-toolchain cluster."
+travis = ["addons", "android", "apt_packages", "arch", "bioc_packages", "brew_packages", "bundler_args", "compiler", "cran", "crystal", "d", "dart", "dart_task", "dist", "elixir", "elm", "elm-format", "elm-test", "erlang", "gemfile", "ghc", "go", "haxe", "hxml", "jdk", "julia", "language", "lein", "matlab", "mono", "neko", "node_js", "opt_release", "os", "osx_image", "pandoc_version", "perl", "perl6", "php", "podfile", "python", "r", "r_binary_packages", "r_github_packages", "r_packages", "repos", "rust", "rvm", "sbt_args", "scala", "smalltalk", "solution", "xcode_project", "xcode_scheme", "xcode_sdk", "xcode_workspace"]
+
+[pipeline.field.deployments]
+doc = "Pipeline-level deploy declarations."
+travis = ["deploy"]
+
+[pipeline.field.entrypoint]
+doc = "Entry template / job the run starts from."
+argo = ["entrypoint"]
+
+[pipeline.field.timeout]
+doc = "Overall run time / TTL limits."
+google_cloudbuild = ["timeout", "queueTtl"]
+argo = ["ttlStrategy"]
+
+[pipeline.field.logs]
+doc = "Log destination."
+google_cloudbuild = ["logsBucket"]
+
+[pipeline.field.tags]
+doc = "Free-form pipeline tags / labels."
+google_cloudbuild = ["tags"]
+
+[pipeline.field.artifact_store]
+doc = "Backing store for artifacts handed between stages."
+aws_codepipeline = ["artifactStore", "artifactStores"]
+
+[pipeline.field.execution_mode]
+doc = "Run execution mode (queued / superseded / parallel)."
+aws_codepipeline = ["executionMode"]
+
+[pipeline.field.role]
+doc = "Service role the pipeline assumes."
+aws_codepipeline = ["roleArn"]
+
+[pipeline.field.pipelines]
+# Bitbucket special case — one pipelines_configuration (= the whole YAML)
+# holds a `pipelines:` section whose keys
+# (default / branches / tags / pull-requests / custom) each name
+# EVENT-GATED sub-pipelines. Each sub-pipeline is itself a full step
+# sequence — hence the self-ref onto `pipeline` rather than onto `stage`
+# or a dedicated construct: the sub-pipeline carries the same step /
+# condition structures as the top level. Other platforms leave this
+# field empty. Consequence in the hub graph: bitbucket cascades produce
+# 1 + N hub:pipeline nodes (top level + N named sub-pipelines), linked
+# via `has_pipeline`.
+doc = "Named event-gated sub-pipelines (bitbucket's pipelines map). Self-referential — sub-pipelines have the same structure as the outer one."
+bitbucket = ["pipelines"]
+
+[pipeline.field.export]
+doc = "Whether the pipeline definition is exported for reuse."
+bitbucket = ["export"]
+
+[pipeline.field.experimental]
+doc = "Experimental / unstable feature flags."
+circleci = ["experimental"]
+
+[pipeline.field.targets]
+doc = "Earthfile build targets and the base recipe."
+earthly = ["targets", "base_recipe"]
+
+[pipeline.field.project]
+doc = "Project / file-level identity (Earthfile PROJECT)."
+earthly = ["PROJECT"]
+
+[pipeline.field.dependencies]
+doc = "Module dependencies + include/exclude globs (Dagger)."
+dagger = ["dependencies", "include", "exclude", "codegenIgnore"]
+
+[pipeline.field.description]
+doc = "Human description of the pipeline."
+tekton = ["description"]
+
+[pipeline.field.anchors]
+doc = "YAML value-reuse references (gitlab `!reference`)."
+gitlab = ["!reference"]
+
+[stage]
+doc = "An ordered group of jobs. Optional — many platforms express ordering only as a dependency DAG."
+
+[stage.maps]
+jenkins = []
+azure = ["stagesTemplate"]
+travis = []
+bitbucket = ["stage", "stage_item", "parallel_expanded", "parallel_item"]
+buildkite = ["groupStep"]
+aws_codepipeline = ["stage"]
+woodpecker = []
+
+[stage.field.name]
+doc = "Stage name / label."
+bitbucket = ["name"]
+buildkite = ["name", "label"]
+aws_codepipeline = ["name"]
+azure = ["stage"]
+
+[stage.field.jobs]
+doc = "The jobs / steps the stage groups."
+bitbucket = ["steps"]
+aws_codepipeline = ["actions"]
+# Buildkite's stage construct (groupStep) also has a `steps:` key
+# semantically, but adding `buildkite = ["steps"]` here makes
+# gen_classification.py emit a `(steps, job)` table that overrides
+# the correct `(steps, step)` from [pipeline.field.steps]. The
+# pipeline-level mapping is the canonical roundtrip path; the
+# groupStep edge case is left as a known coverage gap.
+azure = ["jobs"]
+
+[stage.field.condition]
+doc = "Guard on whether the stage runs."
+bitbucket = ["condition"]
+buildkite = ["if", "if_changed"]
+
+[stage.field.depends_on]
+doc = "Stages this stage waits on."
+buildkite = ["depends_on"]
+
+[stage.field.group]
+doc = "Visual / logical grouping key."
+buildkite = ["group"]
+
+[stage.field.id]
+doc = "Stable identifier."
+buildkite = ["id", "identifier", "key"]
+
+[stage.field.skip]
+doc = "Whether the stage is skipped."
+buildkite = ["skip"]
+
+[stage.field.notify]
+doc = "Stage-level notifications."
+buildkite = ["notify"]
+
+[stage.field.deployment]
+doc = "Deployment target the stage releases to."
+bitbucket = ["deployment", "environment"]
+
+[stage.field.trigger]
+doc = "Trigger gating the stage."
+bitbucket = ["trigger"]
+
+[stage.field.nested_stage]
+doc = "A stage / parallel group nested in this one."
+bitbucket = ["stage", "parallel"]
+
+[stage.field.fail_fast]
+doc = "Abort siblings on first failure."
+bitbucket = ["fail-fast"]
+
+[stage.field.parameters]
+doc = "Parameters a stage-template declares."
+azure = ["parameters"]
+
+[stage.field.nested_stages]
+doc = "Stages a stage-template contributes."
+azure = ["stages"]
+
+[stage.field.blockers]
+doc = "Gates that must clear before the stage starts."
+aws_codepipeline = ["blockers"]
+
+[stage.field.hooks]
+doc = "Stage-level success / failure handlers."
+aws_codepipeline = ["onFailure", "onSuccess"]
+
+[job]
+doc = "A unit of work that runs on one agent / container."
+
+[job.maps]
+github = ["normalJob", "reusableWorkflowCallJob"]
+gitlab = ["job", "job_template"]
+jenkins = ["stage", "options"]
+azure = ["jobWorkspace"]
+# CircleCI: the `jobs:` map under [pipeline] in catalog/circleci.toml
+# carries job definitions inline (`map<object | string>`) without a
+# dedicated [job] section. The synthetic mapping here drives
+# gen_ruleset.py to emit `R_circleci_job` so the seeder's
+# `construct=job` tags can anchor on a real construct rule.
+circleci = ["job"]
+travis = ["job"]
+bitbucket = ["step", "step_base", "step_item"]
+buildkite = ["commandStep", "nestedCommandStep"]
+google_cloudbuild = ["BuildStep"]
+tekton = ["pipeline_task", "task"]
+argo = ["template"]
+aws_codebuild = ["phase", "phases"]
+aws_codepipeline = ["action", "action_type_id"]
+earthly = ["target", "recipe"]
+dagger = ["function"]
+
+[job.field.name]
+doc = "Job name / label."
+# NOTE github absent: github jobs are MAP-KEYED (the `jobs:` map key is the
+# job identity, set as job.name by the map name-carrier). github's `name:`
+# is a DISPLAY label, a distinct scalar field — mapping it to job.field.name
+# too made a job with an explicit `name:` carry TWO identities (map key vs
+# label), breaking name-keyed containment (the job's entry wrapper vanished
+# and its fields leaked to the jobs level). It lives in [job.field.options].
+jenkins = ["name"]
+bitbucket = ["name"]
+buildkite = ["name", "label"]
+drone = ["name"]
+woodpecker = ["name"]
+tekton = ["name", "displayName"]
+argo = ["name"]
+aws_codepipeline = ["name"]
+earthly = ["name"]
+dagger = ["name"]
+# azure jobs are `- job: build` — the `job:` key IS the job name/identity.
+azure = ["job", "deployment"]
+
+[job.field.id]
+doc = "Stable identifier for cross-references."
+buildkite = ["id", "identifier", "key"]
+google_cloudbuild = ["id"]
+
+[job.field.steps]
+doc = "The job's main command / step list."
+github = ["steps"]
+gitlab = ["script", "run"]
+jenkins = ["steps"]
+azure = ["steps"]
+circleci = ["steps"]
+aws_codepipeline = ["commands"]
+travis = ["script"]
+bitbucket = ["script", "step"]
+buildkite = ["command", "commands", "script"]
+drone = ["commands"]
+woodpecker = ["commands", "entrypoint"]
+google_cloudbuild = ["args", "script", "entrypoint"]
+tekton = ["steps", "stepTemplate"]
+argo = ["steps"]
+aws_codebuild = ["commands", "build", "install", "post_build", "pre_build"]
+earthly = ["recipe", "RUN", "CMD", "COPY", "GIT CLONE", "ENTRYPOINT", "WITH", "IF / ELSE", "FOR", "TRY", "LET", "DO"]
+
+[job.field.container]
+doc = "Single-container job body (argo template `container:`)."
+argo = ["container"]
+
+[job.field.script]
+doc = "Inline-script job body (argo template `script:`)."
+argo = ["script"]
+
+[job.field.before_steps]
+doc = "Steps before the main step list."
+gitlab = ["before_script"]
+
+[job.field.after_steps]
+doc = "Steps after the main step list."
+gitlab = ["after_script"]
+bitbucket = ["after-script"]
+
+[job.field.hooks]
+doc = "Lifecycle hooks scoped to the job."
+gitlab = ["hooks"]
+jenkins = ["post"]
+travis = ["after_deploy", "after_failure", "after_script", "after_success", "before_cache", "before_deploy", "before_install", "before_script", "install"]
+aws_codebuild = ["finally"]
+
+[job.field.image]
+doc = "Container image the job runs in."
+github = ["container"]
+gitlab = ["image"]
+bitbucket = ["image"]
+buildkite = ["image"]
+google_cloudbuild = ["name"]
+earthly = ["FROM", "FROM DOCKERFILE"]
+circleci = ["docker"]
+
+[job.field.stage]
+doc = "Stage the job belongs to."
+gitlab = ["stage"]
+jenkins = ["stages", "parallel"]
+
+[job.field.needs]
+doc = "Jobs this one depends on."
+github = ["needs"]
+gitlab = ["needs", "dependencies"]
+buildkite = ["depends_on"]
+drone = ["depends_on"]
+woodpecker = ["depends_on"]
+google_cloudbuild = ["waitFor"]
+tekton = ["runAfter"]
+argo = ["tasks"]
+aws_codepipeline = ["runOrder"]
+earthly = ["BUILD"]
+
+[job.field.condition]
+doc = "Guard — whether the job runs."
+github = ["if"]
+gitlab = ["only", "except", "when", "manual_confirmation"]
+jenkins = ["when", "input"]
+travis = ["branches"]
+bitbucket = ["condition"]
+drone = ["when"]
+woodpecker = ["when"]
+buildkite = ["if", "if_changed", "branches", "skip"]
+tekton = ["when"]
+
+[job.field.matrix]
+doc = "Per-combination fan-out of the job."
+github = ["strategy"]
+gitlab = ["parallel"]
+jenkins = ["matrix", "failFast"]
+buildkite = ["matrix", "parallelism"]
+tekton = ["matrix"]
+
+[job.field.variables]
+doc = "Environment variables in the job's scope."
+github = ["env"]
+gitlab = ["variables"]
+jenkins = ["environment"]
+travis = ["env"]
+buildkite = ["env"]
+drone = ["environment"]
+woodpecker = ["environment"]
+google_cloudbuild = ["env"]
+earthly = ["ENV"]
+circleci = ["environment"]
+
+[job.field.cache]
+doc = "Caches the job declares."
+gitlab = ["cache"]
+travis = ["cache", "before_cache"]
+bitbucket = ["caches"]
+buildkite = ["cache"]
+earthly = ["CACHE"]
+
+[job.field.artifacts]
+doc = "Artifacts / outputs the job produces."
+github = ["outputs"]
+gitlab = ["artifacts"]
+bitbucket = ["artifacts"]
+buildkite = ["artifact_paths"]
+tekton = ["results"]
+argo = ["artifacts"]
+aws_codepipeline = ["inputArtifacts", "outputArtifacts"]
+earthly = ["SAVE ARTIFACT", "SAVE IMAGE"]
+dagger = ["returns"]
+
+[job.field.services]
+doc = "Side-containers available to the job."
+github = ["services"]
+gitlab = ["services"]
+travis = ["services"]
+bitbucket = ["services"]
+tekton = ["sidecars"]
+
+[job.field.timeout]
+doc = "Job time limit."
+github = ["timeout-minutes"]
+bitbucket = ["max-time"]
+gitlab = ["timeout", "start_in"]
+jenkins = ["timeout"]
+buildkite = ["timeout_in_minutes"]
+google_cloudbuild = ["timeout"]
+tekton = ["timeout"]
+argo = ["activeDeadlineSeconds"]
+aws_codepipeline = ["timeoutInMinutes"]
+
+[job.field.tools]
+doc = "Per-stage tool installations (jenkins `tools { … }`)."
+jenkins = ["tools"]
+
+[job.field.agent]
+doc = "Where the job runs — runner / pool / node selection."
+github = ["runs-on"]
+gitlab = ["tags"]
+jenkins = ["agent"]
+travis = ["git"]
+bitbucket = ["runs-on", "runtime", "size"]
+buildkite = ["agents", "priority"]
+drone = ["user", "resources"]
+woodpecker = ["backend_options"]
+argo = ["nodeSelector"]
+aws_codepipeline = ["region"]
+earthly = ["USER"]
+circleci = ["resource_class"]
+
+[job.field.retry]
+doc = "Retry-on-failure policy."
+gitlab = ["retry"]
+jenkins = ["retry"]
+buildkite = ["retry"]
+tekton = ["retries"]
+argo = ["retryStrategy"]
+
+[job.field.allow_failure]
+doc = "Whether a job failure is non-fatal."
+github = ["continue-on-error"]
+gitlab = ["allow_failure"]
+drone = ["failure"]
+woodpecker = ["failure"]
+buildkite = ["soft_fail"]
+google_cloudbuild = ["allowFailure", "allowExitCodes"]
+aws_codebuild = ["on-failure"]
+
+[job.field.concurrency]
+doc = "Concurrency / interruptibility of the job."
+github = ["concurrency"]
+buildkite = ["concurrency", "concurrency_group", "concurrency_method", "cancel_on_build_failing"]
+circleci = ["parallelism"]
+
+[job.field.deployment]
+doc = "Deploy target the job releases to."
+github = ["environment"]
+gitlab = ["environment", "release"]
+travis = ["deploy"]
+bitbucket = ["deployment", "environment"]
+
+[job.field.extends]
+doc = "Templates / jobs this one extends or inherits from."
+gitlab = ["extends", "inherit"]
+earthly = ["IMPORT"]
+
+[job.field.parameters]
+doc = "Typed inputs to the job."
+github = ["with"]
+gitlab = ["inputs"]
+bitbucket = ["input-variables"]
+drone = ["settings"]
+woodpecker = ["settings"]
+tekton = ["params"]
+argo = ["parameters"]
+aws_codepipeline = ["configuration"]
+earthly = ["ARG"]
+dagger = ["args"]
+
+[job.field.uses]
+doc = "Reusable workflow / task / action the job invokes."
+github = ["uses"]
+bitbucket = ["type"]
+buildkite = ["plugins", "type"]
+tekton = ["taskRef"]
+argo = ["resource"]
+aws_codepipeline = ["actionTypeId", "category", "owner", "provider", "version"]
+circleci = ["executor"]
+
+[job.field.secrets]
+doc = "Secrets / identity tokens the job is granted."
+github = ["secrets"]
+gitlab = ["secrets", "id_tokens", "identity"]
+bitbucket = ["auth", "oidc"]
+buildkite = ["secrets"]
+google_cloudbuild = ["secretEnv"]
+aws_codepipeline = ["roleArn"]
+
+[job.field.defaults]
+doc = "Defaults inherited by the job's steps."
+github = ["defaults"]
+
+[job.field.permissions]
+doc = "Token / identity scopes for the job."
+github = ["permissions"]
+
+[job.field.working_dir]
+doc = "Working directory for the job."
+woodpecker = ["directory"]
+google_cloudbuild = ["dir"]
+earthly = ["WORKDIR"]
+circleci = ["working_directory"]
+
+[job.field.trigger]
+doc = "Child-pipeline trigger the job fires."
+gitlab = ["trigger"]
+bitbucket = ["trigger"]
+
+[job.field.backend]
+doc = "Execution-backend specifics (k8s …)."
+woodpecker = ["kubernetes"]
+
+[job.field.description]
+doc = "Human description of the job."
+tekton = ["description"]
+dagger = ["description"]
+
+[job.field.toolchain]
+doc = "Travis language / SDK / package selection for the job."
+travis = ["addons", "android", "apt_packages", "arch", "bioc_packages", "brew_packages", "bundler_args", "compiler", "cran", "crystal", "d", "dart", "dart_task", "dist", "elixir", "elm", "elm-format", "elm-test", "erlang", "gemfile", "ghc", "go", "haxe", "hxml", "jdk", "julia", "language", "lein", "matlab", "mono", "neko", "node_js", "opt_release", "os", "osx_image", "pandoc_version", "perl", "perl6", "php", "podfile", "python", "r", "r_binary_packages", "r_github_packages", "r_packages", "repos", "rust", "rvm", "sbt_args", "scala", "smalltalk", "solution", "xcode_project", "xcode_scheme", "xcode_sdk", "xcode_workspace"]
+
+[job.field.options]
+doc = "Job behaviour flags / settings without a dedicated field."
+github = ["snapshot", "name"]
+gitlab = ["coverage", "resource_group", "interruptible", "pages", "publish"]
+jenkins = ["options", "buildDiscarder", "disableConcurrentBuilds", "disableResume", "newContainerPerStage", "overrideIndexTriggers", "parallelsAlwaysFailFast", "preserveStashes", "quietPeriod", "skipDefaultCheckout", "skipStagesAfterUnstable", "timestamps"]
+azure = ["clean"]
+travis = ["sudo"]
+bitbucket = ["clone", "custom", "concurrency-group", "fail-fast"]
+drone = ["detach", "network_mode", "privileged", "pull", "volumes"]
+woodpecker = ["detach", "dns", "dns_search", "privileged", "pull", "volumes"]
+google_cloudbuild = ["automapSubstitutions", "volumes"]
+tekton = ["workspaces", "volumes"]
+argo = ["suspend"]
+aws_codebuild = ["run-as", "runtime-versions"]
+aws_codepipeline = ["namespace"]
+buildkite = ["notify", "signature"]
+
+# earthly's LABEL/EXPOSE/VOLUME/HEALTHCHECK are DISTINCT concepts, not generic
+# behaviour flags — lumping them into `options` made another platform's options
+# (gitlab coverage/pages/…) collapse onto earthly's first options key (LABEL) on
+# cross-emit, emitting two `LABEL` lines that don't round-trip (the gitlab→earthly
+# drift). Split into dedicated scalar fields so earthly has no generic
+# (job, options) target; foreign options fall away cleanly (not earthly concepts).
+[job.field.labels]
+doc = "Image/build labels (earthly LABEL)."
+scalar = true
+earthly = ["LABEL"]
+
+[job.field.expose]
+doc = "Exposed ports (earthly EXPOSE)."
+scalar = true
+earthly = ["EXPOSE"]
+
+[job.field.volume]
+doc = "Volume declarations (earthly VOLUME)."
+scalar = true
+earthly = ["VOLUME"]
+
+[job.field.healthcheck]
+doc = "Container healthcheck (earthly HEALTHCHECK)."
+scalar = true
+earthly = ["HEALTHCHECK"]
+
+[step]
+doc = "One command or action inside a job. Each [step.field.*] is a normalized IR field; the per-platform lists are the source keys that feed it — every key of every mapped section lands in exactly one field."
+
+[step.maps]
+github = ["step", "defaults"]
+gitlab = ["stepGitReference", "stepOciReference"]
+jenkins = ["step"]
+azure = ["task", "taskBase", "stepsTemplate", "jobDecoratorSteps"]
+# CircleCI: see [job.maps] — synthetic step mapping so the
+# `R_circleci_step` construct rule materialises.
+circleci = ["step"]
+bitbucket = ["pipe", "agent_task"]
+tekton = ["step"]
+argo = ["container", "script"]
+dagger = ["container"]
+buildkite = ["commandStepManualRetryObject", "blockStep", "nestedBlockStep"]
+google_cloudbuild = ["BuildStep"]
+# Drone/Woodpecker share the step-item shape — the items under
+# `steps:` carry the step definition inline. The catalog has no
+# dedicated [step] section for them (steps live as map-of-objects);
+# the synthetic mapping drives the construct rule generator.
+drone = ["step"]
+woodpecker = ["step"]
+travis = ["step"]
+
+[step.field.run]
+doc = "Inline command(s) the step executes."
+github = ["run"]
+azure = ["script", "bash", "powershell", "pwsh"]
+tekton = ["command", "args", "script"]
+argo = ["command", "args", "source"]
+dagger = ["withExec"]
+google_cloudbuild = ["script", "args", "entrypoint"]
+buildkite = ["command", "commands"]
+drone = ["commands"]
+woodpecker = ["commands"]
+circleci = ["run", "command", "shell"]
+jenkins = ["sh", "bat"]
+# aws_codebuild `commands` are JOB-level (a phase's command list → job.steps),
+# NOT a nested step's run — see [pipeline.field.jobs] / [job.field.steps]. The
+# command string IS the step (seq_scalar), so no step.run mapping here.
+aws_codepipeline = ["commands"]
+bitbucket = ["script"]
+
+[step.field.uses]
+doc = "Reference to a reusable action / task / plugin the step invokes."
+github = ["uses"]
+gitlab = ["git", "oci"]
+jenkins = ["name"]
+azure = ["task", "target"]
+bitbucket = ["pipe", "provider"]
+
+[step.field.with]
+doc = "Inputs passed to the invoked action / task."
+github = ["with"]
+jenkins = ["args"]
+azure = ["inputs"]
+bitbucket = ["variables", "config"]
+google_cloudbuild = ["automapSubstitutions"]
+
+[step.field.name]
+doc = "Human-readable step name / label."
+github = ["name"]
+azure = ["name", "displayName"]
+tekton = ["name"]
+buildkite = ["name", "label", "group"]
+google_cloudbuild = ["name"]
+drone = ["name"]
+woodpecker = ["name"]
+argo = ["name"]
+# circleci: the `name` inside a `run: {name, command}` block, hoisted by the
+# seeder onto the step alongside command→step.run.
+circleci = ["name"]
+
+[step.field.checkout]
+doc = "Source checkout step (azure `checkout:`, circleci handled separately)."
+azure = ["checkout"]
+scalar = true
+
+[step.field.restore_cache]
+doc = "circleci `restore_cache` step."
+circleci = ["restore_cache"]
+scalar = true
+
+[step.field.save_cache]
+doc = "circleci `save_cache` step."
+circleci = ["save_cache"]
+scalar = true
+
+[step.field.store_test_results]
+doc = "circleci `store_test_results` step."
+circleci = ["store_test_results"]
+scalar = true
+
+[step.field.store_artifacts]
+doc = "circleci `store_artifacts` step."
+circleci = ["store_artifacts"]
+scalar = true
+
+[step.field.persist_to_workspace]
+doc = "circleci `persist_to_workspace` step."
+circleci = ["persist_to_workspace"]
+scalar = true
+
+[step.field.attach_workspace]
+doc = "circleci `attach_workspace` step."
+circleci = ["attach_workspace"]
+scalar = true
+
+[step.field.orb]
+doc = "circleci orb command step (namespaced key like `codecov/upload`)."
+circleci = ["codecov/upload"]
+scalar = true
+
+[step.field.id]
+doc = "Stable identifier for cross-references."
+github = ["id"]
+buildkite = ["id", "identifier", "key"]
+google_cloudbuild = ["id"]
+
+[step.field.condition]
+doc = "Guard — whether the step runs."
+github = ["if"]
+azure = ["condition"]
+buildkite = ["if"]
+drone = ["when"]
+woodpecker = ["when"]
+aws_codebuild = ["on-failure"]
+
+[step.field.env]
+doc = "Environment variables in the step's scope."
+github = ["env"]
+azure = ["env"]
+tekton = ["env"]
+argo = ["env"]
+dagger = ["withEnvVariable"]
+google_cloudbuild = ["env", "secretEnv"]
+drone = ["environment"]
+woodpecker = ["environment"]
+buildkite = ["env"]
+circleci = ["environment"]
+
+[step.field.working_dir]
+doc = "Working directory for the step."
+github = ["working-directory"]
+tekton = ["workingDir"]
+argo = ["workingDir"]
+dagger = ["withWorkdir"]
+google_cloudbuild = ["dir"]
+woodpecker = ["directory"]
+circleci = ["working_directory"]
+
+[step.field.shell]
+doc = "Shell used to run the command."
+github = ["shell"]
+circleci = ["shell"]
+
+[step.field.timeout]
+doc = "Per-step time limit."
+github = ["timeout-minutes"]
+azure = ["timeoutInMinutes"]
+tekton = ["timeout"]
+google_cloudbuild = ["timeout"]
+circleci = ["no_output_timeout"]
+
+[step.field.continue_on_error]
+doc = "Whether a step failure is non-fatal."
+github = ["continue-on-error"]
+azure = ["continueOnError"]
+google_cloudbuild = ["allowFailure", "allowExitCodes"]
+buildkite = ["allow_dependency_failure", "soft_fail"]
+woodpecker = ["failure"]
+
+[step.field.options]
+doc = "Step behaviour flags / settings without a dedicated field."
+# Buildkite command-step concurrency knobs are scalar flags, not a
+# concurrency CONSTRUCT — modelled as step-level scalar attrs (the bare
+# `concurrency` integer remains a concurrency construct key). Without a
+# step home these lived only under the dead job.field.concurrency mapping
+# (buildkite is bijektiv-flach: steps -> hub:step, no hub:job) and were
+# dropped backward.
+buildkite = ["concurrency_group", "concurrency_method", "cancel_on_build_failing"]
+# woodpecker container step body fields without a dedicated IR step field:
+# behaviour flags (detach/pull/privileged), the display `name` (the step's
+# IDENTITY is its map key, so name: is a label), and the nested
+# entrypoint/dns/settings/backend_options (classify routes each by its own
+# type — scalar/seq/block — under the options field).
+woodpecker = ["detach", "pull", "privileged", "name", "entrypoint", "dns", "dns_search", "settings", "backend_options"]
+
+[step.field.enabled]
+doc = "Whether the step is active."
+azure = ["enabled"]
+
+[step.field.retry]
+doc = "Per-step retry policy."
+azure = ["retryCountOnTaskFailure"]
+buildkite = ["allowed", "permit_on_passed", "reason"]
+
+[step.field.image]
+doc = "Container image the step runs in (for platforms where the step, not the job, carries the image)."
+tekton = ["image"]
+argo = ["image"]
+dagger = ["from"]
+woodpecker = ["image"]
+drone = ["image"]
+
+[step.field.resources]
+doc = "Compute resource requests / limits."
+tekton = ["computeResources"]
+argo = ["resources"]
+
+[step.field.volume_mounts]
+doc = "Volumes / directories mounted into the step."
+tekton = ["volumeMounts"]
+argo = ["volumeMounts"]
+dagger = ["withDirectory", "withMountedCache", "withServiceBinding"]
+google_cloudbuild = ["volumes"]
+woodpecker = ["volumes"]
+
+[step.field.depends_on]
+doc = "Steps this step waits on (step-level ordering)."
+buildkite = ["depends_on"]
+google_cloudbuild = ["waitFor"]
+drone = ["depends_on"]
+woodpecker = ["depends_on"]
+argo = ["dependencies"]
+
+[step.field.on_error]
+doc = "Behaviour when the step errors."
+tekton = ["onError"]
+
+[step.field.gate]
+doc = "Manual-gate / barrier payload — a step that pauses for human input / approval, or a wait barrier (buildkite folds its block/input/wait step variants here, bijektiv-flach)."
+bitbucket = ["prompt"]
+buildkite = ["block", "blocked_state", "prompt", "fields", "input", "wait", "waiter"]
+
+[step.field.branches]
+doc = "Branch filter on the step."
+buildkite = ["branches"]
+
+[step.field.kind]
+doc = "Step-kind discriminator."
+buildkite = ["type"]
+
+[step.field.teams]
+doc = "Teams permitted to act on the step (e.g. unblock a gate)."
+buildkite = ["allowed_teams"]
+
+[step.field.secrets]
+doc = "Secrets a step (command step) is granted."
+buildkite = ["secrets"]
+
+[step.field.nested_steps]
+doc = "Steps a step-template / decorator injects, or a buildkite groupStep's nested steps."
+azure = ["steps"]
+buildkite = ["steps"]
+
+[step.field.parameters]
+doc = "Parameters a step-template declares."
+azure = ["parameters"]
+
+[step.field.agent]
+doc = "Agent the step runs on (where steps, not jobs, pick an agent)."
+bitbucket = ["agent"]
+
+[step.field.permissions]
+doc = "Token / identity scopes granted to the step."
+bitbucket = ["permissions"]
+
+[dependency_edge]
+doc = "An ordering / data dependency between jobs. Most platforms express this as a job *key* (needs / dependsOn / runAfter), captured under [job]; the sections here are the ones that model a dependency as its own construct — argo DAG tasks and buildkite wait barriers."
+
+[dependency_edge.maps]
+github = []
+gitlab = []
+azure = []
+circleci = []
+tekton = []
+argo = ["dag_template", "dag_task", "workflow_step"]
+aws_codepipeline = []
+earthly = []
+drone = []
+buildkite = ["waitStep", "nestedWaitStep"]
+
+[dependency_edge.field.name]
+doc = "Name / label of the dependent node."
+argo = ["name"]
+buildkite = ["name", "label"]
+
+[dependency_edge.field.template_ref]
+doc = "The job / template the edge points at."
+argo = ["template", "templateRef", "target"]
+
+[dependency_edge.field.depends_on]
+doc = "The upstream nodes waited on. A clean LIST of upstream names (argo's `dependencies`, buildkite's wait keys), modelled as ref edges to the depended-on nodes."
+argo = ["dependencies"]
+buildkite = ["depends_on", "wait", "waiter"]
+
+[dependency_edge.field.depends_expr]
+doc = "argo's raw `depends` expression string (e.g. \"A && B\"): a boolean expression over upstream task names, NOT a clean node reference. Carried verbatim as a scalar so it round-trips losslessly — a ref model would synthesise bogus nodes (one named `A && B`) and re-emit them as a sub-mapping."
+scalar = true
+argo = ["depends"]
+
+[dependency_edge.field.condition]
+doc = "Guard on whether the dependent runs."
+argo = ["when"]
+buildkite = ["if"]
+
+[dependency_edge.field.fan_out]
+doc = "Per-item expansion of the dependent."
+argo = ["withItems", "withParam", "withSequence"]
+
+[dependency_edge.field.parameters]
+doc = "Arguments passed to the referenced template (argo dag task)."
+argo = ["parameters"]
+
+[dependency_edge.field.arguments]
+doc = "Inputs passed to the dependent job."
+argo = ["arguments"]
+
+[dependency_edge.field.fail_fast]
+doc = "Whether an upstream failure aborts / is tolerated."
+argo = ["failFast"]
+buildkite = ["continue_on_failure", "allow_dependency_failure"]
+
+[dependency_edge.field.tasks]
+doc = "The DAG's task set."
+argo = ["tasks"]
+
+[dependency_edge.field.id]
+doc = "Stable identifier."
+buildkite = ["id", "identifier", "key"]
+
+[dependency_edge.field.branches]
+doc = "Branch filter."
+buildkite = ["branches"]
+
+[dependency_edge.field.kind]
+doc = "Edge-kind discriminator."
+buildkite = ["type"]
+
+# ── execution context ──────────────────────────────────────────
+
+[image]
+doc = "The container image a job runs in. Platforms with no image *section* (gitlab/argo/… carry it as a job/step key) keep an empty map — that key lands in [job] / [step]."
+
+[image.maps]
+github = ["jobContainer"]
+gitlab = []
+jenkins = []
+azure = ["containerBase", "containerResource"]
+bitbucket = ["image_base", "image_basic_auth", "image_aws_auth", "image_no_auth", "step_auth"]
+argo = []
+earthly = []
+dagger = []
+
+[image.field.name]
+doc = "Image reference (repository:tag)."
+github = ["image"]
+azure = ["image", "container"]
+bitbucket = ["name"]
+circleci = ["image"]
+
+[image.field.env]
+doc = "Environment variables set in the image."
+github = ["env"]
+azure = ["env"]
+
+[image.field.ports]
+doc = "Exposed ports."
+github = ["ports"]
+azure = ["ports"]
+
+[image.field.volumes]
+doc = "Mounted volumes."
+github = ["volumes"]
+azure = ["volumes"]
+
+[image.field.options]
+doc = "Extra container runtime options."
+github = ["options"]
+azure = ["options"]
+
+[image.field.credentials]
+doc = "Registry / pull credentials."
+github = ["credentials"]
+bitbucket = ["password", "username", "aws", "system"]
+
+[image.field.endpoint]
+doc = "Registry endpoint / subscription / repository coordinates."
+azure = ["endpoint", "azureSubscription", "registry", "repository", "resourceGroup"]
+
+[image.field.docker_socket]
+doc = "Whether the host Docker socket is mapped in."
+azure = ["mapDockerSocket"]
+
+[image.field.mount_read_only]
+doc = "Whether mounts are read-only."
+azure = ["mountReadOnly"]
+
+[image.field.local]
+doc = "Use a locally-built image instead of pulling."
+azure = ["localImage"]
+
+[image.field.trigger]
+doc = "Trigger a run when the image updates."
+azure = ["trigger"]
+
+[image.field.kind]
+doc = "Image-resource kind discriminator."
+azure = ["type"]
+
+[image.field.run_as]
+doc = "User the container runs as."
+bitbucket = ["run-as-user"]
+
+[agent]
+doc = "Selects WHERE a job runs — runner labels, pool, resource class."
+
+[agent.maps]
+github = []
+gitlab = []
+jenkins = ["agent"]
+azure = []
+circleci = []
+bitbucket = ["runtime", "self-hosted", "cloud", "agent_config", "agent_definition"]
+buildkite = []
+drone = ["platform"]
+woodpecker = ["step_backend_kubernetes", "step_backend_kubernetes_resources", "step_backend_kubernetes_secprofile", "step_backend_kubernetes_security_context", "step_backend_kubernetes_service_account", "step_backend_kubernetes_toleration_object"]
+
+[agent.field.selector]
+doc = "How the runner is chosen — label, node, or none/any."
+bitbucket = ["cloud", "self-hosted"]
+
+[agent.field.container]
+doc = "Run inside a container / k8s pod instead of a bare runner."
+
+# jenkins agent is a UNION (exactly one form), but the chaos generator emits
+# several sub-types at once — so each gets its OWN field, not a shared
+# selector/container that would collide and scramble backward.
+[agent.field.label]
+doc = "jenkins `agent { label '…' }`."
+jenkins = ["label"]
+
+[agent.field.node]
+doc = "jenkins `agent { node { … } }`."
+jenkins = ["node"]
+
+[agent.field.any]
+doc = "jenkins `agent any`."
+jenkins = ["any"]
+
+[agent.field.none]
+doc = "jenkins `agent none`."
+jenkins = ["none"]
+
+[agent.field.docker]
+doc = "jenkins `agent { docker { … } }`."
+jenkins = ["docker"]
+
+[agent.field.dockerfile]
+doc = "jenkins `agent { dockerfile { … } }`."
+jenkins = ["dockerfile"]
+
+[agent.field.kubernetes]
+doc = "jenkins `agent { kubernetes { … } }`."
+jenkins = ["kubernetes"]
+
+[agent.field.resources]
+doc = "CPU / memory / storage allocation."
+bitbucket = ["cpu", "memory", "storage", "volumes"]
+woodpecker = ["limits", "requests"]
+
+[agent.field.platform]
+doc = "OS / architecture the runner must provide."
+bitbucket = ["arch", "atlassian-ip-ranges", "instance-type", "version"]
+drone = ["arch", "os", "variant", "version"]
+
+[agent.field.config]
+doc = "Self-hosted runner configuration."
+bitbucket = ["overrides", "path", "config", "provider"]
+
+[agent.field.permissions]
+doc = "Permissions / prompt policy of the agent."
+bitbucket = ["permissions", "prompt"]
+
+[agent.field.labels]
+doc = "Pod / runner labels and annotations."
+woodpecker = ["annotations", "labels", "runtimeClassName"]
+
+[agent.field.security]
+doc = "Security context of the runner pod."
+woodpecker = ["securityContext", "secrets", "localhostProfile", "type", "apparmorProfile", "fsGroup", "privileged", "runAsGroup", "runAsNonRoot", "runAsUser", "seccompProfile"]
+
+[agent.field.tolerations]
+doc = "k8s scheduling tolerations."
+woodpecker = ["tolerations", "effect", "key", "operator", "tolerationSeconds", "value"]
+
+[service]
+doc = "A side-container available to a job (DB, broker, …)."
+
+[service.maps]
+github = ["serviceContainer"]
+gitlab = []
+bitbucket = ["service"]
+woodpecker = ["service"]
+drone = []
+tekton = []
+
+[service.field.image]
+doc = "Service container image."
+github = ["image"]
+bitbucket = ["image"]
+woodpecker = ["image"]
+
+[service.field.name]
+doc = "Service name / alias."
+woodpecker = ["name"]
+
+[service.field.env]
+doc = "Environment variables in the service container."
+github = ["env"]
+bitbucket = ["variables"]
+woodpecker = ["environment"]
+
+[service.field.command]
+doc = "Entrypoint / command override."
+github = ["command", "entrypoint"]
+woodpecker = ["commands", "entrypoint"]
+
+[service.field.ports]
+doc = "Exposed ports."
+github = ["ports"]
+woodpecker = ["ports"]
+
+[service.field.volumes]
+doc = "Mounted volumes."
+github = ["volumes"]
+woodpecker = ["volumes"]
+
+[service.field.options]
+doc = "Extra runtime options / backend settings."
+github = ["options"]
+woodpecker = ["backend_options", "settings", "privileged"]
+bitbucket = ["memory"]
+
+[service.field.credentials]
+doc = "Registry credentials."
+github = ["credentials"]
+
+[service.field.kind]
+doc = "Service-type discriminator."
+bitbucket = ["type"]
+
+[service.field.resources]
+doc = "Resource allocation."
+
+[service.field.working_dir]
+doc = "Working directory."
+woodpecker = ["directory"]
+
+[service.field.pull]
+doc = "Image pull policy."
+woodpecker = ["pull"]
+
+[service.field.condition]
+doc = "When the service runs."
+woodpecker = ["when", "failure"]
+
+[resource]
+doc = "An external entity the pipeline references — a repository, a container image registry, another pipeline, a package feed, a webhook source."
+
+[resource.maps]
+azure = ["buildResource", "containerResource", "legacyResource", "packageResource", "pipelineResource", "repositoryResource", "webhookResource", "explicitResources", "repositoryCheckoutOptions"]
+drone = ["kind_template"]
+bitbucket = ["clone"]
+woodpecker = ["clone_settings"]
+tekton = []
+
+[resource.field.kind]
+doc = "Resource-kind discriminator (repo / container / pipeline / package / webhook)."
+azure = ["type"]
+
+[resource.field.name]
+doc = "Resource name / identifier."
+azure = ["name", "build", "package", "pipeline", "repository", "webhook", "container", "image"]
+
+[resource.field.connection]
+doc = "Service connection / endpoint the resource is reached through."
+azure = ["connection", "endpoint", "azureSubscription", "registry", "resourceGroup", "project", "server"]
+
+[resource.field.ref]
+doc = "Version / branch / tag of the resource."
+azure = ["branch", "ref", "version", "tag", "tags", "source"]
+
+[resource.field.trigger]
+doc = "Trigger a run when the resource updates."
+azure = ["trigger"]
+
+[resource.field.checkout]
+doc = "Checkout options (depth, lfs, submodules, clean, …)."
+azure = ["checkoutOptions", "clean", "fetchDepth", "fetchTags", "lfs", "persistCredentials", "submodules", "repo"]
+bitbucket = ["depth", "enabled", "lfs", "skip-ssl-verify"]
+woodpecker = ["depth", "lfs", "partial", "recursive", "tags"]
+
+[resource.field.filters]
+doc = "Event filters on a webhook resource."
+azure = ["filters"]
+
+[resource.field.pools]
+doc = "Agent pools declared as resources."
+azure = ["pools"]
+
+[resource.field.repositories]
+doc = "Repositories declared as resources."
+azure = ["repositories"]
+
+[resource.field.container_config]
+doc = "Container-resource runtime configuration."
+azure = ["env", "localImage", "mapDockerSocket", "mountReadOnly", "options", "ports", "volumes"]
+
+[resource.field.data]
+doc = "Inline data / loaded extension of a template resource."
+drone = ["data", "load"]
+
+[workspace]
+doc = "A shared / mounted volume a job's steps read and write."
+
+[workspace.maps]
+azure = ["jobWorkspace", "phaseTargetWorkspace", "readOnlyMounts"]
+tekton = ["workspace_decl", "workspace_binding"]
+google_cloudbuild = ["Volume"]
+argo = []
+
+[workspace.field.name]
+doc = "Workspace name."
+tekton = ["name"]
+google_cloudbuild = ["name"]
+
+[workspace.field.mount_path]
+doc = "Path the workspace is mounted at."
+tekton = ["mountPath"]
+google_cloudbuild = ["path"]
+
+[workspace.field.description]
+doc = "Human description."
+tekton = ["description"]
+
+[workspace.field.optional]
+doc = "Whether the workspace is optional."
+tekton = ["optional"]
+
+[workspace.field.sub_path]
+doc = "Sub-path within the bound volume."
+tekton = ["subPath"]
+
+[workspace.field.source]
+doc = "The volume the workspace binds to."
+tekton = ["workspace"]
+
+[workspace.field.clean]
+doc = "Whether the workspace is cleaned before the run."
+azure = ["clean"]
+
+[workspace.field.read_only_mounts]
+doc = "Categories mounted read-only (externals / tasks / tools / work)."
+azure = ["externals", "tasks", "tools", "work"]
+
+# ── flow control ────────────────────────────────────────────────
+
+[trigger]
+doc = "What starts the pipeline — push, PR, schedule, manual, webhook."
+
+[trigger.maps]
+github = []
+gitlab = ["workflowConfig"]
+jenkins = ["trigger"]
+azure = ["webhookFilter", "includeExcludeFilters"]
+bitbucket = ["trigger_configuration", "trigger_context"]
+drone = []
+aws_codepipeline = []
+buildkite = ["triggerStep", "nestedTriggerStep"]
+
+[trigger.field.kind]
+doc = "Trigger kind — cron / poll / upstream / webhook / pipeline."
+jenkins = ["cron", "pollSCM", "upstream"]
+bitbucket = ["type"]
+buildkite = ["type"]
+
+[trigger.field.schedule]
+doc = "Schedule specification."
+
+[trigger.field.branches]
+doc = "Branch filter."
+buildkite = ["branches"]
+
+[trigger.field.paths]
+doc = "Path filter."
+
+[trigger.field.condition]
+doc = "Guard on whether the trigger fires."
+bitbucket = ["condition"]
+buildkite = ["if", "if_changed"]
+
+[trigger.field.target_pipeline]
+doc = "The downstream pipeline a trigger-step starts."
+bitbucket = ["pipelines"]
+buildkite = ["trigger", "build"]
+
+[trigger.field.parent]
+doc = "Parent pipeline / step that triggered this run."
+bitbucket = ["parent_pipeline_run_uuid", "parent_pipeline_uuid", "parent_step_uuid"]
+
+[trigger.field.name]
+doc = "Trigger / trigger-step name."
+buildkite = ["name", "label"]
+
+[trigger.field.id]
+doc = "Stable identifier."
+buildkite = ["id", "identifier", "key"]
+
+[trigger.field.depends_on]
+doc = "Steps the trigger-step waits on."
+buildkite = ["depends_on"]
+
+[trigger.field.async]
+doc = "Whether the trigger does not block on the downstream run."
+buildkite = ["async"]
+
+[trigger.field.skip]
+doc = "Whether the trigger is skipped."
+buildkite = ["skip"]
+
+[trigger.field.soft_fail]
+doc = "Whether a downstream failure is tolerated."
+buildkite = ["soft_fail"]
+
+[condition]
+doc = "Whether a job / step / stage runs — the `when` / `if` guard."
+
+[condition.maps]
+github = []
+gitlab = []
+jenkins = ["when", "input"]
+azure = ["check"]
+bitbucket = ["condition"]
+drone = ["allConditions"]
+woodpecker = ["step_when_condition", "workflow_when_condition"]
+tekton = ["when_expression"]
+argo = []
+buildkite = []
+
+[condition.field.expr]
+doc = "A free-form boolean expression."
+jenkins = ["expression", "equals"]
+woodpecker = ["evaluate"]
+tekton = ["input", "operator", "values"]
+
+[condition.field.branch]
+doc = "Branch the run is on."
+jenkins = ["branch"]
+drone = ["branch"]
+woodpecker = ["branch"]
+
+[condition.field.tag]
+doc = "Tag / building-a-tag guard."
+jenkins = ["tag", "buildingTag"]
+
+[condition.field.change_request]
+doc = "Pull/merge-request guard."
+jenkins = ["changeRequest"]
+
+[condition.field.changes]
+doc = "Changed-paths / changelog guard."
+jenkins = ["changelog", "changeset"]
+bitbucket = ["changesets"]
+drone = ["paths"]
+woodpecker = ["path"]
+
+[condition.field.env_match]
+doc = "Environment-variable equality guard."
+jenkins = ["environment"]
+
+[condition.field.triggered_by]
+doc = "Guard on what triggered the run."
+jenkins = ["triggeredBy"]
+
+[condition.field.combinator]
+doc = "Boolean combination of nested conditions (all / any / not)."
+jenkins = ["allOf", "anyOf", "not"]
+
+[condition.field.before]
+doc = "Whether the condition is evaluated before agent / input / options."
+jenkins = ["beforeAgent", "beforeInput", "beforeOptions"]
+
+[condition.field.gate]
+doc = "Manual-input gate payload."
+jenkins = ["id", "message", "ok", "parameters", "submitter", "submitterParameter"]
+
+[condition.field.kind]
+doc = "Condition / check kind."
+azure = ["type"]
+
+[condition.field.state]
+doc = "Required build / commit state."
+bitbucket = ["state"]
+drone = ["status"]
+woodpecker = ["status"]
+
+[condition.field.event]
+doc = "Triggering event the run must match."
+drone = ["event"]
+woodpecker = ["event"]
+
+[condition.field.ref]
+doc = "Git ref guard."
+drone = ["ref"]
+woodpecker = ["ref"]
+
+[condition.field.repo]
+doc = "Repository / instance guard."
+drone = ["repo", "instance"]
+woodpecker = ["repo", "instance"]
+
+[condition.field.target_branch]
+doc = "Target branch of a PR."
+drone = ["target"]
+
+[condition.field.cron]
+doc = "Named cron-schedule guard."
+drone = ["cron"]
+woodpecker = ["cron"]
+
+[condition.field.platform]
+doc = "OS / arch guard."
+woodpecker = ["platform"]
+
+[condition.field.matrix_filter]
+doc = "Guard on matrix-cell values."
+woodpecker = ["matrix"]
+
+[matrix]
+doc = "Fan-out: run a job once per combination of axis values."
+
+[matrix.maps]
+github = []
+gitlab = []
+jenkins = ["matrix"]
+azure = []
+buildkite = ["matrixObject", "matrixAdjustments"]
+woodpecker = ["matrix"]
+tekton = []
+
+[matrix.field.axes]
+doc = "The fan-out axes / dimensions."
+jenkins = ["axes"]
+buildkite = ["setup"]
+woodpecker = ["include"]
+
+[matrix.field.exclude]
+doc = "Combinations removed from the product."
+jenkins = ["excludes"]
+
+[matrix.field.stages]
+doc = "Stages run per matrix cell."
+jenkins = ["stages"]
+
+[matrix.field.adjustments]
+doc = "Per-combination overrides added to the product."
+buildkite = ["adjustments", "with"]
+
+[matrix.field.skip]
+doc = "Combinations skipped."
+buildkite = ["skip"]
+
+[matrix.field.soft_fail]
+doc = "Combinations whose failure is tolerated."
+buildkite = ["soft_fail"]
+
+[concurrency]
+doc = "Limits / groups concurrent runs."
+
+[concurrency.maps]
+github = ["concurrency"]
+drone = ["concurrency"]
+gitlab = ["workflowAutoCancel"]
+
+[concurrency.field.group]
+doc = "Concurrency group key — runs in the same group serialize."
+github = ["group"]
+
+[concurrency.field.cancel_in_progress]
+doc = "Whether an in-progress run is cancelled by a newer one."
+github = ["cancel-in-progress"]
+gitlab = ["on_new_commit", "on_job_failure"]
+
+[concurrency.field.queue]
+doc = "Queueing behaviour for superseded runs."
+github = ["queue"]
+
+[concurrency.field.limit]
+doc = "Maximum concurrent runs."
+drone = ["limit"]
+
+# ── data ────────────────────────────────────────────────────────
+
+[variable]
+doc = "An environment variable / key-value binding in scope."
+
+[variable.maps]
+github = []
+gitlab = []
+jenkins = []
+azure = ["variablesTemplate"]
+bitbucket = ["variables_item"]
+aws_codebuild = ["env"]
+aws_codepipeline = ["variable"]
+argo = []
+earthly = []
+
+[variable.field.name]
+doc = "The variable's name (when it is a list item, not a map key)."
+aws_codepipeline = ["name"]
+
+[variable.field.default]
+doc = "Default / literal value of the variable."
+aws_codepipeline = ["defaultValue"]
+
+[variable.field.bindings]
+doc = "The name=value bindings."
+azure = ["variables"]
+bitbucket = ["variables"]
+aws_codebuild = ["variables"]
+
+[variable.field.parameters]
+doc = "Parameters a variable-template declares."
+azure = ["parameters"]
+
+[variable.field.exported]
+doc = "Variables exported out of the build for later phases."
+aws_codebuild = ["exported-variables"]
+
+[variable.field.from_store]
+doc = "Variables sourced from a parameter / secret store."
+aws_codebuild = ["parameter-store", "secrets-manager"]
+
+[variable.field.shell]
+doc = "Shell the variables apply to."
+aws_codebuild = ["shell"]
+
+[variable.field.git_credentials]
+doc = "Whether the git credential helper is enabled."
+aws_codebuild = ["git-credential-helper"]
+
+[parameter]
+doc = "A typed input to the pipeline or a reusable unit."
+
+[parameter.maps]
+github = ["workflowDispatchInput"]
+gitlab = ["baseInput"]
+jenkins = ["parameter"]
+azure = ["templateParameter", "pipelineTemplateParameter"]
+tekton = ["param_spec", "param_value", "result_decl"]
+argo = ["parameter", "arguments", "inputs", "outputs"]
+buildkite = ["inputStep", "nestedInputStep", "textField", "selectField", "selectFieldOption"]
+earthly = []
+dagger = []
+
+[parameter.field.name]
+doc = "Parameter name."
+jenkins = ["name"]
+azure = ["name"]
+tekton = ["name"]
+argo = ["name"]
+aws_codepipeline = ["name"]
+buildkite = ["name", "label", "key", "text", "select"]
+
+[parameter.field.type]
+doc = "Declared type of the parameter."
+github = ["type"]
+gitlab = ["type"]
+jenkins = ["type"]
+azure = ["type"]
+tekton = ["type"]
+buildkite = ["type"]
+
+[parameter.field.default]
+doc = "Default value when none is supplied."
+github = ["default"]
+gitlab = ["default"]
+jenkins = ["defaultValue"]
+azure = ["default"]
+tekton = ["default"]
+argo = ["default"]
+aws_codepipeline = ["defaultValue"]
+buildkite = ["default"]
+
+[parameter.field.description]
+doc = "Human description / display name."
+github = ["description"]
+gitlab = ["description"]
+jenkins = ["description"]
+azure = ["displayName"]
+tekton = ["description"]
+aws_codepipeline = ["description"]
+buildkite = ["hint"]
+
+[parameter.field.options]
+doc = "Allowed values (enumerated parameter)."
+github = ["options"]
+gitlab = ["options"]
+azure = ["values"]
+buildkite = ["options"]
+
+[parameter.field.required]
+doc = "Whether the parameter must be supplied."
+github = ["required"]
+buildkite = ["required"]
+
+[parameter.field.value]
+doc = "Concrete value passed for the parameter."
+tekton = ["value"]
+argo = ["value", "valueFrom"]
+buildkite = ["value"]
+
+[parameter.field.constraint]
+doc = "Validation constraint on the value (regex / format)."
+gitlab = ["regex"]
+buildkite = ["format"]
+
+[parameter.field.deprecated]
+doc = "Deprecation notice for the parameter."
+github = ["deprecationMessage"]
+
+[parameter.field.result]
+doc = "A named result a unit emits as output."
+argo = ["result"]
+
+[parameter.field.artifacts]
+doc = "Artifact-typed inputs / outputs of a reusable unit."
+argo = ["artifacts"]
+
+[parameter.field.parameters]
+doc = "Parameter-typed inputs / outputs of a reusable unit."
+argo = ["parameters"]
+
+[parameter.field.multiple]
+doc = "Whether multiple values may be selected."
+buildkite = ["multiple"]
+
+[parameter.field.gate]
+doc = "Manual-input-step payload (a parameter collected via a gate)."
+buildkite = ["allow_dependency_failure", "allowed_teams", "blocked_state", "branches", "depends_on", "fields", "id", "identifier", "if", "input", "prompt"]
+
+[secret]
+doc = "A reference to a secret value, resolved at run time."
+
+[secret.maps]
+gitlab = []
+drone = ["secret", "kind_secret", "kind_signature"]
+travis = ["secretString"]
+woodpecker = ["step_kubernetes_secret"]
+google_cloudbuild = ["Secret"]
+aws_codebuild = []
+bitbucket = ["step_auth", "storage_aws_auth", "storage_gcp_auth"]
+
+[secret.field.name]
+doc = "Secret name."
+drone = ["name"]
+woodpecker = ["name"]
+
+[secret.field.ref]
+doc = "Reference resolving the secret value at run time."
+drone = ["from_secret", "get"]
+woodpecker = ["key"]
+
+[secret.field.value]
+doc = "Inlined (encrypted) secret value."
+drone = ["data"]
+travis = ["secure"]
+google_cloudbuild = ["secretEnv"]
+
+[secret.field.kind]
+doc = "Secret-kind discriminator."
+drone = ["kind"]
+
+[secret.field.signature]
+doc = "HMAC / signature material."
+drone = ["hmac"]
+
+[secret.field.target]
+doc = "Where the secret is delivered (env var / mount)."
+woodpecker = ["target"]
+
+[secret.field.key_ref]
+doc = "KMS / encryption key the secret is sealed with."
+google_cloudbuild = ["kmsKeyName"]
+
+[secret.field.backend]
+doc = "External secret backend / store coordinates."
+bitbucket = ["system", "access-key", "secret-key", "bucket", "oidc-role", "region", "key-file"]
+
+[template]
+doc = "A reusable pipeline fragment, parameterized and referenced from another pipeline."
+
+[template.maps]
+azure = ["extends", "extendsTemplateBase", "stepsTemplate"]
+bitbucket = ["import_inline_pipeline", "import_source", "import_source_pipeline"]
+github = []
+gitlab = []
+
+[template.field.ref]
+doc = "Reference to the template being included / extended."
+azure = ["template"]
+bitbucket = ["import"]
+
+[template.field.parameters]
+doc = "Parameters / variables passed into the template."
+azure = ["parameters"]
+bitbucket = ["variables"]
+
+[template.field.body]
+doc = "The steps the template contributes."
+azure = ["steps"]
+
+[template.field.resources]
+doc = "Resources the template declares."
+azure = ["resources"]
+
+[template.field.variables]
+doc = "Variables the template declares."
+azure = ["variables"]
+
+[template.field.triggers]
+doc = "Triggers the template declares."
+azure = ["trigger"]
+
+[permissions]
+doc = "Token / identity scopes granted to a job or pipeline."
+
+[permissions.maps]
+github = ["permissions-event"]
+bitbucket = ["agent_permissions"]
+
+[permissions.field.scopes]
+doc = "Per-resource permission scopes granted to the run token."
+github = ["actions", "artifact-metadata", "attestations", "checks", "contents", "deployments", "discussions", "id-token", "issues", "models", "packages", "pages", "pull-requests", "repository-projects", "security-events", "statuses"]
+
+[permissions.field.prompt]
+doc = "Whether elevated permissions require an interactive prompt."
+bitbucket = ["on-ask"]
+
+# ── persistence ─────────────────────────────────────────────────
+
+[cache]
+doc = "Files persisted between runs for reuse."
+
+[cache.maps]
+gitlab = ["cache_item"]
+bitbucket = ["cache_expanded"]
+aws_codebuild = ["cache"]
+earthly = []
+
+[cache.field.key]
+doc = "Cache key — what the cache is keyed on."
+gitlab = ["key"]
+bitbucket = ["key"]
+
+[cache.field.paths]
+doc = "Paths included in the cache."
+gitlab = ["paths"]
+bitbucket = ["path"]
+aws_codebuild = ["paths"]
+
+[cache.field.policy]
+doc = "Pull / push policy."
+gitlab = ["policy"]
+
+[cache.field.fallback_keys]
+doc = "Keys tried when the primary key misses."
+gitlab = ["fallback_keys"]
+
+[cache.field.untracked]
+doc = "Whether git-untracked files are cached."
+gitlab = ["untracked"]
+
+[cache.field.unprotect]
+doc = "Whether the cache is shared with unprotected refs."
+gitlab = ["unprotect"]
+
+[cache.field.when]
+doc = "When the cache is saved (on success / always / …)."
+gitlab = ["when"]
+
+[artifact]
+doc = "Files produced by a job, published for later jobs or download."
+
+[artifact.maps]
+gitlab = ["artifacts"]
+bitbucket = ["artifacts_upload", "artifacts_expanded"]
+google_cloudbuild = ["Artifacts", "ArtifactObjects", "MavenArtifacts", "NpmPackages", "PythonPackages", "GoModules"]
+aws_codebuild = ["artifacts", "report"]
+aws_codepipeline = ["artifact_store"]
+argo = ["artifact"]
+earthly = []
+
+[artifact.field.name]
+doc = "Artifact name."
+gitlab = ["name"]
+bitbucket = ["name"]
+aws_codebuild = ["name"]
+argo = ["name"]
+
+[artifact.field.paths]
+doc = "Paths collected into the artifact."
+gitlab = ["paths"]
+bitbucket = ["paths"]
+google_cloudbuild = ["paths", "path", "objects", "sourcePath", "packagePath", "modulePath"]
+aws_codebuild = ["files"]
+argo = ["path"]
+
+[artifact.field.exclude]
+doc = "Paths excluded from the artifact."
+gitlab = ["exclude"]
+bitbucket = ["ignore-paths"]
+aws_codebuild = ["exclude-paths"]
+
+[artifact.field.when]
+doc = "When the artifact is captured (on success / always / …)."
+gitlab = ["when"]
+bitbucket = ["capture-on"]
+
+[artifact.field.expire_in]
+doc = "Retention duration."
+gitlab = ["expire_in"]
+
+[artifact.field.expose_as]
+doc = "Label the artifact is exposed under in the UI."
+gitlab = ["expose_as"]
+
+[artifact.field.access]
+doc = "Who may download the artifact."
+gitlab = ["access"]
+
+[artifact.field.untracked]
+doc = "Whether git-untracked files are included."
+gitlab = ["untracked"]
+
+[artifact.field.reports]
+doc = "Typed reports (junit, coverage, SAST, …) bundled with the artifact."
+gitlab = ["reports"]
+
+[artifact.field.kind]
+doc = "Artifact / report kind discriminator."
+bitbucket = ["type"]
+aws_codebuild = ["file-format"]
+
+[artifact.field.depth]
+doc = "Directory depth captured."
+bitbucket = ["depth"]
+
+[artifact.field.direction]
+doc = "Whether the step uploads or downloads the artifact."
+bitbucket = ["download", "upload"]
+
+[artifact.field.subtypes]
+doc = "Per-ecosystem artifact groups (Maven / npm / Python / Go)."
+ref = "artifact"
+google_cloudbuild = ["goModules", "mavenArtifacts", "npmPackages", "pythonPackages"]
+
+[artifact.field.location]
+doc = "Destination location / bucket."
+google_cloudbuild = ["location", "repositoryLocation"]
+aws_codepipeline = ["location"]
+
+[artifact.field.repository]
+doc = "Target package repository."
+google_cloudbuild = ["repository", "repositoryName", "repositoryProject_id"]
+
+[artifact.field.version]
+doc = "Published version."
+google_cloudbuild = ["version", "moduleVersion"]
+
+[artifact.field.coordinates]
+doc = "Package coordinates (group / artifact id)."
+google_cloudbuild = ["artifactId", "groupId"]
+
+[artifact.field.base_directory]
+doc = "Base directory paths are taken relative to."
+aws_codebuild = ["base-directory"]
+
+[artifact.field.discard_paths]
+doc = "Whether directory structure is flattened."
+aws_codebuild = ["discard-paths"]
+
+[artifact.field.symlinks]
+doc = "Whether symlinks are preserved."
+aws_codebuild = ["enable-symlinks"]
+
+[artifact.field.prefix]
+doc = "Destination key prefix."
+aws_codebuild = ["s3-prefix"]
+
+[artifact.field.secondary]
+doc = "Additional named artifact sets."
+aws_codebuild = ["secondary-artifacts"]
+
+[artifact.field.encryption]
+doc = "Encryption key for the artifact store."
+aws_codepipeline = ["encryptionKey"]
+
+[artifact.field.store_type]
+doc = "Artifact-store backend type."
+aws_codepipeline = ["type"]
+
+[artifact.field.source]
+doc = "Where an input artifact is fetched from."
+argo = ["from", "git", "http", "s3"]
+
+# ── lifecycle ───────────────────────────────────────────────────
+
+[hook]
+doc = "Lifecycle steps that run around the main work — before / after / on-success / on-failure / cleanup."
+
+[hook.maps]
+gitlab = ["hooks"]
+jenkins = ["post"]
+azure = ["preDeployHook", "deployHook", "onSuccessHook", "onFailureHook", "onSuccessOrFailureHook", "routeTrafficHook", "postRouteTrafficHook"]
+argo = []
+aws_codebuild = []
+bitbucket = ["final_step", "final_item"]
+
+[hook.field.phase]
+doc = "Lifecycle phase the hook fires at (always / success / failure / …)."
+jenkins = ["aborted", "always", "changed", "cleanup", "failure", "fixed", "regression", "success", "unstable", "unsuccessful"]
+azure = ["failure", "success"]
+
+[hook.field.steps]
+doc = "Steps the hook runs."
+azure = ["steps"]
+bitbucket = ["script", "after-script"]
+
+[hook.field.agent]
+doc = "Agent the hook runs on."
+azure = ["pool"]
+bitbucket = ["runs-on", "runtime", "size"]
+
+[hook.field.pre_script]
+doc = "Script run before sources are fetched."
+gitlab = ["pre_get_sources_script"]
+
+[hook.field.job]
+doc = "When the hook is shaped as a full job (bitbucket final step), its job-level keys."
+bitbucket = ["name", "image", "services", "caches", "artifacts", "clone", "deployment", "environment", "trigger", "type", "oidc", "auth", "input-variables", "max-time", "concurrency-group", "custom", "fail-fast"]
+
+[hook.field.nested]
+doc = "A hook nested inside another (final-item wrapper)."
+bitbucket = ["final"]
+
+[deployment]
+doc = "A deploy to a named environment, possibly with a strategy."
+
+[deployment.maps]
+github = ["environment"]
+gitlab = []
+azure = ["canaryDeploymentStrategy", "rollingDeploymentStrategy", "runOnceDeploymentStrategy"]
+travis = ["deployment"]
+
+[deployment.field.name]
+doc = "Target environment name."
+github = ["name"]
+
+[deployment.field.url]
+doc = "URL the deployment is reachable at."
+github = ["url"]
+
+[deployment.field.deployment]
+doc = "Deployment metadata / reference."
+github = ["deployment"]
+
+[deployment.field.strategy_phases]
+doc = "The strategy's lifecycle phases (preDeploy / deploy / routeTraffic / postRouteTraffic)."
+azure = ["deploy", "preDeploy", "routeTraffic", "postRouteTraffic"]
+
+[deployment.field.triggers]
+doc = "Conditions under which the deploy strategy runs."
+azure = ["on"]
+travis = ["on"]
+
+[deployment.field.increments]
+doc = "Canary traffic increments."
+azure = ["increments"]
+
+[deployment.field.max_parallel]
+doc = "Rolling-strategy parallelism."
+azure = ["maxParallel"]
+
+[notification]
+doc = "Out-of-band reporting of pipeline outcome."
+
+[notification.maps]
+buildkite = ["notifySlack", "notifySlackObject", "notifyEmail", "notifyWebhook", "notifyGithubCheck", "notifyGithubCommitStatus", "notifyPagerduty", "notifyBasecamp"]
+
+[notification.field.channel]
+doc = "Destination — Slack / email / webhook / PagerDuty / Basecamp / GitHub status."
+buildkite = ["slack", "channels", "email", "webhook", "github_check", "github_commit_status", "pagerduty_change_event", "basecamp_campfire"]
+
+[notification.field.message]
+doc = "Notification body."
+buildkite = ["message"]
+
+[notification.field.condition]
+doc = "Guard on whether the notification fires."
+buildkite = ["if"]
+
+# ── retry / robustness ──────────────────────────────────────────
+
+[retry]
+doc = "Automatic re-run policy on failure."
+
+[retry.maps]
+buildkite = ["automaticRetry", "softFailObject"]
+gitlab = []
+azure = []
+
+[retry.field.limit]
+doc = "Maximum retry attempts."
+buildkite = ["limit"]
+
+[retry.field.exit_status]
+doc = "Exit statuses that trigger a retry."
+buildkite = ["exit_status"]
+
+[retry.field.signal]
+doc = "Signal that triggers a retry."
+buildkite = ["signal"]
+
+[retry.field.signal_reason]
+doc = "Signal-reason that triggers a retry."
+buildkite = ["signal_reason"]
+
+# ── lexical layer — round-trip fidelity ─────────────────────────
+# These have NO entry in any platform's construct schema, yet they
+# live in the source file and must live in the IR: without them
+# a -> ir -> a loses the user's formatting and a -> ir -> b cannot
+# preserve intent. They are universal (every target has comments
+# and whitespace) and are carried from the CST layer. `source =
+# "cst"` marks that — the coverage check does not expect a schema
+# construct behind them.
+
+[comment]
+doc = "A source comment — leading (above an element), trailing (end-of-line), or standalone. Bound to the nearest construct so an edit carries it along."
+source = "cst"
+
+[blank_run]
+doc = "A run of blank lines between elements — preserved so emit does not collapse intentional spacing."
+source = "cst"
+
+[key_order]
+doc = "The order keys appear within a mapping. YAML mappings are ordered in practice; recorded so emit does not reshuffle."
+source = "cst"
+
+[anchor]
+doc = "A YAML anchor / alias (&a, *a) or merge key (<<:). The IR records the anchor graph so emit can re-emit the alias instead of inlining the resolved value."
+source = "cst"
+
+[scalar_style]
+doc = "How a scalar was written — plain, single/double-quoted, block-literal (|), block-folded (>), flow. Recorded per scalar so emit preserves it."
+source = "cst"
+
+[provenance]
+doc = "Byte range of every element in its source file. Enables surgical re-emit of only changed regions, and diagnostics."
+source = "cst"
+
+# No fold / ignore registry: a CI pipeline construct never carries
+# zero information, so nothing may be discarded. Every platform
+# section maps to an IR construct — including schema-decomposition
+# variants (a `nested*` twin maps to the same construct as its
+# base) and field-carrier blocks (`defaults`, `options`, whose keys
+# become fields of the construct they configure). Many platform
+# sections map to one IR construct — that is normalization, not
+# loss.
+
+# ── Azure structural trigger model (replaces concept-normalised triggers) ──
+[pipeline.field.pull_request]
+doc = "Pull-request triggers (Azure `pr:`) — distinct from push triggers."
+ref = "pull_request"
+azure = ["pr"]
+
+[pipeline.field.schedules]
+doc = "Scheduled (cron) triggers."
+ref = "schedule"
+azure = ["schedules"]
+
+[trigger.field.branch_filter]
+doc = "Branch include/exclude filter (Azure `trigger.branches`)."
+ref = "include_exclude_filter"
+azure = ["branches"]
+
+[trigger.field.tag_filter]
+doc = "Tag include/exclude filter (Azure `trigger.tags`)."
+ref = "include_exclude_filter"
+azure = ["tags"]
+
+[trigger.field.path_filter]
+doc = "Path include/exclude filter (Azure `trigger.paths`)."
+ref = "include_exclude_filter"
+azure = ["paths"]
+
+[include_exclude_filter]
+doc = "An include/exclude pattern filter (branches, tags, paths)."
+
+[include_exclude_filter.maps]
+azure = ["includeExcludeFilters"]
+
+[include_exclude_filter.field.include]
+doc = "Patterns that match (allow-list)."
+azure = ["include"]
+
+[include_exclude_filter.field.exclude]
+doc = "Patterns that are excluded (deny-list)."
+azure = ["exclude"]
+
+[schedule]
+doc = "A cron schedule that triggers the pipeline (Azure `schedules:`)."
+
+[schedule.maps]
+azure = ["schedule"]
+
+[schedule.field.cron]
+doc = "Cron expression."
+azure = ["cron"]
+
+[schedule.field.display_name]
+doc = "Human-readable schedule name."
+azure = ["displayName"]
+
+[schedule.field.always]
+doc = "Run even with no source changes."
+azure = ["always"]
+
+[schedule.field.batch]
+doc = "Batch concurrent runs."
+azure = ["batch"]
+
+[schedule.field.branch_filter]
+doc = "Branch filter the schedule applies to."
+ref = "include_exclude_filter"
+azure = ["branches"]
+
+[step.field.publish]
+doc = "Publish-artifact step path (Azure `publish:`)."
+azure = ["publish"]
+
+[step.field.artifact]
+doc = "Published artifact name (Azure `artifact:`)."
+azure = ["artifact"]
+
+[pull_request]
+doc = "Pull-request trigger (Azure `pr:`) — distinct from push triggers so it round-trips under its own key."
+
+[pull_request.maps]
+azure = ["ciTrigger"]
+
+[pull_request.field.branch_filter]
+doc = "Branch include/exclude filter."
+ref = "include_exclude_filter"
+azure = ["branches"]
+
+[pull_request.field.tag_filter]
+doc = "Tag include/exclude filter."
+ref = "include_exclude_filter"
+azure = ["tags"]
+
+[pull_request.field.path_filter]
+doc = "Path include/exclude filter."
+ref = "include_exclude_filter"
+azure = ["paths"]
+
+[job.field.rules]
+doc = "gitlab modern rule clauses (`rules:`)."
+ref = "rule_clause"
+gitlab = ["rules"]
+
+[rule_clause]
+doc = "One clause of a gitlab rules: list."
+
+[rule_clause.maps]
+gitlab = ["ruleClause"]
+
+[rule_clause.field.if_expr]
+doc = "if condition."
+gitlab = ["if"]
+
+[rule_clause.field.when]
+doc = "when."
+gitlab = ["when"]
+
+[rule_clause.field.changes]
+doc = "changes."
+gitlab = ["changes"]
+
+[rule_clause.field.variables]
+doc = "variables."
+gitlab = ["variables"]
+
+[trigger.field.rules]
+doc = "gitlab `workflow.rules` — pipeline-level rule clauses."
+ref = "rule_clause"
+gitlab = ["rules"]

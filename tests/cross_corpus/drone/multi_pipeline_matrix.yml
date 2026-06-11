@@ -1,0 +1,69 @@
+kind: pipeline
+type: docker
+name: lint-and-test
+platform:
+  os: linux
+  arch: amd64
+clone:
+  depth: 50
+trigger:
+  branch:
+    include:
+      - main
+      - develop
+      - release/*
+    exclude:
+      - tmp/*
+  event:
+    include:
+      - push
+      - pull_request
+      - tag
+  paths:
+    include:
+      - src/**
+      - tests/**
+    exclude:
+      - docs/**
+cron: '0 2 * * *'
+steps:
+  - name: lint
+    image: rust:1.75
+    commands:
+      - cargo fmt --check
+      - cargo clippy --all-targets -- -D warnings
+  - name: test
+    image: rust:1.75
+    depends_on:
+      - lint
+    environment:
+      RUST_LOG: debug
+      CARGO_HOME: /cache/cargo
+    commands:
+      - cargo test --workspace --release
+  - name: coverage
+    image: xd009642/tarpaulin:0.27.3
+    depends_on:
+      - test
+    privileged: true
+    commands:
+      - cargo tarpaulin --workspace --out Xml
+  - name: build-image
+    image: plugins/docker
+    depends_on:
+      - test
+    when:
+      event:
+        include:
+          - tag
+      ref:
+        include:
+          - refs/tags/v*
+    settings:
+      repo: example/app
+      tags:
+        - latest
+volumes:
+  - name: cargo-cache
+    host:
+      path: /var/cache/cargo

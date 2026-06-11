@@ -1,0 +1,18 @@
+# catalog/classify/woodpecker.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "woodpecker"
+key_count = 6
+
+[classify]
+depends_on = "dependency_edge"
+image = "image"
+matrix = "matrix"
+services = "map:service"
+steps = "map:step"
+variables = "variable"
+
+# keys whose value-mapping construct is context-dependent:
+#   when: ['condition', 'trigger']

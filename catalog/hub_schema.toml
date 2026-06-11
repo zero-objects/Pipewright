@@ -1,0 +1,539 @@
+# catalog/hub_schema.toml — the Hub-IR schema. Generated from
+# catalog/ir.toml by gen_hub_schema.py. Node-kinds + fields;
+# each field is a scalar attribute or a `ref:<kind>` edge to
+# another node. This is the spec pipeline-hub-ir and the TGG
+# rules are built against — do not hand-edit; regenerate.
+#
+# SATELLITE MODEL (a): a `scalar` field is NOT an attribute on
+# the construct node — the TGG engine cannot bind onto a
+# shared-anchor node. It is realised as a `hub:attr` child
+# node {name, value} on a `has_attr` edge. A `ref` field is a
+# child node of the referenced kind. Every field is a child;
+# only the always-fresh `hub:attr` node carries real bound
+# attributes.
+
+[meta]
+kind = "hub-schema"
+edge_kinds = ["has_agent", "has_artifact", "has_attr", "has_cache", "has_concurrency", "has_condition", "has_dependency_edge", "has_deployment", "has_hook", "has_image", "has_include_exclude_filter", "has_item", "has_job", "has_matrix", "has_notification", "has_parameter", "has_permissions", "has_pipeline", "has_pull_request", "has_resource", "has_retry", "has_rule_clause", "has_schedule", "has_secret", "has_service", "has_stage", "has_step", "has_template", "has_trigger", "has_value", "has_variable"]
+model = "satellite"
+generated_from = "catalog/ir.toml"
+node_kinds = 29
+lexical_kinds = 6
+
+[node.agent]
+doc = "Selects WHERE a job runs — runner labels, pool, resource class."
+[node.agent.fields]
+any = "scalar"
+config = "scalar"
+container = "scalar"
+docker = "scalar"
+dockerfile = "scalar"
+kubernetes = "scalar"
+label = "scalar"
+labels = "scalar"
+node = "scalar"
+none = "scalar"
+permissions = "ref:permissions"
+platform = "scalar"
+resources = "ref:resource"
+security = "scalar"
+selector = "scalar"
+tolerations = "scalar"
+
+[node.artifact]
+doc = "Files produced by a job, published for later jobs or download."
+[node.artifact.fields]
+access = "scalar"
+base_directory = "scalar"
+coordinates = "scalar"
+depth = "scalar"
+direction = "scalar"
+discard_paths = "scalar"
+encryption = "scalar"
+exclude = "scalar"
+expire_in = "scalar"
+expose_as = "scalar"
+kind = "scalar"
+location = "scalar"
+name = "scalar"
+paths = "scalar"
+prefix = "scalar"
+reports = "scalar"
+repository = "scalar"
+secondary = "scalar"
+source = "scalar"
+store_type = "scalar"
+subtypes = "ref:artifact"
+symlinks = "scalar"
+untracked = "scalar"
+version = "scalar"
+when = "scalar"
+
+[node.cache]
+doc = "Files persisted between runs for reuse."
+[node.cache.fields]
+fallback_keys = "scalar"
+key = "scalar"
+paths = "scalar"
+policy = "scalar"
+unprotect = "scalar"
+untracked = "scalar"
+when = "scalar"
+
+[node.concurrency]
+doc = "Limits / groups concurrent runs."
+[node.concurrency.fields]
+cancel_in_progress = "scalar"
+group = "scalar"
+limit = "scalar"
+queue = "scalar"
+
+[node.condition]
+doc = "Whether a job / step / stage runs — the `when` / `if` guard."
+[node.condition.fields]
+before = "scalar"
+branch = "scalar"
+change_request = "scalar"
+changes = "scalar"
+combinator = "scalar"
+cron = "scalar"
+env_match = "scalar"
+event = "scalar"
+expr = "scalar"
+gate = "scalar"
+kind = "scalar"
+matrix_filter = "scalar"
+platform = "scalar"
+ref = "scalar"
+repo = "scalar"
+state = "scalar"
+tag = "scalar"
+target_branch = "scalar"
+triggered_by = "scalar"
+
+[node.dependency_edge]
+doc = "An ordering / data dependency between jobs. Most platforms express this as a job *key* (needs / dependsOn / runAfter), captured under [job]; the sections here are the ones that model a dependency as its own construct — argo DAG tasks and buildkite wait barriers."
+[node.dependency_edge.fields]
+arguments = "scalar"
+branches = "scalar"
+condition = "ref:condition"
+depends_expr = "scalar"
+depends_on = "ref:dependency_edge"
+fail_fast = "scalar"
+fan_out = "scalar"
+id = "scalar"
+kind = "scalar"
+name = "scalar"
+parameters = "ref:parameter"
+tasks = "scalar"
+template_ref = "scalar"
+
+[node.deployment]
+doc = "A deploy to a named environment, possibly with a strategy."
+[node.deployment.fields]
+deployment = "ref:deployment"
+increments = "scalar"
+max_parallel = "scalar"
+name = "scalar"
+strategy_phases = "scalar"
+triggers = "ref:trigger"
+url = "scalar"
+
+[node.hook]
+doc = "Lifecycle steps that run around the main work — before / after / on-success / on-failure / cleanup."
+[node.hook.fields]
+agent = "ref:agent"
+job = "ref:job"
+nested = "scalar"
+phase = "scalar"
+pre_script = "scalar"
+steps = "ref:step"
+
+[node.image]
+doc = "The container image a job runs in. Platforms with no image *section* (gitlab/argo/… carry it as a job/step key) keep an empty map — that key lands in [job] / [step]."
+[node.image.fields]
+credentials = "scalar"
+docker_socket = "scalar"
+endpoint = "scalar"
+env = "scalar"
+kind = "scalar"
+local = "scalar"
+mount_read_only = "scalar"
+name = "scalar"
+options = "scalar"
+ports = "scalar"
+run_as = "scalar"
+trigger = "ref:trigger"
+volumes = "scalar"
+
+[node.include_exclude_filter]
+doc = "An include/exclude pattern filter (branches, tags, paths)."
+[node.include_exclude_filter.fields]
+exclude = "scalar"
+include = "scalar"
+
+[node.job]
+doc = "A unit of work that runs on one agent / container."
+[node.job.fields]
+after_steps = "ref:step"
+agent = "ref:agent"
+allow_failure = "scalar"
+artifacts = "ref:artifact"
+backend = "scalar"
+before_steps = "ref:step"
+cache = "ref:cache"
+concurrency = "ref:concurrency"
+condition = "ref:condition"
+container = "scalar"
+defaults = "scalar"
+deployment = "ref:deployment"
+description = "scalar"
+expose = "scalar"
+extends = "scalar"
+healthcheck = "scalar"
+hooks = "ref:hook"
+id = "scalar"
+image = "ref:image"
+labels = "scalar"
+matrix = "ref:matrix"
+name = "scalar"
+needs = "ref:dependency_edge"
+options = "scalar"
+parameters = "ref:parameter"
+permissions = "ref:permissions"
+retry = "ref:retry"
+rules = "ref:rule_clause"
+script = "scalar"
+secrets = "ref:secret"
+services = "ref:service"
+stage = "ref:stage"
+steps = "ref:step"
+timeout = "scalar"
+toolchain = "scalar"
+tools = "scalar"
+trigger = "ref:trigger"
+uses = "scalar"
+variables = "ref:variable"
+volume = "scalar"
+working_dir = "scalar"
+
+[node.matrix]
+doc = "Fan-out: run a job once per combination of axis values."
+[node.matrix.fields]
+adjustments = "scalar"
+axes = "scalar"
+exclude = "scalar"
+skip = "scalar"
+soft_fail = "scalar"
+stages = "ref:stage"
+
+[node.notification]
+doc = "Out-of-band reporting of pipeline outcome."
+[node.notification.fields]
+channel = "scalar"
+condition = "ref:condition"
+message = "scalar"
+
+[node.parameter]
+doc = "A typed input to the pipeline or a reusable unit."
+[node.parameter.fields]
+artifacts = "ref:artifact"
+constraint = "scalar"
+default = "scalar"
+deprecated = "scalar"
+description = "scalar"
+gate = "scalar"
+multiple = "scalar"
+name = "scalar"
+options = "scalar"
+parameters = "ref:parameter"
+required = "scalar"
+result = "scalar"
+type = "scalar"
+value = "scalar"
+
+[node.permissions]
+doc = "Token / identity scopes granted to a job or pipeline."
+[node.permissions.fields]
+prompt = "scalar"
+scopes = "scalar"
+
+[node.pipeline]
+doc = "The whole pipeline definition — one config file / object."
+[node.pipeline.fields]
+agent = "ref:agent"
+anchors = "scalar"
+artifact_store = "scalar"
+artifacts = "ref:artifact"
+cache = "ref:cache"
+clone = "scalar"
+concurrency = "ref:concurrency"
+defaults = "scalar"
+definitions = "scalar"
+dependencies = "scalar"
+deployments = "ref:deployment"
+description = "scalar"
+entrypoint = "scalar"
+execution_mode = "scalar"
+experimental = "scalar"
+export = "scalar"
+hooks = "ref:hook"
+image = "ref:image"
+includes = "scalar"
+jobs = "ref:job"
+libraries = "scalar"
+logs = "scalar"
+matrix = "ref:matrix"
+name = "scalar"
+notifications = "ref:notification"
+options = "scalar"
+parameters = "ref:parameter"
+permissions = "ref:permissions"
+pipelines = "ref:pipeline"
+project = "scalar"
+pull_request = "ref:pull_request"
+resources = "ref:resource"
+role = "scalar"
+schedules = "ref:schedule"
+secrets = "ref:secret"
+services = "ref:service"
+stages = "ref:stage"
+steps = "ref:step"
+tags = "scalar"
+targets = "scalar"
+templates = "ref:template"
+timeout = "scalar"
+toolchain = "scalar"
+tools = "scalar"
+triggers = "ref:trigger"
+variables = "ref:variable"
+version = "scalar"
+volumes = "scalar"
+workflows = "scalar"
+workspace = "scalar"
+
+[node.pull_request]
+doc = "Pull-request trigger (Azure `pr:`) — distinct from push triggers so it round-trips under its own key."
+[node.pull_request.fields]
+branch_filter = "ref:include_exclude_filter"
+path_filter = "ref:include_exclude_filter"
+tag_filter = "ref:include_exclude_filter"
+
+[node.resource]
+doc = "An external entity the pipeline references — a repository, a container image registry, another pipeline, a package feed, a webhook source."
+[node.resource.fields]
+checkout = "scalar"
+connection = "scalar"
+container_config = "scalar"
+data = "scalar"
+filters = "scalar"
+kind = "scalar"
+name = "scalar"
+pools = "scalar"
+ref = "scalar"
+repositories = "scalar"
+trigger = "ref:trigger"
+
+[node.retry]
+doc = "Automatic re-run policy on failure."
+[node.retry.fields]
+exit_status = "scalar"
+limit = "scalar"
+signal = "scalar"
+signal_reason = "scalar"
+
+[node.rule_clause]
+doc = "One clause of a gitlab rules: list."
+[node.rule_clause.fields]
+changes = "scalar"
+if_expr = "scalar"
+variables = "ref:variable"
+when = "scalar"
+
+[node.schedule]
+doc = "A cron schedule that triggers the pipeline (Azure `schedules:`)."
+[node.schedule.fields]
+always = "scalar"
+batch = "scalar"
+branch_filter = "ref:include_exclude_filter"
+cron = "scalar"
+display_name = "scalar"
+
+[node.secret]
+doc = "A reference to a secret value, resolved at run time."
+[node.secret.fields]
+backend = "scalar"
+key_ref = "scalar"
+kind = "scalar"
+name = "scalar"
+ref = "scalar"
+signature = "scalar"
+target = "scalar"
+value = "scalar"
+
+[node.service]
+doc = "A side-container available to a job (DB, broker, …)."
+[node.service.fields]
+command = "scalar"
+condition = "ref:condition"
+credentials = "scalar"
+env = "scalar"
+image = "ref:image"
+kind = "scalar"
+name = "scalar"
+options = "scalar"
+ports = "scalar"
+pull = "scalar"
+resources = "ref:resource"
+volumes = "scalar"
+working_dir = "scalar"
+
+[node.stage]
+doc = "An ordered group of jobs. Optional — many platforms express ordering only as a dependency DAG."
+[node.stage.fields]
+blockers = "scalar"
+condition = "ref:condition"
+depends_on = "ref:dependency_edge"
+deployment = "ref:deployment"
+fail_fast = "scalar"
+group = "scalar"
+hooks = "ref:hook"
+id = "scalar"
+jobs = "ref:job"
+name = "scalar"
+nested_stage = "ref:stage"
+nested_stages = "ref:stage"
+notify = "scalar"
+parameters = "ref:parameter"
+skip = "scalar"
+trigger = "ref:trigger"
+
+[node.step]
+doc = "One command or action inside a job. Each [step.field.*] is a normalized IR field; the per-platform lists are the source keys that feed it — every key of every mapped section lands in exactly one field."
+[node.step.fields]
+agent = "ref:agent"
+artifact = "ref:artifact"
+attach_workspace = "scalar"
+branches = "scalar"
+checkout = "scalar"
+condition = "ref:condition"
+continue_on_error = "scalar"
+depends_on = "ref:dependency_edge"
+enabled = "scalar"
+env = "scalar"
+gate = "scalar"
+id = "scalar"
+image = "ref:image"
+kind = "scalar"
+name = "scalar"
+nested_steps = "ref:step"
+on_error = "scalar"
+options = "scalar"
+orb = "scalar"
+parameters = "ref:parameter"
+permissions = "ref:permissions"
+persist_to_workspace = "scalar"
+publish = "scalar"
+resources = "ref:resource"
+restore_cache = "scalar"
+retry = "ref:retry"
+run = "scalar"
+save_cache = "scalar"
+secrets = "ref:secret"
+shell = "scalar"
+store_artifacts = "scalar"
+store_test_results = "scalar"
+teams = "scalar"
+timeout = "scalar"
+uses = "scalar"
+volume_mounts = "scalar"
+with = "scalar"
+working_dir = "scalar"
+
+[node.template]
+doc = "A reusable pipeline fragment, parameterized and referenced from another pipeline."
+[node.template.fields]
+body = "scalar"
+parameters = "ref:parameter"
+ref = "scalar"
+resources = "ref:resource"
+triggers = "ref:trigger"
+variables = "ref:variable"
+
+[node.trigger]
+doc = "What starts the pipeline — push, PR, schedule, manual, webhook."
+[node.trigger.fields]
+async = "scalar"
+branch_filter = "ref:include_exclude_filter"
+branches = "scalar"
+condition = "ref:condition"
+depends_on = "ref:dependency_edge"
+id = "scalar"
+kind = "scalar"
+name = "scalar"
+parent = "scalar"
+path_filter = "ref:include_exclude_filter"
+paths = "scalar"
+rules = "ref:rule_clause"
+schedule = "ref:schedule"
+skip = "scalar"
+soft_fail = "scalar"
+tag_filter = "ref:include_exclude_filter"
+target_pipeline = "ref:pipeline"
+
+[node.variable]
+doc = "An environment variable / key-value binding in scope."
+[node.variable.fields]
+bindings = "scalar"
+default = "scalar"
+exported = "scalar"
+from_store = "scalar"
+git_credentials = "scalar"
+name = "scalar"
+parameters = "ref:parameter"
+shell = "scalar"
+
+[node.workspace]
+doc = "A shared / mounted volume a job's steps read and write."
+[node.workspace.fields]
+clean = "scalar"
+description = "scalar"
+mount_path = "scalar"
+name = "scalar"
+optional = "scalar"
+read_only_mounts = "scalar"
+source = "scalar"
+sub_path = "scalar"
+
+[lexical.anchor]
+doc = "A YAML anchor / alias (&a, *a) or merge key (<<:). The IR records the anchor graph so emit can re-emit the alias instead of inlining the resolved value."
+
+[lexical.blank_run]
+doc = "A run of blank lines between elements — preserved so emit does not collapse intentional spacing."
+
+[lexical.comment]
+doc = "A source comment — leading (above an element), trailing (end-of-line), or standalone. Bound to the nearest construct so an edit carries it along."
+
+[lexical.key_order]
+doc = "The order keys appear within a mapping. YAML mappings are ordered in practice; recorded so emit does not reshuffle."
+
+[lexical.provenance]
+doc = "Byte range of every element in its source file. Enables surgical re-emit of only changed regions, and diagnostics."
+
+[lexical.scalar_style]
+doc = "How a scalar was written — plain, single/double-quoted, block-literal (|), block-folded (>), flow. Recorded per scalar so emit preserves it."
+
+[node.attr]
+doc = "Satellite carrying one scalar field of its parent construct — name = the field, value = the resolved scalar. Always freshly created, so its own attributes are bindable."
+[node.attr.fields]
+name = "scalar"
+value = "scalar"
+
+[node.collection]
+doc = "An ordered list value of a field — has_item edges to its elements (a hub:value for scalar lists, a construct for ref lists). Identity from its parent hub:attr."
+[node.collection.fields]
+
+[node.value]
+doc = "A leaf scalar value node — the resolved text of a scalar field or a scalar-list element. Always freshly created, so its attributes are bindable."
+[node.value.fields]
+text = "scalar"

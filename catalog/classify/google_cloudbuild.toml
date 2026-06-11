@@ -1,0 +1,16 @@
+# catalog/classify/google_cloudbuild.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "google_cloudbuild"
+key_count = 7
+
+[classify]
+artifacts = "artifact"
+goModules = "artifact"
+mavenArtifacts = "artifact"
+npmPackages = "artifact"
+pythonPackages = "artifact"
+secrets = "secret"
+steps = "step"

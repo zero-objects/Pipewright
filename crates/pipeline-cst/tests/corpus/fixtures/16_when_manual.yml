@@ -1,0 +1,6 @@
+deploy_prod:
+  stage: deploy
+  script:
+    - echo "deploying to production"
+  when: manual
+  allow_failure: false

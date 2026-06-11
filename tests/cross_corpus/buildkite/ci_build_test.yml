@@ -1,0 +1,8 @@
+steps:
+  - label: build
+    command: cargo build --release
+    env:
+      CARGO_HOME: .cargo
+  - label: test
+    command: cargo test
+    depends_on: build

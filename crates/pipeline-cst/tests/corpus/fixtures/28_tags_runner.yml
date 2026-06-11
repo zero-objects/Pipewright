@@ -1,0 +1,13 @@
+build_arm:
+  tags:
+    - arm64
+    - docker
+  script:
+    - cargo build --target aarch64-unknown-linux-gnu
+
+build_amd:
+  tags:
+    - amd64
+    - docker
+  script:
+    - cargo build --target x86_64-unknown-linux-gnu

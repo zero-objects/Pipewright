@@ -1,0 +1,99 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: rust-release-
+  labels:
+    workflows.argoproj.io/archive-strategy: 'false'
+spec:
+  entrypoint: pipeline
+  arguments:
+    parameters:
+      - name: revision
+        value: main
+  volumeClaimTemplates:
+    - metadata:
+        name: workdir
+      spec:
+        accessModes: ['ReadWriteOnce']
+        resources:
+          requests:
+            storage: 1Gi
+  templates:
+    - name: pipeline
+      dag:
+        tasks:
+          - name: fetch
+            template: clone
+            arguments:
+              parameters:
+                - name: rev
+                  value: '{{workflow.parameters.revision}}'
+          - name: lint
+            dependencies: [fetch]
+            template: cargo-cmd
+            arguments:
+              parameters:
+                - name: cmd
+                  value: 'fmt --check'
+          - name: clippy
+            dependencies: [fetch]
+            template: cargo-cmd
+            arguments:
+              parameters:
+                - name: cmd
+                  value: 'clippy --all-targets -- -D warnings'
+          - name: test
+            dependencies: [lint, clippy]
+            template: cargo-cmd
+            arguments:
+              parameters:
+                - name: cmd
+                  value: 'test --workspace --release'
+          - name: publish
+            dependencies: [test]
+            template: cargo-cmd
+            when: "{{workflow.parameters.revision}} == main"
+            arguments:
+              parameters:
+                - name: cmd
+                  value: 'publish'
+    - name: clone
+      inputs:
+        parameters:
+          - name: rev
+      container:
+        image: alpine/git:latest
+        command: [sh, -c]
+        args:
+          - git clone --branch {{inputs.parameters.rev}} https://example.com/repo /work
+        volumeMounts:
+          - name: workdir
+            mountPath: /work
+    - name: cargo-cmd
+      inputs:
+        parameters:
+          - name: cmd
+      container:
+        image: rust:1.75
+        command: [sh, -c]
+        args:
+          - cd /work && cargo {{inputs.parameters.cmd}}
+        workingDir: /work
+        env:
+          - name: CARGO_HOME
+            value: /work/.cargo
+          - name: RUST_BACKTRACE
+            value: full
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: '1'
+          limits:
+            memory: 4Gi
+            cpu: '4'
+        volumeMounts:
+          - name: workdir
+            mountPath: /work
+      retryStrategy:
+        limit: 2
+        retryPolicy: OnFailure

@@ -1,0 +1,147 @@
+# catalog/targets.toml — the full target universe for the IR catalog.
+#
+# Every CI/CD system pipewright translates, or plans to. The IR's
+# "common discriminator" can only be designed once every target's
+# construct inventory is on the table — designing it from a subset
+# risks an IR that cannot express Tekton's DAG or Dagger's code form.
+#
+# Each target gets a construct inventory at catalog/<id>.toml; those
+# inventories feed the normalization pass that defines the IR model.
+#
+# tier    1 = YAML jobs/steps model, strong Hub-IR fit
+#         2 = common, partly different model
+#         3 = cloud-native (k8s CRDs / cloud build specs)
+#         4 = code-defined (poor CST fit — may never get a full adapter)
+# schema  vendored = JSON-Schema in crates/pipeline-lint/schemas/
+#         public   = a JSON-Schema exists upstream, not yet vendored
+#         none     = no schema; inventory must be hand-crafted from docs
+# adapter the *-tgg crate, or "planned" if not built yet
+
+[github]
+name = "GitHub Actions"
+tier = 1
+config_file = ".github/workflows/*.yml"
+schema = "vendored"
+adapter = "pipeline-github-tgg"
+
+[gitlab]
+name = "GitLab CI"
+tier = 1
+config_file = ".gitlab-ci.yml"
+schema = "vendored"
+adapter = "pipeline-gitlab-tgg"
+# Jobs are top-level keyless mappings (`build:` IS the job name),
+# tagged construct=job by exclusion in the seeder — no `jobs:` carrier
+# key. Enables the implicit pipeline->job containment rule that is
+# gitlab's sole reverse-containment path; see gen_ruleset.py.
+top_level_keyless_jobs = true
+
+[jenkins]
+name = "Jenkins Pipeline"
+tier = 1
+config_file = "Jenkinsfile"
+schema = "none"               # Groovy DSL — no JSON-Schema possible
+adapter = "pipeline-jenkins-tgg"
+
+[azure]
+name = "Azure Pipelines"
+tier = 1
+config_file = "azure-pipelines.yml"
+schema = "vendored"
+adapter = "pipeline-azure-tgg"
+
+[circleci]
+name = "CircleCI"
+tier = 1
+config_file = ".circleci/config.yml"
+schema = "vendored"
+adapter = "pipeline-circleci-tgg"
+
+[travis]
+name = "Travis CI"
+tier = 1
+config_file = ".travis.yml"
+schema = "vendored"
+adapter = "pipeline-travis-tgg"
+
+[bitbucket]
+name = "Bitbucket Pipelines"
+tier = 1
+config_file = "bitbucket-pipelines.yml"
+schema = "vendored"
+adapter = "pipeline-bitbucket-tgg"
+
+[buildkite]
+name = "Buildkite"
+tier = 2
+config_file = ".buildkite/pipeline.yml"
+schema = "public"
+adapter = "planned"
+
+[drone]
+name = "Drone CI"
+tier = 2
+config_file = ".drone.yml"
+schema = "public"
+adapter = "planned"
+
+[woodpecker]
+name = "Woodpecker CI"
+tier = 2
+config_file = ".woodpecker.yml"
+schema = "public"
+adapter = "planned"
+
+[aws_codebuild]
+name = "AWS CodeBuild"
+tier = 3
+config_file = "buildspec.yml"
+schema = "none"
+adapter = "planned"
+
+[aws_codepipeline]
+name = "AWS CodePipeline"
+tier = 3
+config_file = "(CloudFormation / JSON definition)"
+schema = "none"
+adapter = "planned"
+
+[google_cloudbuild]
+name = "Google Cloud Build"
+tier = 3
+config_file = "cloudbuild.yaml"
+schema = "public"
+adapter = "planned"
+
+[tekton]
+name = "Tekton Pipelines"
+tier = 3
+config_file = "(k8s CRD: Pipeline / Task)"
+schema = "public"            # k8s OpenAPI CRD schema
+adapter = "planned"
+
+[argo]
+name = "Argo Workflows"
+tier = 3
+config_file = "(k8s CRD: Workflow)"
+schema = "public"            # k8s OpenAPI CRD schema
+adapter = "planned"
+
+[dagger]
+name = "Dagger"
+tier = 4
+config_file = "(SDK / code — Go, Python, TypeScript)"
+schema = "none"
+adapter = "planned"
+
+[earthly]
+name = "Earthly"
+tier = 4
+config_file = "Earthfile"
+schema = "none"              # custom Dockerfile-like DSL
+adapter = "planned"
+# Targets are top-level keyless recipes (`build:` IS the target/job name),
+# tagged construct=job by the seeder — no `jobs:` carrier key. Enables the
+# implicit pipeline->job containment rule (gen_ruleset.py emits it, so it
+# survives regeneration — was previously hand-added to earthly.ruleset.json).
+top_level_keyless_jobs = true

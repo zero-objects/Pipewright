@@ -1,0 +1,123 @@
+# catalog/jenkins.toml — construct inventory, hand-crafted from the
+# Jenkins Declarative Pipeline documentation. Jenkins has no JSON-
+# Schema (Groovy DSL), so this is curated, not generated. Types use
+# the same mini-language as the generated inventories; a bare
+# construct name is a nesting. Scripted Pipeline (free-form Groovy)
+# is out of scope — only the Declarative form is inventoried.
+
+[meta]
+platform = "jenkins"
+config_file = "Jenkinsfile"
+tier = 1
+source = "hand-crafted"
+
+[pipeline]
+agent = { type = "agent", required = true }
+environment = { type = "map<string>" }
+options = { type = "options" }
+parameters = { type = "list<parameter>" }
+triggers = { type = "trigger" }
+tools = { type = "map<string>" }
+stages = { type = "list<stage>", required = true }
+post = { type = "post" }
+libraries = { type = "list<string>" }
+
+[stage]
+name = { type = "string", required = true }
+agent = { type = "agent" }
+when = { type = "when" }
+environment = { type = "map<string>" }
+options = { type = "options" }
+input = { type = "input" }
+tools = { type = "map<string>" }
+steps = { type = "list<step>" }
+stages = { type = "list<stage>" }
+parallel = { type = "list<stage>" }
+matrix = { type = "matrix" }
+post = { type = "post" }
+failFast = { type = "bool" }
+
+[agent]
+# exactly one form is used
+any = { type = "bool" }
+none = { type = "bool" }
+label = { type = "string" }
+node = { type = "map<string>" }
+docker = { type = "map<string>" }
+dockerfile = { type = "map<string>" }
+kubernetes = { type = "map<string>" }
+
+[when]
+branch = { type = "string" }
+buildingTag = { type = "bool" }
+changelog = { type = "string" }
+changeset = { type = "string" }
+changeRequest = { type = "map<string>" }
+environment = { type = "map<string>" }
+equals = { type = "map<string>" }
+expression = { type = "string" }
+tag = { type = "string" }
+not = { type = "when" }
+allOf = { type = "list<when>" }
+anyOf = { type = "list<when>" }
+triggeredBy = { type = "string" }
+beforeAgent = { type = "bool" }
+beforeInput = { type = "bool" }
+beforeOptions = { type = "bool" }
+
+[post]
+always = { type = "list<step>" }
+changed = { type = "list<step>" }
+fixed = { type = "list<step>" }
+regression = { type = "list<step>" }
+aborted = { type = "list<step>" }
+failure = { type = "list<step>" }
+success = { type = "list<step>" }
+unstable = { type = "list<step>" }
+unsuccessful = { type = "list<step>" }
+cleanup = { type = "list<step>" }
+
+[options]
+buildDiscarder = { type = "map<string>" }
+disableConcurrentBuilds = { type = "bool" }
+disableResume = { type = "bool" }
+newContainerPerStage = { type = "bool" }
+overrideIndexTriggers = { type = "bool" }
+preserveStashes = { type = "map<string>" }
+quietPeriod = { type = "integer" }
+retry = { type = "integer" }
+skipDefaultCheckout = { type = "bool" }
+skipStagesAfterUnstable = { type = "bool" }
+timeout = { type = "map<string>" }
+timestamps = { type = "bool" }
+parallelsAlwaysFailFast = { type = "bool" }
+
+[matrix]
+axes = { type = "list<map<string>>" }
+excludes = { type = "list<map<string>>" }
+stages = { type = "list<stage>" }
+
+[input]
+message = { type = "string", required = true }
+id = { type = "string" }
+ok = { type = "string" }
+submitter = { type = "string" }
+submitterParameter = { type = "string" }
+parameters = { type = "list<parameter>" }
+
+[parameter]
+name = { type = "string", required = true }
+type = { type = "enum", options = ["string", "booleanParam", "choice", "text", "password", "file"] }
+defaultValue = { type = "string" }
+description = { type = "string" }
+
+[trigger]
+cron = { type = "string" }
+pollSCM = { type = "string" }
+upstream = { type = "map<string>" }
+
+[step]
+# a step is a call to a step-function (sh, echo, git, withEnv, …);
+# the function name + named args. Free-form by design.
+name = { type = "string", required = true }
+args = { type = "map<string>" }

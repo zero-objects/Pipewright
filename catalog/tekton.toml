@@ -1,0 +1,92 @@
+# catalog/tekton.toml — construct inventory, hand-crafted from the
+# Tekton Pipelines API reference. Tekton ships k8s CRD OpenAPI
+# schemas, but those are deeply inline-nested and swamped with k8s
+# object machinery; this curates the pipeline-relevant constructs.
+# The k8s envelope (apiVersion, kind, metadata) is omitted.
+
+[meta]
+platform = "tekton"
+config_file = "(k8s CRD: Pipeline / Task)"
+tier = 3
+source = "hand-crafted"
+
+[pipeline]
+# Kubernetes envelope keys, hoisted by the seeder to top-level
+# pipeline fields so they survive roundtrip.
+apiVersion = { type = "string" }
+kind = { type = "string" }
+# Pipeline.spec
+params = { type = "list<param_spec>" }
+tasks = { type = "list<pipeline_task>", required = true }
+finally = { type = "list<pipeline_task>" }
+workspaces = { type = "list<workspace_decl>" }
+results = { type = "list<result_decl>" }
+description = { type = "string" }
+
+[pipeline_task]
+name = { type = "string", required = true }
+taskRef = { type = "map<string>" }
+taskSpec = { type = "task" }
+runAfter = { type = "list<string>" }
+params = { type = "list<param_value>" }
+when = { type = "list<when_expression>" }
+retries = { type = "integer" }
+timeout = { type = "string" }
+workspaces = { type = "list<workspace_binding>" }
+matrix = { type = "map<string>" }
+displayName = { type = "string" }
+
+[task]
+# Task.spec
+params = { type = "list<param_spec>" }
+steps = { type = "list<step>", required = true }
+workspaces = { type = "list<workspace_decl>" }
+results = { type = "list<result_decl>" }
+sidecars = { type = "list<step>" }
+volumes = { type = "list<map<string>>" }
+stepTemplate = { type = "step" }
+description = { type = "string" }
+
+[step]
+name = { type = "string" }
+image = { type = "string" }
+command = { type = "list<string>" }
+args = { type = "list<string>" }
+script = { type = "string" }
+env = { type = "list<map<string>>" }
+workingDir = { type = "string" }
+computeResources = { type = "map<string>" }
+volumeMounts = { type = "list<map<string>>" }
+timeout = { type = "string" }
+onError = { type = "enum", options = ["continue", "stopAndFail"] }
+
+[param_spec]
+name = { type = "string", required = true }
+type = { type = "enum", options = ["string", "array", "object"] }
+description = { type = "string" }
+default = { type = "string | list<string>" }
+
+[param_value]
+name = { type = "string", required = true }
+value = { type = "string | list<string>" }
+
+[when_expression]
+input = { type = "string" }
+operator = { type = "enum", options = ["in", "notin"] }
+values = { type = "list<string>" }
+
+[workspace_decl]
+name = { type = "string", required = true }
+description = { type = "string" }
+optional = { type = "bool" }
+mountPath = { type = "string" }
+
+[workspace_binding]
+name = { type = "string", required = true }
+workspace = { type = "string" }
+subPath = { type = "string" }
+
+[result_decl]
+name = { type = "string", required = true }
+description = { type = "string" }
+type = { type = "enum", options = ["string", "array", "object"] }

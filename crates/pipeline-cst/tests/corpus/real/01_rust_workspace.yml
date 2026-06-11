@@ -1,0 +1,145 @@
+# Anonymized GitLab CI pipeline — Rust multi-crate workspace
+#
+# Runner: example-runner-1 (gitlab.example.com) with network_mode=host.
+#
+# Stages:
+#   - lint   (fmt + clippy)
+#   - test   (cargo test per crate)
+#   - cover  (cargo-llvm-cov, optional)
+#   - compliance (audit, deny, sbom)
+
+stages:
+  - lint
+  - test
+  - cover
+  - compliance
+
+default:
+  image: rust:1.88
+  before_script:
+    # Workspace deps cached via .cargo/config.toml + vendor/, if present.
+    # Otherwise fetched online.
+    - rustup component add rustfmt clippy
+    - cargo --version
+    - rustc --version
+
+variables:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: "0"
+  RUST_BACKTRACE: "1"
+
+cache:
+  key: workspace-cargo-${CI_COMMIT_REF_SLUG}
+  paths:
+    - .cargo/registry/
+    - .cargo/git/
+    - target/
+
+# ---------- LINT STAGE ----------
+
+fmt:
+  stage: lint
+  script:
+    - cargo fmt -p crate-a -p crate-b -p crate-c -p crate-d -p crate-e -p crate-f -- --check
+
+clippy:
+  stage: lint
+  script:
+    - cargo clippy -p crate-a -p crate-b -p crate-c -p crate-d -p crate-e -p crate-f --all-targets -- -D warnings
+
+# ---------- TEST STAGE ----------
+
+test-crate-a:
+  stage: test
+  script:
+    - cargo test -p crate-a --all-targets
+
+test-crate-b:
+  stage: test
+  script:
+    - cargo test -p crate-b --all-targets
+
+test-crate-c:
+  stage: test
+  script:
+    - cargo test -p crate-c --all-targets
+
+test-crate-d:
+  stage: test
+  script:
+    - cargo test -p crate-d --all-targets
+
+test-crate-e:
+  stage: test
+  script:
+    - cargo test -p crate-e --all-targets
+
+test-crate-f:
+  stage: test
+  script:
+    - cargo test -p crate-f --all-targets
+
+# crate-gui needs Qt6 + Network headers. Install Qt packages only in this
+# job — the other tests should not be slowed by Qt setup.
+test-crate-gui:
+  stage: test
+  before_script:
+    - rustup component add rustfmt clippy
+    - apt-get update -qq
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends
+        qt6-base-dev qt6-declarative-dev qt6-quickcontrols2-dev libgl-dev
+        clang pkg-config
+    - cargo --version
+    - rustc --version
+  script:
+    - cargo test -p crate-gui --features link_qt_object_files --all-targets
+
+# ---------- COVER STAGE ----------
+
+coverage:
+  stage: cover
+  allow_failure: true
+  script:
+    - cargo install cargo-llvm-cov --version 0.6.21 || true
+    - rustup component add llvm-tools-preview
+    - cargo llvm-cov -p crate-a -p crate-b -p crate-c -p crate-d -p crate-e -p crate-f --summary-only
+    - cargo llvm-cov -p crate-a -p crate-b -p crate-c -p crate-d -p crate-e -p crate-f --lcov --output-path lcov.info
+  coverage: '/^TOTAL.*?\s+(\d+\.\d+)%/'
+  artifacts:
+    paths:
+      - lcov.info
+    expire_in: 1 week
+
+# ---------- COMPLIANCE STAGE ----------
+
+audit:
+  stage: compliance
+  allow_failure: true
+  script:
+    - cargo install cargo-audit --version 0.21.0 || true
+    - cargo audit --ignore RUSTSEC-2024-0436 || true
+  artifacts:
+    when: always
+    paths:
+      - cargo-audit.log
+
+deny:
+  stage: compliance
+  allow_failure: true
+  script:
+    - cargo install cargo-deny --version 0.16.0 || true
+    - cargo deny check licenses bans sources advisories
+  artifacts:
+    when: always
+
+sbom:
+  stage: compliance
+  allow_failure: true
+  script:
+    - cargo install cargo-cyclonedx --version 0.5.7 || true
+    - cargo cyclonedx --format json
+  artifacts:
+    when: always
+    paths:
+      - "**/bom.json"
+    expire_in: 30 days

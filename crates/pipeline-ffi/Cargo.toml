@@ -1,0 +1,33 @@
+[package]
+name = "pipeline-ffi"
+description = "C-ABI surface over the forward path + renderer, for the Qt6 UI (and any C consumer). One extern \"C\" entry point per BridgeApi call; render entry points are live, the deleted-backend ones (migrate/capabilities/compose) return a structured not-available error."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "pipeline_ffi"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[dependencies]
+pipeline-forward = { path = "../pipeline-forward" }
+pipeline-render = { path = "../pipeline-render" }
+pipeline-recipe = { path = "../pipeline-recipe" }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+# Graph-level assertions in integration tests (forward → inspect the hub).
+pipeline-hub-ir = { path = "../pipeline-hub-ir" }
+seesaw-core.workspace = true
+
+# This crate is the one place `unsafe` is unavoidable (the C ABI), so it can't
+# inherit the workspace's `unsafe_code = "forbid"`. It mirrors the rest of the
+# workspace's clippy posture but permits unsafe.
+[lints.rust]
+unsafe_code = "allow"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"

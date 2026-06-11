@@ -1,0 +1,20 @@
+name: Feature request
+description: A new platform, field, or capability
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: The use case, not just the feature.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: >
+        For a new platform or field, link the official syntax docs and
+        give a small example config.
+    validations:
+      required: true

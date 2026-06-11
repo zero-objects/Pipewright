@@ -1,0 +1,11 @@
+job_a:
+  variables:
+    MSG: "hello world"
+  script:
+    - echo "$MSG"
+
+job_b:
+  variables:
+    PATH_LIKE: "/usr/local/bin:/usr/bin"
+  script:
+    - echo "$PATH_LIKE"

@@ -1,0 +1,29 @@
+recipe_id: python-ci
+recipe_version: 1.0.0
+description: lint and test a Python package
+tags: [python, ci, lint, test, pytest]
+doc: |
+  Two sequential jobs on the `python:3.12` image: **lint** runs `ruff check`;
+  **test** runs `pytest` after lint. Install your deps in each job (e.g.
+  `pip install -e .[dev]`) or pre-bake them into a custom image.
+input_ports:
+  - name: source
+    kind: checkout
+output_ports:
+  - name: report
+    kind: test-report
+platform_requirements:
+  - docker
+jobs:
+  lint:
+    image: python:3.12
+    steps:
+      - pip install ruff
+      - ruff check .
+  test:
+    image: python:3.12
+    needs:
+      - lint
+    steps:
+      - pip install -e '.[dev]'
+      - pytest -q

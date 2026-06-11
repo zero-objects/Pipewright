@@ -1,0 +1,301 @@
+# catalog/rules/tekton.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "tekton"
+rule_count = 49
+
+[[rule]]
+to = "condition.expr"
+from = "input"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.expr"
+from = "operator"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "condition.expr"
+from = "values"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "job.artifacts"
+from = "results"
+shape = "seq_mapping_nodes"
+type = "list<result_decl>"
+
+[[rule]]
+to = "job.condition"
+from = "when"
+shape = "seq_mapping_nodes"
+type = "list<when_expression>"
+
+[[rule]]
+to = "job.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.matrix"
+from = "matrix"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.name"
+from = "displayName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.needs"
+from = "runAfter"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.options"
+from = "workspaces"
+shape = "seq_attr"
+type = "list<workspace_binding>"
+
+[[rule]]
+to = "job.options"
+from = "volumes"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "job.parameters"
+from = "params"
+shape = "seq_mapping_nodes"
+type = "list<param_value>"
+
+[[rule]]
+to = "job.retry"
+from = "retries"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "job.services"
+from = "sidecars"
+shape = "seq_mapping_nodes"
+type = "list<step>"
+
+[[rule]]
+to = "job.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<step>"
+
+[[rule]]
+to = "job.steps"
+from = "stepTemplate"
+shape = "mapping_node"
+type = "step"
+
+[[rule]]
+to = "job.timeout"
+from = "timeout"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.uses"
+from = "taskRef"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "parameter.default"
+from = "default"
+shape = "union"
+type = "string | list<string>"
+
+[[rule]]
+to = "parameter.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.type"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "parameter.value"
+from = "value"
+shape = "union"
+type = "string | list<string>"
+
+[[rule]]
+to = "pipeline.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "finally"
+shape = "seq_mapping_nodes"
+type = "list<pipeline_task>"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "tasks"
+shape = "seq_mapping_nodes"
+type = "list<pipeline_task>"
+
+[[rule]]
+to = "pipeline.parameters"
+from = "params"
+shape = "seq_mapping_nodes"
+type = "list<param_spec>"
+
+[[rule]]
+to = "pipeline.parameters"
+from = "results"
+shape = "seq_mapping_nodes"
+type = "list<result_decl>"
+
+[[rule]]
+to = "pipeline.version"
+from = "apiVersion"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.version"
+from = "kind"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.workspace"
+from = "workspaces"
+shape = "seq_attr"
+type = "list<workspace_decl>"
+
+[[rule]]
+to = "step.env"
+from = "env"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "step.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.on_error"
+from = "onError"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.resources"
+from = "computeResources"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.run"
+from = "command"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.run"
+from = "args"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.run"
+from = "script"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.timeout"
+from = "timeout"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.volume_mounts"
+from = "volumeMounts"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "step.working_dir"
+from = "workingDir"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.mount_path"
+from = "mountPath"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.optional"
+from = "optional"
+shape = "block_attr"
+type = "bool"
+
+[[rule]]
+to = "workspace.source"
+from = "workspace"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.sub_path"
+from = "subPath"
+shape = "scalar_attr"
+type = "string"

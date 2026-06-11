@@ -1,0 +1,27 @@
+# catalog/classify/gitlab.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "gitlab"
+key_count = 14
+
+[classify]
+artifacts = "artifact"
+cache = "cache"
+hooks = "hook"
+image = "map:image"
+needs = "map:dependency_edge"
+retry = "map:retry"
+rules = "rule_clause"
+secrets = "map:secret"
+services = "map:service"
+stage = "stage"
+stages = "stage"
+trigger = "map:trigger"
+variables = "map:variable"
+workflow = "trigger"
+
+# keys whose value-mapping construct is context-dependent:
+#   after_script: ['hook', 'step']
+#   before_script: ['hook', 'step']

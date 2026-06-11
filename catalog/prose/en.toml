@@ -1,0 +1,48 @@
+# catalog/prose/en.toml — English runbook wording + grammar.
+#
+# The user-editable surface of the "prose" emit target. [pipeline]/[job] carry
+# the sentence shapes; [grammar] carries every locale-varying atom (pluralisation,
+# the "a, b and c" conjunction, the verb/needs/condition/params fragments) — so a
+# new language is a PURE-DATA file (copy this, translate the strings, keep the
+# {slot} names). Slots are filled with grammar-correct, formatted fragments in
+# Rust; an absent field contributes nothing.
+
+[pipeline]
+# slots: {name} {count} {jobs_word} {stages} {triggers}
+named = "The {name} pipeline defines {count} {jobs_word}{stages}.{triggers}"
+unnamed = "This pipeline defines {count} {jobs_word}{stages}.{triggers}"
+
+[job]
+# slots: {name} {verb} {needs} {condition}
+context = "The {name} job{verb}{needs}{condition}."
+# slots: {command}
+one_step = "It runs {command}."
+many_intro = "It runs the following commands, in order:"
+no_steps = "Its individual steps are not captured in the IR — they survive only in the original source."
+
+[grammar]
+job_singular = "job"
+job_plural = "jobs"
+# the connective in an "a, b and c" join (comma elsewhere)
+conj_and = " and "
+conj_comma = ", "
+# overview clauses — slot {stages} / {triggers} = the joined list
+across_stages = " across the stages {stages}"
+triggered_by = " It is triggered by {triggers}."
+# {verb} variants — slots {stage} (Em) / {image} (Code)
+runs = " runs"
+runs_in_stage = " runs in the {stage} stage"
+runs_in_container = " runs inside the {image} container"
+runs_in_stage_and_container = " runs in the {stage} stage, inside the {image} container"
+# {needs} — slot {jobs} = the joined dependency names
+needs_one = " after {jobs} completes"
+needs_many = " after {jobs} complete"
+# {condition} — slot {expr}
+condition = ", but only when {expr}"
+# params sentence
+params_lead = "It "
+env_one = "sets the environment variable {vars}"
+env_many = "sets the environment variables {vars}"
+artifacts = "publishes its artifacts under {paths}"
+set_other = "sets {key} to {value}"
+sentence_end = "."

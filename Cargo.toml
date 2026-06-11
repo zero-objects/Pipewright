@@ -1,0 +1,94 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/pipeline-cst",
+    "crates/pipeline-hub-ir",
+    "crates/pipeline-render",
+    "crates/pipeline-forward",
+    "crates/pipeline-ffi",
+    "crates/pipeline-recipe",
+    "crates/pipeline-cli",
+    "crates/pipeline-tgg-seeder",
+    "crates/pipeline-earthfile-cst",
+    "crates/pipeline-jenkinsfile-cst",
+    "crates/chaos-generator",
+]
+
+[workspace.package]
+version = "1.0.0-rc.1"
+edition = "2021"
+authors = ["Sandra Theresa Keßler <mail@zero-principle.org>"]
+license = "Apache-2.0"
+publish = false
+rust-version = "1.88"
+
+[workspace.dependencies]
+# TGG engine — the published `seesaw-tgg` release on crates.io is the
+# canonical, fixed engine. `package = "seesaw-tgg"` pulls it; the
+# dependency key `seesaw-core` keeps the existing `use seesaw_core::...`
+# paths untouched. rc7 = bidirectional lowering (compile_bidirectional)
+# + CorrRole + identity decoupled from propagated attrs. rc8 = created-node
+# invariant (CreatedNodeWithoutCorrespondence), corr-following retraction,
+# directional_rule_refs, input_domain_kinds precision. rc9 = reuse-path edge
+# fix (reused R-partner registered in `created` so edges_to_create from a
+# reused node — e.g. has_item(shared coll → new item) — are emitted, not
+# silently dropped). rc10 = speed pass: blake3 GhostId hashing (was SHA-256)
+# + cascade overhead removed (the O(steps²) per-step contradiction re-check) —
+# ~7× faster end-to-end (chaos suite 552s→78s, multistage cascade 9.6s→1.3s)
+# with identical results (chaos 17/17@30/30; corpus 44/46). The per-step time
+# growth curve flattened, so the consumer-side opt-level dep hack is no longer
+# needed (removed in 5352d88). 1.0.0 = the released engine: blake3 GhostIds,
+# the cached cascade path (run_cascade_cached, levers D/3/4/5 + const-hasher)
+# that linearises both directions, and the NAC/SetAttr reverse-pole fixes.
+seesaw-core = { version = "1.0.0", package = "seesaw-tgg" }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+serde_json = { version = "1.0", features = ["preserve_order"] }
+
+# Hashing
+sha2 = "0.10"
+
+# Containers
+indexmap = { version = "2.7", features = ["serde"] }
+
+# Error handling
+thiserror = "1.0"
+
+# YAML CST tokenizer base
+yaml-rust2 = "0.10"
+
+# Test utilities (M3)
+pretty_assertions = "1.4"
+proptest = "1.5"
+tempfile = "3.13"
+
+# Identity UUIDs (M3 Phase 2 Task 7)
+uuid = { version = "1.10", features = ["v4"] }
+
+# CLI (M4 Phase 8)
+clap = { version = "4.5", features = ["derive"] }
+
+# Regex (M4.5 — full rules:if =~ /pattern/ support)
+regex = "1.10"
+
+# Remote-include (M4.5 — HTTPS fetch with rustls; no system TLS deps)
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls", "gzip"] }
+url = "2"
+
+# Local Docker executor (M7 Phase 3)
+bollard = "0.18"
+tokio = { version = "1.40", features = ["rt", "macros", "io-util"] }
+futures-util = "0.3"
+tar = "0.4"
+bytes = "1.7"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"

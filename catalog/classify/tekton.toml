@@ -1,0 +1,16 @@
+# catalog/classify/tekton.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "tekton"
+key_count = 4
+
+[classify]
+image = "image"
+matrix = "map:matrix"
+steps = "step"
+tasks = "job"
+
+# keys whose value-mapping construct is context-dependent:
+#   results: ['artifact', 'parameter']

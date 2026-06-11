@@ -1,0 +1,505 @@
+# catalog/rules/gitlab.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "gitlab"
+rule_count = 83
+
+[[rule]]
+to = "artifact.access"
+from = "access"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "artifact.exclude"
+from = "exclude"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "artifact.expire_in"
+from = "expire_in"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.expose_as"
+from = "expose_as"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "paths"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "artifact.reports"
+from = "reports"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "artifact.untracked"
+from = "untracked"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "artifact.when"
+from = "when"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "cache.fallback_keys"
+from = "fallback_keys"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "cache.key"
+from = "key"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "cache.paths"
+from = "paths"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "cache.policy"
+from = "policy"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "cache.unprotect"
+from = "unprotect"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "cache.untracked"
+from = "untracked"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "cache.when"
+from = "when"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "concurrency.cancel_in_progress"
+from = "on_new_commit"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "concurrency.cancel_in_progress"
+from = "on_job_failure"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "hook.pre_script"
+from = "pre_get_sources_script"
+shape = "union"
+type = "list<list<string> | string> | string"
+
+[[rule]]
+to = "job.after_steps"
+from = "after_script"
+shape = "union"
+type = "list<list<string> | string> | string"
+
+[[rule]]
+to = "job.agent"
+from = "tags"
+shape = "seq_mapping_nodes"
+type = "list<list<string> | string>"
+
+[[rule]]
+to = "job.allow_failure"
+from = "allow_failure"
+shape = "union"
+type = "boolean | map<string>"
+
+[[rule]]
+to = "job.artifacts"
+from = "artifacts"
+shape = "mapping_node"
+type = "artifacts"
+
+[[rule]]
+to = "job.before_steps"
+from = "before_script"
+shape = "union"
+type = "list<list<string> | string> | string"
+
+[[rule]]
+to = "job.cache"
+from = "cache"
+shape = "union"
+type = "cache_item | list<cache_item>"
+
+[[rule]]
+to = "job.condition"
+from = "only"
+shape = "union"
+type = "list<enum | string> | null | map<string>"
+
+[[rule]]
+to = "job.condition"
+from = "except"
+shape = "union"
+type = "list<enum | string> | null | map<string>"
+
+[[rule]]
+to = "job.condition"
+from = "when"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "job.condition"
+from = "manual_confirmation"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.deployment"
+from = "environment"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "job.deployment"
+from = "release"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.extends"
+from = "extends"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.extends"
+from = "inherit"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.hooks"
+from = "hooks"
+shape = "mapping_node"
+type = "hooks"
+
+[[rule]]
+to = "job.image"
+from = "image"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "job.matrix"
+from = "parallel"
+shape = "union"
+type = "integer | map<string>"
+
+[[rule]]
+to = "job.needs"
+from = "needs"
+shape = "seq_mapping_nodes"
+type = "list<list<string> | map<string> | string>"
+
+[[rule]]
+to = "job.needs"
+from = "dependencies"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.options"
+from = "coverage"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "resource_group"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.options"
+from = "interruptible"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "job.options"
+from = "pages"
+shape = "union"
+type = "boolean | map<string>"
+
+[[rule]]
+to = "job.options"
+from = "publish"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.parameters"
+from = "inputs"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.retry"
+from = "retry"
+shape = "union"
+type = "integer | map<string>"
+
+[[rule]]
+to = "job.rules"
+from = "rules"
+shape = "seq_mapping_nodes"
+type = "list<list<string> | ruleClause | string>"
+
+[[rule]]
+to = "job.secrets"
+from = "secrets"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.secrets"
+from = "id_tokens"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.secrets"
+from = "identity"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "job.services"
+from = "services"
+shape = "seq_mapping_nodes"
+type = "list<map<string> | string>"
+
+[[rule]]
+to = "job.stage"
+from = "stage"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "job.steps"
+from = "script"
+shape = "union"
+type = "list<list<string> | string> | string"
+
+[[rule]]
+to = "job.steps"
+from = "run"
+shape = "seq_mapping_nodes"
+type = "list<map<string>>"
+
+[[rule]]
+to = "job.timeout"
+from = "timeout"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.timeout"
+from = "start_in"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.trigger"
+from = "trigger"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "job.variables"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "parameter.constraint"
+from = "regex"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.default"
+from = "default"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.description"
+from = "description"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "parameter.options"
+from = "options"
+shape = "seq_attr"
+type = "list<boolean | number | string>"
+
+[[rule]]
+to = "parameter.type"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.anchors"
+from = "!reference"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.artifacts"
+from = "pages"
+shape = "mapping_node"
+type = "job"
+
+[[rule]]
+to = "pipeline.cache"
+from = "cache"
+shape = "union"
+type = "cache_item | list<cache_item>"
+
+[[rule]]
+to = "pipeline.defaults"
+from = "default"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "before_script"
+shape = "union"
+type = "list<list<string> | string> | string"
+
+[[rule]]
+to = "pipeline.hooks"
+from = "after_script"
+shape = "union"
+type = "list<list<string> | string> | string"
+
+[[rule]]
+to = "pipeline.image"
+from = "image"
+shape = "union"
+type = "map<string> | string"
+
+[[rule]]
+to = "pipeline.includes"
+from = "include"
+shape = "union"
+type = "list<map<string>> | map<string>"
+
+[[rule]]
+to = "pipeline.parameters"
+from = "spec"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.services"
+from = "services"
+shape = "seq_mapping_nodes"
+type = "list<map<string> | string>"
+
+[[rule]]
+to = "pipeline.stages"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<list<string> | string>"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "workflow"
+shape = "mapping_node"
+type = "workflowConfig"
+
+[[rule]]
+to = "pipeline.variables"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.version"
+from = "$schema"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "rule_clause.changes"
+from = "changes"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "rule_clause.if_expr"
+from = "if"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "rule_clause.variables"
+from = "variables"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "rule_clause.when"
+from = "when"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.uses"
+from = "git"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.uses"
+from = "oci"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "trigger.rules"
+from = "rules"
+shape = "seq_mapping_nodes"
+type = "list<list<string> | ruleClause | string>"

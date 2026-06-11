@@ -1,0 +1,83 @@
+name: release-pipeline
+trigger:
+  branches:
+    include:
+      - main
+      - release/*
+    exclude:
+      - feature/*
+  tags:
+    include:
+      - 'v*'
+  paths:
+    include:
+      - src/
+      - tests/
+schedules:
+  - cron: '0 2 * * *'
+    displayName: nightly
+    branches:
+      include:
+        - main
+    always: true
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - '*.md'
+
+variables:
+  CARGO_HOME: $(Build.SourcesDirectory)/.cargo
+  RUST_LOG: info
+
+stages:
+  - stage: Build
+    displayName: build and test
+    jobs:
+      - job: BuildJob
+        displayName: build
+        timeoutInMinutes: 30
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          matrix:
+            linux_stable:
+              imageName: ubuntu-latest
+              rustVersion: stable
+            linux_msrv:
+              imageName: ubuntu-latest
+              rustVersion: '1.75'
+            mac_stable:
+              imageName: macos-latest
+              rustVersion: stable
+          maxParallel: 3
+        steps:
+          - checkout: self
+            fetchDepth: 0
+          - script: rustup install $(rustVersion)
+            displayName: install rust
+          - script: cargo fmt --check
+            displayName: fmt
+          - script: cargo clippy --all-targets -- -D warnings
+            displayName: clippy
+          - script: cargo test --workspace --release
+            displayName: test
+          - publish: $(System.DefaultWorkingDirectory)/target
+            artifact: build-output-$(rustVersion)
+  - stage: Deploy
+    displayName: deploy
+    dependsOn: Build
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+    jobs:
+      - deployment: PublishCrate
+        environment: production
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: cargo publish --token $(CARGO_REGISTRY_TOKEN)
+                  displayName: publish to crates.io

@@ -1,0 +1,82 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Nightly: run the full heavy gates (interop matrix, whole corpus, wide
+    # chaos sweep) that are too slow for every PR.
+    - cron: "0 3 * * *"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  lint:
+    name: fmt + clippy
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+
+  test:
+    name: workspace tests
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --locked
+
+  gate-sample:
+    # A fast slice of the round-trip gates on every PR: 3 chaos seeds per
+    # platform + the canonical corpus fixtures. The full gates run nightly.
+    name: gate sample (round-trip)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test -p chaos-generator --test roundtrip gate_sample -- --ignored --nocapture
+
+  supply-chain:
+    # License compatibility + security advisories on the dependency tree.
+    name: cargo-deny (licenses + advisories)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check licenses bans sources advisories
+
+  msrv:
+    # The README claims "rust: 1.88+" — prove it builds on exactly 1.88.
+    name: MSRV (1.88)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --workspace --locked
+
+  gates-full:
+    # Nightly only: the headline numbers. Slow (minutes each).
+    name: full gates (nightly)
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88
+      - uses: Swatinem/rust-cache@v2
+      - name: real-config corpus (59 fixtures)
+        run: cargo test -p chaos-generator --test roundtrip real_config_corpus_roundtrip -- --ignored --nocapture
+      - name: chaos wide stress (17 × 30 seeds)
+        run: cargo test -p chaos-generator --test roundtrip roundtrip_wide_stress -- --ignored --nocapture
+      - name: interop matrix (272 pairs)
+        run: cargo test -p chaos-generator --test roundtrip interop_matrix -- --ignored --nocapture

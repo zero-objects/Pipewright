@@ -1,0 +1,36 @@
+recipe_id: rust-ci
+recipe_version: 1.0.0
+description: lint, test and release-build a Rust crate
+tags: [rust, ci, lint, test, build]
+doc: |
+  Three sequential jobs for a Rust crate: **lint** runs `cargo fmt --check`
+  and `cargo clippy -D warnings`; **test** runs the full `cargo test` suite
+  after lint; **build** produces a `--release` binary after test — all on the
+  `rust:1.75` image. Wire `source` (a checkout) in; take `binary` (the release
+  artifact) out.
+input_ports:
+  - name: source
+    kind: checkout
+output_ports:
+  - name: binary
+    kind: build-artifact
+platform_requirements:
+  - docker
+jobs:
+  lint:
+    image: rust:1.75
+    steps:
+      - cargo fmt --check
+      - cargo clippy -- -D warnings
+  test:
+    image: rust:1.75
+    needs:
+      - lint
+    steps:
+      - cargo test --all
+  build:
+    image: rust:1.75
+    needs:
+      - test
+    steps:
+      - cargo build --release

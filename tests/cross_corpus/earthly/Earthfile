@@ -1,0 +1,11 @@
+VERSION 0.8
+FROM rust:1.75
+
+build:
+    COPY . .
+    RUN cargo build --release
+    SAVE ARTIFACT target/release/my-app
+
+test:
+    FROM +build
+    RUN cargo test

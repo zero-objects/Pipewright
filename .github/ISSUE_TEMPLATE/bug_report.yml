@@ -1,0 +1,45 @@
+name: Bug report
+description: A config that doesn't round-trip, migrate, or run as expected
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - inspect / render
+        - migrate (platform → platform)
+        - run (local Docker)
+        - desktop UI
+        - other
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform(s)
+      description: e.g. gitlab, or "gitlab → drone" for a migration
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Minimal config that reproduces it
+      description: The smallest pipeline file that shows the problem.
+      render: yaml
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs. actual
+      description: What you expected, and what happened instead (paste output).
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "`pipeline --version` or the commit you built from"
+    validations:
+      required: true

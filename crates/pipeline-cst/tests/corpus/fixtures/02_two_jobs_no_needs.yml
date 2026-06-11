@@ -1,0 +1,13 @@
+stages:
+  - build
+  - test
+
+compile:
+  stage: build
+  script:
+    - echo "compile"
+
+unit_tests:
+  stage: test
+  script:
+    - echo "tests"

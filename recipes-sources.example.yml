@@ -1,0 +1,19 @@
+# Recipe-source configuration (example).
+#
+# The standard recipe library is always available. List additional sources
+# here to add your own recipes. Each source has a `label` plus exactly one
+# location: a local `dir`, or a `git` URL (cloned/updated into a local cache).
+#
+# Copy to your config location and edit. User sources are additive and
+# source-labelled; a later source can shadow a standard recipe by reusing its
+# recipe_id.
+
+sources:
+  # A directory you keep in sync yourself.
+  - label: my-team
+    dir: /home/me/ci-recipes
+
+  # A git repository we clone (and pull on reload) into the cache.
+  - label: community
+    git: https://github.com/example/ci-recipes.git
+    reference: main          # optional branch/tag/commit; default branch if omitted

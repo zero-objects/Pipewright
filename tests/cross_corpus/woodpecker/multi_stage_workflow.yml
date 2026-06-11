@@ -1,0 +1,85 @@
+when:
+  - branch:
+      include:
+        - main
+        - release/*
+    event:
+      include:
+        - push
+        - tag
+    path:
+      include:
+        - src/**
+
+variables:
+  - &cache_settings
+    image: meltwater/drone-cache:latest
+    settings:
+      backend: filesystem
+      mount: ['target', '.cargo']
+
+steps:
+  restore-cache:
+    <<: *cache_settings
+    settings:
+      restore: true
+
+  lint:
+    image: rust:1.75
+    commands:
+      - cargo fmt --check
+      - cargo clippy --all-targets -- -D warnings
+    depends_on:
+      - restore-cache
+
+  test-stable:
+    image: rust:1.75
+    environment:
+      RUST_LOG: debug
+      CARGO_HOME: .cargo
+    commands:
+      - cargo test --workspace --release
+    depends_on:
+      - lint
+
+  test-msrv:
+    image: rust:1.75
+    commands:
+      - cargo +1.75 test --workspace
+    depends_on:
+      - lint
+
+  coverage:
+    image: xd009642/tarpaulin:0.27.3
+    privileged: true
+    commands:
+      - cargo tarpaulin --workspace --out Xml
+    depends_on:
+      - test-stable
+
+  save-cache:
+    <<: *cache_settings
+    settings:
+      rebuild: true
+    depends_on:
+      - coverage
+
+  publish:
+    image: rust:1.75
+    when:
+      event:
+        include:
+          - tag
+    commands:
+      - cargo publish --token $CARGO_REGISTRY_TOKEN
+    secrets:
+      - CARGO_REGISTRY_TOKEN
+    depends_on:
+      - save-cache
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: ci
+      POSTGRES_DB: app_test

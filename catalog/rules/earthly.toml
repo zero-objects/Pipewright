@@ -1,0 +1,199 @@
+# catalog/rules/earthly.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "earthly"
+rule_count = 32
+
+[[rule]]
+to = "job.agent"
+from = "USER"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.artifacts"
+from = "SAVE ARTIFACT"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.artifacts"
+from = "SAVE IMAGE"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.cache"
+from = "CACHE"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.expose"
+from = "EXPOSE"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.extends"
+from = "IMPORT"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.healthcheck"
+from = "HEALTHCHECK"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.image"
+from = "FROM"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.image"
+from = "FROM DOCKERFILE"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.labels"
+from = "LABEL"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.needs"
+from = "BUILD"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.parameters"
+from = "ARG"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "recipe"
+shape = "mapping_node"
+type = "recipe"
+
+[[rule]]
+to = "job.steps"
+from = "RUN"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "CMD"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "COPY"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "GIT CLONE"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "ENTRYPOINT"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "WITH"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "IF / ELSE"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "FOR"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "TRY"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "LET"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "DO"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.variables"
+from = "ENV"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.volume"
+from = "VOLUME"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.working_dir"
+from = "WORKDIR"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.project"
+from = "PROJECT"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.targets"
+from = "targets"
+shape = "map_nodes"
+type = "map<target>"
+
+[[rule]]
+to = "pipeline.targets"
+from = "base_recipe"
+shape = "block_attr"
+type = "recipe"
+
+[[rule]]
+to = "pipeline.version"
+from = "VERSION"
+shape = "scalar_attr"
+type = "string"

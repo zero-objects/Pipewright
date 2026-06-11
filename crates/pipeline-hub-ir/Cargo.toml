@@ -1,0 +1,26 @@
+[package]
+name = "pipeline-hub-ir"
+description = "Hub-IR v0.1 — platform-neutral CI pipeline IR (types only)"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+indexmap = { workspace = true }
+thiserror = { workspace = true }
+# Read-only graph view for consumers — the typed-graph is the
+# native runtime carrier of the Hub-IR. The struct-IR (model.rs)
+# survives as an additive serialisation layer until consumers
+# finish migrating.
+seesaw-core = { workspace = true }
+
+[dev-dependencies]
+pretty_assertions = { workspace = true }

@@ -1,0 +1,313 @@
+# catalog/rules/drone.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "drone"
+rule_count = 51
+
+[[rule]]
+to = "agent.platform"
+from = "arch"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "agent.platform"
+from = "os"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "agent.platform"
+from = "variant"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.platform"
+from = "version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "concurrency.limit"
+from = "limit"
+shape = "scalar_attr"
+type = "number"
+
+[[rule]]
+to = "condition.branch"
+from = "branch"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "condition.changes"
+from = "paths"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "condition.cron"
+from = "cron"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "condition.event"
+from = "event"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "condition.ref"
+from = "ref"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "condition.repo"
+from = "repo"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "condition.repo"
+from = "instance"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "condition.state"
+from = "status"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "condition.target_branch"
+from = "target"
+shape = "union"
+type = "list<string> | map<string>"
+
+[[rule]]
+to = "pipeline.clone"
+from = "clone"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.concurrency"
+from = "concurrency"
+shape = "mapping_node"
+type = "concurrency"
+
+[[rule]]
+to = "pipeline.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "platform"
+shape = "mapping_node"
+type = "platform"
+
+[[rule]]
+to = "pipeline.resources"
+from = "node"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "metadata"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "node_selector"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "dns_config"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "host_aliases"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "tolerations"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "image_pull_secrets"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.resources"
+from = "service_account_name"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "token"
+shape = "union"
+type = "secret | string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "server"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.resources"
+from = "pool"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.services"
+from = "services"
+shape = "seq_mapping_nodes"
+type = "list<step>"
+
+[[rule]]
+to = "pipeline.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<step>"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "trigger"
+shape = "mapping_node"
+type = "allConditions"
+
+[[rule]]
+to = "pipeline.variables"
+from = "environment"
+shape = "map_nodes"
+type = "map<boolean | number | secret | string>"
+
+[[rule]]
+to = "pipeline.version"
+from = "kind"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.version"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.volumes"
+from = "volumes"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.workspace"
+from = "workspace"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "resource.data"
+from = "data"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "resource.data"
+from = "load"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.kind"
+from = "kind"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.ref"
+from = "from_secret"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.ref"
+from = "get"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "secret.signature"
+from = "hmac"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.value"
+from = "data"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.condition"
+from = "when"
+shape = "mapping_node"
+type = "allConditions"
+
+[[rule]]
+to = "step.depends_on"
+from = "depends_on"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "step.env"
+from = "environment"
+shape = "map_nodes"
+type = "map<boolean | number | secret | string>"
+
+[[rule]]
+to = "step.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "commands"
+shape = "seq_attr"
+type = "list<string>"

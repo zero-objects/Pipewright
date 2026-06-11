@@ -1,0 +1,46 @@
+# cargo-deny configuration — supply-chain gate for the release.
+# Run: cargo deny check
+# Checks: security advisories (RUSTSEC), license compatibility, and that no
+# duplicate/banned crates sneak in.
+
+[advisories]
+# Fail on any crate with a known security advisory.
+yanked = "deny"
+version = 2
+
+[licenses]
+# Apache-2.0 is the project license; only allow licenses compatible with
+# redistributing under it. All are permissive (no copyleft).
+version = 2
+allow = [
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
+    "CC0-1.0",
+    "Unlicense",
+    "BSL-1.0",
+    "MPL-2.0",
+]
+# A crate whose license can't be detected fails the check (forces an
+# explicit decision rather than a silent unknown).
+confidence-threshold = 0.8
+
+[bans]
+# Surfacing multiple versions of the same crate is a warning, not a hard
+# fail — transitive deps legitimately pull different majors.
+multiple-versions = "warn"
+# The workspace is `publish = false` (we ship built binaries, not crates.io
+# packages), so the only "wildcards" are intra-workspace path deps, which we
+# control. There are no real crates.io `= "*"` pins. Warn rather than fail.
+wildcards = "warn"
+
+[sources]
+# Only crates.io and the git deps we explicitly use.
+unknown-registry = "deny"
+unknown-git = "deny"

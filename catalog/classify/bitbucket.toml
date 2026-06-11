@@ -1,0 +1,27 @@
+# catalog/classify/bitbucket.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "bitbucket"
+key_count = 10
+
+[classify]
+agent = "agent"
+artifacts = "artifact"
+condition = "condition"
+deployment = "deployment"
+image = "image"
+permissions = "permissions"
+pipelines = "pipeline"
+services = "map:service"
+trigger = "trigger"
+triggers = "map:trigger"
+
+# keys whose value-mapping construct is context-dependent:
+#   auth: ['job', 'secret']
+#   caches: ['cache', 'job']
+#   clone: ['job', 'resource']
+#   environment: ['deployment', 'job']
+#   input-variables: ['job', 'parameter']
+#   oidc: ['job', 'secret']

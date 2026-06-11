@@ -1,0 +1,517 @@
+# catalog/rules/woodpecker.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "woodpecker"
+rule_count = 85
+
+[[rule]]
+to = "agent.labels"
+from = "annotations"
+shape = "map_nodes"
+type = "map<boolean | string | number>"
+
+[[rule]]
+to = "agent.labels"
+from = "labels"
+shape = "map_nodes"
+type = "map<boolean | string | number>"
+
+[[rule]]
+to = "agent.labels"
+from = "runtimeClassName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.resources"
+from = "limits"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.resources"
+from = "requests"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "agent.security"
+from = "securityContext"
+shape = "block_attr"
+type = "step_backend_kubernetes_security_context"
+
+[[rule]]
+to = "agent.security"
+from = "secrets"
+shape = "seq_attr"
+type = "list<step_kubernetes_secret>"
+
+[[rule]]
+to = "agent.security"
+from = "localhostProfile"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.security"
+from = "type"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.security"
+from = "apparmorProfile"
+shape = "block_attr"
+type = "step_backend_kubernetes_secprofile"
+
+[[rule]]
+to = "agent.security"
+from = "fsGroup"
+shape = "scalar_attr"
+type = "number"
+
+[[rule]]
+to = "agent.security"
+from = "privileged"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "agent.security"
+from = "runAsGroup"
+shape = "scalar_attr"
+type = "number"
+
+[[rule]]
+to = "agent.security"
+from = "runAsNonRoot"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "agent.security"
+from = "runAsUser"
+shape = "scalar_attr"
+type = "number"
+
+[[rule]]
+to = "agent.security"
+from = "seccompProfile"
+shape = "block_attr"
+type = "step_backend_kubernetes_secprofile"
+
+[[rule]]
+to = "agent.tolerations"
+from = "tolerations"
+shape = "seq_attr"
+type = "list<step_backend_kubernetes_toleration_object>"
+
+[[rule]]
+to = "agent.tolerations"
+from = "effect"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.tolerations"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.tolerations"
+from = "operator"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "agent.tolerations"
+from = "tolerationSeconds"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "agent.tolerations"
+from = "value"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.branch"
+from = "branch"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "condition.changes"
+from = "path"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "condition.cron"
+from = "cron"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "condition.event"
+from = "event"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "condition.expr"
+from = "evaluate"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "condition.matrix_filter"
+from = "matrix"
+shape = "map_nodes"
+type = "map<boolean | string | number>"
+
+[[rule]]
+to = "condition.platform"
+from = "platform"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "condition.ref"
+from = "ref"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "condition.repo"
+from = "repo"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "condition.repo"
+from = "instance"
+shape = "union"
+type = "list<string> | map<string> | string"
+
+[[rule]]
+to = "condition.state"
+from = "status"
+shape = "union"
+type = "enum | list<enum>"
+
+[[rule]]
+to = "matrix.axes"
+from = "include"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "pipeline.agent"
+from = "runs_on"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.agent"
+from = "labels"
+shape = "map_nodes"
+type = "map<boolean | string | number>"
+
+[[rule]]
+to = "pipeline.clone"
+from = "clone"
+shape = "union"
+type = "list<commands_step | plugin_step> | map<string>"
+
+[[rule]]
+to = "pipeline.matrix"
+from = "matrix"
+shape = "mapping_node"
+type = "matrix"
+
+[[rule]]
+to = "pipeline.options"
+from = "skip_clone"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "pipeline.services"
+from = "services"
+shape = "union"
+type = "list<service> | map<service>"
+
+[[rule]]
+to = "pipeline.steps"
+from = "steps"
+shape = "union"
+type = "list<commands_step | plugin_step> | map<commands_step | plugin_step>"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "when"
+shape = "union"
+type = "list<workflow_when_condition> | workflow_when_condition"
+
+[[rule]]
+to = "pipeline.variables"
+from = "variables"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.version"
+from = "$schema"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.workspace"
+from = "workspace"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "resource.checkout"
+from = "depth"
+shape = "scalar_attr"
+type = "number"
+
+[[rule]]
+to = "resource.checkout"
+from = "lfs"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "resource.checkout"
+from = "partial"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "resource.checkout"
+from = "recursive"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "resource.checkout"
+from = "tags"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "secret.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.ref"
+from = "key"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.target"
+from = "target"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "service.command"
+from = "commands"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "service.command"
+from = "entrypoint"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "service.condition"
+from = "when"
+shape = "union"
+type = "list<step_when_condition> | step_when_condition"
+
+[[rule]]
+to = "service.condition"
+from = "failure"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "service.env"
+from = "environment"
+shape = "map_nodes"
+type = "map<boolean | string | number | array | map<string>>"
+
+[[rule]]
+to = "service.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "service.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "service.options"
+from = "backend_options"
+shape = "block_attr"
+type = "step_backend_options"
+
+[[rule]]
+to = "service.options"
+from = "settings"
+shape = "map_nodes"
+type = "map<boolean | string | number | array | map<string>>"
+
+[[rule]]
+to = "service.options"
+from = "privileged"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "service.ports"
+from = "ports"
+shape = "seq_attr"
+type = "list<number | string>"
+
+[[rule]]
+to = "service.pull"
+from = "pull"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "service.volumes"
+from = "volumes"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "service.working_dir"
+from = "directory"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.condition"
+from = "when"
+shape = "union"
+type = "list<step_when_condition> | step_when_condition"
+
+[[rule]]
+to = "step.continue_on_error"
+from = "failure"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "step.depends_on"
+from = "depends_on"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.env"
+from = "environment"
+shape = "map_nodes"
+type = "map<boolean | string | number | array | map<string>>"
+
+[[rule]]
+to = "step.image"
+from = "image"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.options"
+from = "detach"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "step.options"
+from = "pull"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "step.options"
+from = "privileged"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "step.options"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.options"
+from = "entrypoint"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.options"
+from = "dns"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.options"
+from = "dns_search"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.options"
+from = "settings"
+shape = "map_nodes"
+type = "map<boolean | string | number | array | map<string>>"
+
+[[rule]]
+to = "step.options"
+from = "backend_options"
+shape = "block_attr"
+type = "step_backend_options"
+
+[[rule]]
+to = "step.run"
+from = "commands"
+shape = "union"
+type = "list<string> | string"
+
+[[rule]]
+to = "step.volume_mounts"
+from = "volumes"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.working_dir"
+from = "directory"
+shape = "scalar_attr"
+type = "string"

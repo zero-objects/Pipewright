@@ -1,0 +1,23 @@
+[package]
+name = "pipeline-cli"
+description = "Command-line frontend over the pipeline library: detect, inspect, render, migrate, compose/apply recipes, capability profile, and a local Docker run/plan. The `pipeline` binary the Qt6 UI's Run tab shells out to, and the dogfooding entry point for CI."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "pipewright"
+path = "src/main.rs"
+
+[dependencies]
+pipeline-forward = { path = "../pipeline-forward" }
+pipeline-render = { path = "../pipeline-render" }
+pipeline-recipe = { path = "../pipeline-recipe" }
+serde_json = { workspace = true }
+clap = { workspace = true }
+bollard = { workspace = true }
+tokio = { workspace = true }
+futures-util = { workspace = true }
+
+[lints]
+workspace = true

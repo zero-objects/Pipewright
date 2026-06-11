@@ -1,0 +1,10 @@
+.shared_setup:
+  script:
+    - apt-get update
+    - apt-get install -y build-essential
+    - rustup component add clippy
+
+build:
+  script:
+    - !reference [.shared_setup, script]
+    - cargo build

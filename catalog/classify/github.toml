@@ -1,0 +1,18 @@
+# catalog/classify/github.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "github"
+key_count = 9
+
+[classify]
+concurrency = "concurrency"
+deployment = "deployment"
+image = "image"
+jobs = "map:job"
+needs = "dependency_edge"
+permissions = "permissions"
+secrets = "map:secret"
+services = "map:service"
+steps = "step"

@@ -1,0 +1,205 @@
+# catalog/rules/circleci.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "circleci"
+rule_count = 33
+
+[[rule]]
+to = "job.agent"
+from = "resource_class"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.concurrency"
+from = "parallelism"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "job.image"
+from = "docker"
+shape = "seq_mapping_nodes"
+type = "list<docker_image>"
+
+[[rule]]
+to = "job.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<step>"
+
+[[rule]]
+to = "job.uses"
+from = "executor"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.variables"
+from = "environment"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.working_dir"
+from = "working_directory"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.definitions"
+from = "executors"
+shape = "map_nodes"
+type = "map<map<string> | string>"
+
+[[rule]]
+to = "pipeline.definitions"
+from = "orbs"
+shape = "map_nodes"
+type = "map<map<string> | string>"
+
+[[rule]]
+to = "pipeline.definitions"
+from = "commands"
+shape = "map_nodes"
+type = "map<map<string> | string>"
+
+[[rule]]
+to = "pipeline.definitions"
+from = "examples"
+shape = "map_nodes"
+type = "map<map<string>>"
+
+[[rule]]
+to = "pipeline.experimental"
+from = "experimental"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "jobs"
+shape = "map_nodes"
+type = "map<job>"
+
+[[rule]]
+to = "pipeline.jobs"
+from = "job-groups"
+shape = "map_nodes"
+type = "map<map<string>>"
+
+[[rule]]
+to = "pipeline.name"
+from = "display"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.parameters"
+from = "parameters"
+shape = "map_nodes"
+type = "map<map<string>>"
+
+[[rule]]
+to = "pipeline.version"
+from = "version"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.workflows"
+from = "workflows"
+shape = "map_nodes"
+type = "map<map<string>>"
+
+[[rule]]
+to = "step.attach_workspace"
+from = "attach_workspace"
+shape = "block_attr"
+type = "step_block"
+
+[[rule]]
+to = "step.env"
+from = "environment"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.orb"
+from = "codecov/upload"
+shape = "block_attr"
+type = "step_block"
+
+[[rule]]
+to = "step.persist_to_workspace"
+from = "persist_to_workspace"
+shape = "block_attr"
+type = "step_block"
+
+[[rule]]
+to = "step.restore_cache"
+from = "restore_cache"
+shape = "block_attr"
+type = "step_block"
+
+[[rule]]
+to = "step.run"
+from = "run"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "command"
+shape = "block_attr"
+type = "any"
+
+[[rule]]
+to = "step.run"
+from = "shell"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.save_cache"
+from = "save_cache"
+shape = "block_attr"
+type = "step_block"
+
+[[rule]]
+to = "step.shell"
+from = "shell"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.store_artifacts"
+from = "store_artifacts"
+shape = "block_attr"
+type = "step_block"
+
+[[rule]]
+to = "step.store_test_results"
+from = "store_test_results"
+shape = "block_attr"
+type = "step_block"
+
+[[rule]]
+to = "step.timeout"
+from = "no_output_timeout"
+shape = "block_attr"
+type = "any"
+
+[[rule]]
+to = "step.working_dir"
+from = "working_directory"
+shape = "scalar_attr"
+type = "string"

@@ -1,0 +1,72 @@
+language: rust
+dist: focal
+sudo: required
+
+cache:
+  cargo: true
+  directories:
+    - target/
+
+env:
+  global:
+    - RUST_BACKTRACE=full
+    - CARGO_TERM_COLOR=always
+
+rust:
+  - stable
+  - "1.75"
+  - nightly
+
+os:
+  - linux
+  - osx
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rust: nightly
+  include:
+    - rust: stable
+      os: linux
+      env: COVERAGE=1
+
+addons:
+  apt:
+    packages:
+      - libssl-dev
+      - cmake
+
+branches:
+  only:
+    - main
+    - develop
+    - /^release\/.*/
+    - /^v.*/
+
+before_install:
+  - rustup self update
+  - rustc --version
+
+install:
+  - cargo build --workspace
+
+script:
+  - cargo fmt --check
+  - cargo clippy --all-targets -- -D warnings
+  - cargo test --workspace --release
+
+after_success:
+  - if [ "$COVERAGE" = "1" ]; then bash <(curl -s https://codecov.io/bash); fi
+
+deploy:
+  - provider: cargo
+    token:
+      secure: $CARGO_REGISTRY_TOKEN
+    on:
+      tags: true
+      condition: $TRAVIS_TAG =~ ^v.*$
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change

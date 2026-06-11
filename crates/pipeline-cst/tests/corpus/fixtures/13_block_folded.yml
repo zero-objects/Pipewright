@@ -1,0 +1,6 @@
+job:
+  script:
+    - >
+      this is a
+      folded block
+      scalar

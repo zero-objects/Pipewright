@@ -1,0 +1,9 @@
+job:
+  variables:
+    NESTED:
+      LEVEL1:
+        LEVEL2:
+          LEVEL3: deep
+    SIMPLE: top
+  script:
+    - echo "$NESTED"

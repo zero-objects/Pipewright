@@ -1,0 +1,81 @@
+image: rust:1.75
+
+clone:
+  depth: full
+
+definitions:
+  caches:
+    cargo: ~/.cargo
+    target: target
+  services:
+    postgres:
+      image: postgres:16
+      variables:
+        POSTGRES_DB: app_test
+        POSTGRES_PASSWORD: ci
+
+  steps:
+    - step: &lint
+        name: lint
+        caches:
+          - cargo
+        script:
+          - cargo fmt --check
+          - cargo clippy --all-targets -- -D warnings
+    - step: &test
+        name: test
+        caches:
+          - cargo
+          - target
+        services:
+          - postgres
+        script:
+          - cargo test --workspace --release
+        artifacts:
+          - target/test-results/**
+
+pipelines:
+  default:
+    - step: *lint
+    - parallel:
+        - step: *test
+        - step:
+            name: docs
+            script:
+              - cargo doc --workspace --no-deps
+
+  branches:
+    main:
+      - step: *lint
+      - step: *test
+      - step:
+          name: deploy
+          deployment: production
+          script:
+            - cargo publish --token $CARGO_REGISTRY_TOKEN
+    'release/*':
+      - step: *lint
+      - step: *test
+      - step:
+          name: build-release
+          script:
+            - cargo build --release --workspace
+
+  tags:
+    'v*':
+      - step:
+          name: publish
+          deployment: production
+          script:
+            - cargo publish --token $CARGO_REGISTRY_TOKEN
+
+  custom:
+    nightly:
+      - variables:
+          - name: RUST_VERSION
+            default: nightly
+      - step:
+          name: nightly-test
+          image: rust:$RUST_VERSION
+          script:
+            - cargo +$RUST_VERSION test --workspace

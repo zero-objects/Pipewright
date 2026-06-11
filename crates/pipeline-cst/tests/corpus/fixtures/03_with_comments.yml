@@ -1,0 +1,16 @@
+# top-of-file comment
+# explaining intent
+
+# this is the build job
+build:
+  # script comment
+  script:
+    - echo "build"  # trailing comment
+    - echo "more"
+
+# blank-line-separated test job
+test:
+  script:
+    - echo "test"
+
+# trailing file comment

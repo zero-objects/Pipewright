@@ -1,0 +1,4 @@
+name: my-module
+sdk: go
+source: ./src
+engineVersion: v0.12.0

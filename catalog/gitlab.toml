@@ -1,0 +1,158 @@
+# catalog/gitlab.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "gitlab"
+config_file = ".gitlab-ci.yml"
+tier = 1
+source = "json-schema"
+
+[artifacts]
+access = { type = "enum", options = ["none", "developer", "maintainer", "all"] }
+exclude = { type = "list<string>" }
+expire_in = { type = "string" }
+expose_as = { type = "string" }
+name = { type = "string" }
+paths = { type = "list<string>" }
+reports = { type = "map<string>" }
+untracked = { type = "boolean" }
+when = { type = "enum", options = ["on_success", "on_failure", "always"] }
+
+[baseInput]
+default = { type = "string" }
+description = { type = "string" }
+options = { type = "list<boolean | number | string>" }
+regex = { type = "string" }
+type = { type = "enum", options = ["array", "boolean", "number", "string"] }
+
+[cache_item]
+fallback_keys = { type = "list<string>" }
+key = { type = "map<string> | string" }
+paths = { type = "list<string>" }
+policy = { type = "string" }
+unprotect = { type = "boolean" }
+untracked = { type = "boolean" }
+when = { type = "enum", options = ["on_success", "on_failure", "always"] }
+
+[hooks]
+pre_get_sources_script = { type = "list<list<string> | string> | string" }
+
+[job]
+after_script = { type = "list<list<string> | string> | string" }
+allow_failure = { type = "boolean | map<string>" }
+artifacts = { type = "artifacts" }
+before_script = { type = "list<list<string> | string> | string" }
+cache = { type = "cache_item | list<cache_item>" }
+coverage = { type = "string" }
+dependencies = { type = "list<string>" }
+environment = { type = "map<string> | string" }
+except = { type = "list<enum | string> | null | map<string>" }
+extends = { type = "list<string> | string" }
+hooks = { type = "hooks" }
+id_tokens = { type = "map<string>" }
+identity = { type = "enum", options = ["google_cloud"] }
+image = { type = "map<string> | string" }
+inherit = { type = "map<string>" }
+inputs = { type = "map<string>" }
+interruptible = { type = "boolean" }
+manual_confirmation = { type = "string" }
+needs = { type = "list<list<string> | map<string> | string>" }
+only = { type = "list<enum | string> | null | map<string>" }
+pages = { type = "boolean | map<string>" }
+parallel = { type = "integer | map<string>" }
+publish = { type = "string" }
+release = { type = "map<string>" }
+resource_group = { type = "string" }
+retry = { type = "integer | map<string>" }
+rules = { type = "list<list<string> | ruleClause | string>" }
+run = { type = "list<map<string>>" }
+script = { type = "list<list<string> | string> | string" }
+secrets = { type = "map<string>" }
+services = { type = "list<map<string> | string>" }
+stage = { type = "list<string> | string" }
+start_in = { type = "string" }
+tags = { type = "list<list<string> | string>" }
+timeout = { type = "string" }
+trigger = { type = "map<string> | string" }
+variables = { type = "map<string>" }
+when = { type = "enum", options = ["on_success", "on_failure", "always", "never", "manual", "delayed"] }
+
+[job_template]
+after_script = { type = "list<list<string> | string> | string" }
+allow_failure = { type = "boolean | map<string>" }
+artifacts = { type = "artifacts" }
+before_script = { type = "list<list<string> | string> | string" }
+cache = { type = "cache_item | list<cache_item>" }
+coverage = { type = "string" }
+dependencies = { type = "list<string>" }
+environment = { type = "map<string> | string" }
+except = { type = "list<enum | string> | null | map<string>" }
+extends = { type = "list<string> | string" }
+hooks = { type = "hooks" }
+id_tokens = { type = "map<string>" }
+identity = { type = "enum", options = ["google_cloud"] }
+image = { type = "map<string> | string" }
+inherit = { type = "map<string>" }
+inputs = { type = "map<string>" }
+interruptible = { type = "boolean" }
+manual_confirmation = { type = "string" }
+needs = { type = "list<list<string> | map<string> | string>" }
+only = { type = "list<enum | string> | null | map<string>" }
+pages = { type = "boolean | map<string>" }
+parallel = { type = "integer | map<string>" }
+publish = { type = "string" }
+release = { type = "map<string>" }
+resource_group = { type = "string" }
+retry = { type = "integer | map<string>" }
+rules = { type = "list<list<string> | ruleClause | string>" }
+run = { type = "list<map<string>>" }
+script = { type = "list<list<string> | string> | string" }
+secrets = { type = "map<string>" }
+services = { type = "list<map<string> | string>" }
+stage = { type = "list<string> | string" }
+start_in = { type = "string" }
+tags = { type = "list<list<string> | string>" }
+timeout = { type = "string" }
+trigger = { type = "map<string> | string" }
+variables = { type = "map<string>" }
+when = { type = "enum", options = ["on_success", "on_failure", "always", "never", "manual", "delayed"] }
+
+[pipeline]
+"!reference" = { type = "list<string>" }
+"$schema" = { type = "string" }
+after_script = { type = "list<list<string> | string> | string" }
+before_script = { type = "list<list<string> | string> | string" }
+cache = { type = "cache_item | list<cache_item>" }
+default = { type = "map<string>" }
+image = { type = "map<string> | string" }
+include = { type = "list<map<string>> | map<string>" }
+pages = { type = "job" }
+services = { type = "list<map<string> | string>" }
+spec = { type = "map<string>" }
+stages = { type = "list<list<string> | string>" }
+variables = { type = "map<string>" }
+workflow = { type = "workflowConfig" }
+
+[stepGitReference]
+git = { type = "map<string>", required = true }
+
+[stepOciReference]
+oci = { type = "map<string>", required = true }
+
+[workflowAutoCancel]
+on_job_failure = { type = "enum", options = ["none", "all"] }
+on_new_commit = { type = "enum", options = ["conservative", "interruptible", "none"] }
+
+[ruleClause]
+allow_failure = { type = "boolean" }
+changes = { type = "list<string> | map<string>" }
+exists = { type = "list<string>" }
+if = { type = "string" }
+start_in = { type = "string" }
+variables = { type = "map<string>" }
+when = { type = "enum", options = ["on_success", "on_failure", "always", "never", "manual", "delayed"] }
+
+[workflowConfig]
+name = { type = "string" }
+rules = { type = "list<list<string> | ruleClause | string>" }

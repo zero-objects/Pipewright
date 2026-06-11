@@ -1,0 +1,15 @@
+[package]
+name = "pipeline-recipe"
+description = "The recipe system: reusable, platform-neutral pipeline fragments (*.recipe.yml) composed into a pipeline and rendered to any target platform behind the Hub-IR. A recipe is forwarded to the hub and re-emitted to the target — composition is migration."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+pipeline-forward = { path = "../pipeline-forward" }
+pipeline-render = { path = "../pipeline-render" }
+serde = { workspace = true }
+serde_yaml = "0.9"
+
+[lints]
+workspace = true

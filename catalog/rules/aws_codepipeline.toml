@@ -1,0 +1,217 @@
+# catalog/rules/aws_codepipeline.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "aws_codepipeline"
+rule_count = 35
+
+[[rule]]
+to = "artifact.encryption"
+from = "encryptionKey"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "artifact.location"
+from = "location"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.store_type"
+from = "type"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.agent"
+from = "region"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.artifacts"
+from = "inputArtifacts"
+shape = "seq_mapping_nodes"
+type = "list<map<string>>"
+
+[[rule]]
+to = "job.artifacts"
+from = "outputArtifacts"
+shape = "seq_mapping_nodes"
+type = "list<map<string>>"
+
+[[rule]]
+to = "job.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.needs"
+from = "runOrder"
+shape = "scalar_node"
+type = "integer"
+
+[[rule]]
+to = "job.options"
+from = "namespace"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.parameters"
+from = "configuration"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "job.secrets"
+from = "roleArn"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "commands"
+shape = "mapping_node"
+type = "any"
+
+[[rule]]
+to = "job.timeout"
+from = "timeoutInMinutes"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "job.uses"
+from = "actionTypeId"
+shape = "block_attr"
+type = "action_type_id"
+
+[[rule]]
+to = "job.uses"
+from = "category"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.uses"
+from = "owner"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "job.uses"
+from = "provider"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.uses"
+from = "version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.artifact_store"
+from = "artifactStore"
+shape = "block_attr"
+type = "artifact_store"
+
+[[rule]]
+to = "pipeline.artifact_store"
+from = "artifactStores"
+shape = "map_nodes"
+type = "map<artifact_store>"
+
+[[rule]]
+to = "pipeline.execution_mode"
+from = "executionMode"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.role"
+from = "roleArn"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.stages"
+from = "stages"
+shape = "seq_mapping_nodes"
+type = "list<stage>"
+
+[[rule]]
+to = "pipeline.triggers"
+from = "triggers"
+shape = "seq_mapping_nodes"
+type = "list<map<string>>"
+
+[[rule]]
+to = "pipeline.variables"
+from = "variables"
+shape = "seq_mapping_nodes"
+type = "list<variable>"
+
+[[rule]]
+to = "pipeline.version"
+from = "version"
+shape = "scalar_attr"
+type = "integer"
+
+[[rule]]
+to = "pipeline.version"
+from = "pipelineType"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "stage.blockers"
+from = "blockers"
+shape = "seq_attr"
+type = "list<map<string>>"
+
+[[rule]]
+to = "stage.hooks"
+from = "onFailure"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "stage.hooks"
+from = "onSuccess"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "stage.jobs"
+from = "actions"
+shape = "seq_mapping_nodes"
+type = "list<action>"
+
+[[rule]]
+to = "stage.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "variable.default"
+from = "defaultValue"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "variable.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"

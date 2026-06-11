@@ -1,0 +1,211 @@
+# Anonymized GitLab CI pipeline — Godot game project
+# Source domain anonymized; structural shape preserved.
+
+stages:
+  - prepare
+  - assets
+  - docs
+  - export
+
+variables:
+  GODOT_VERSION: "4.6.1"
+  REGISTRY: registry.gitlab.example.com
+  CI_TOOLCHAIN_IMAGE: $REGISTRY/example-project/ci-toolchain:latest
+
+# Stage 0: Build CI Images
+
+build-ci-toolchain-image:
+  stage: prepare
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  before_script:
+    - |
+      GITLAB_AUTH=$(echo -n "$CI_REGISTRY_USER:$CI_REGISTRY_PASSWORD" | base64 -w0)
+      cat > /kaniko/.docker/config.json <<EOF
+      {"auths":{"$REGISTRY":{"auth":"$GITLAB_AUTH"}}}
+      EOF
+  script:
+    - |
+      /kaniko/executor \
+        --context "${CI_PROJECT_DIR}/tools/docker" \
+        --dockerfile "Dockerfile.ci-toolchain" \
+        --destination "${CI_TOOLCHAIN_IMAGE}" \
+        --insecure-registry "${REGISTRY}" \
+        --skip-tls-verify-registry "${REGISTRY}" \
+        --cache=true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      changes:
+        - tools/docker/Dockerfile.ci-toolchain
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
+      allow_failure: true
+
+# Stage 1: Asset Rebuild (uses pre-built CI image)
+
+.toolchain-base:
+  stage: assets
+  image: $CI_TOOLCHAIN_IMAGE
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+
+rebuild-units:
+  extends: .toolchain-base
+  script:
+    - cd artwork/toolchain
+    - ./batch_units.sh
+    - cp out/faction-a/units/unit*.glb ../../game/assets/units/
+  artifacts:
+    paths:
+      - game/assets/units/*.glb
+      - artwork/toolchain/out/faction-a/units/*.glb
+    expire_in: 2 hours
+
+rebuild-buildings:
+  extends: .toolchain-base
+  script:
+    - cd artwork/toolchain
+    - python3 csg_to_glb.py batch ../source/faction-a/buildings out/faction-a/buildings
+    - |
+      for cat in civic dwellings military mines workshops; do
+        src="out/faction-a/buildings/$cat"
+        dst="../../game/assets/buildings/$cat"
+        if [ -d "$src" ]; then
+          mkdir -p "$dst"
+          cp "$src"/*.glb "$dst/" 2>/dev/null || true
+        fi
+      done
+  artifacts:
+    paths:
+      - game/assets/buildings/**/*.glb
+    expire_in: 2 hours
+
+rebuild-creatures:
+  extends: .toolchain-base
+  script:
+    - cd artwork/toolchain
+    - |
+      for src in ../source/creatures/*.csg; do
+        name=$(basename "$src" .csg)
+        skel="" anims=""
+        case "$name" in
+          alpha) skel="skeletons/quadruped_alpha.bones.json"
+                 anims="--anim animations/alpha_walk.anim.json --anim animations/alpha_graze.anim.json" ;;
+          beta)  skel="skeletons/beta.bones.json"
+                 anims="--anim animations/beta_fly.anim.json --anim animations/beta_land.anim.json" ;;
+          gamma) skel="skeletons/gamma.bones.json"
+                 anims="--anim animations/gamma_swim.anim.json" ;;
+        esac
+        mkdir -p out/creatures
+        if [ -n "$skel" ]; then
+          python3 csg_to_glb.py convert "$src" "out/creatures/${name}.glb" --skeleton "$skel" $anims
+        else
+          python3 csg_to_glb.py convert "$src" "out/creatures/${name}.glb"
+        fi
+      done
+    - cp out/creatures/*.glb ../../game/assets/creatures/
+  artifacts:
+    paths:
+      - game/assets/creatures/*.glb
+    expire_in: 2 hours
+
+rebuild-tools-resources:
+  extends: .toolchain-base
+  script:
+    - cd artwork/toolchain
+    - |
+      for src in ../source/tools/*.csg ../source/resources/*.csg; do
+        [ ! -f "$src" ] && continue
+        name=$(basename "$src" .csg)
+        dir=$(basename $(dirname "$src"))
+        mkdir -p "out/$dir"
+        python3 csg_to_glb.py convert "$src" "out/$dir/${name}.glb" 2>&1 || echo "WARN: $name failed"
+      done
+    - cp out/tools/*.glb ../../game/assets/tools/ 2>/dev/null || true
+    - cp out/resources/*.glb ../../game/assets/resources/ 2>/dev/null || true
+  artifacts:
+    paths:
+      - game/assets/tools/*.glb
+      - game/assets/resources/*.glb
+    expire_in: 2 hours
+
+# Stage 3: Documentation
+
+.latex-base:
+  stage: docs
+  image: texlive/texlive:latest
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq graphviz > /dev/null 2>&1
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+
+build-entity-catalog:
+  extends: .latex-base
+  script:
+    - cd docs/entity-catalog
+    - python3 generate-entity-catalog.py --game-dir ../../game
+    - pdflatex -interaction=nonstopmode entity-catalog.tex || (tail -30 entity-catalog.log && exit 1)
+    - pdflatex -interaction=nonstopmode entity-catalog.tex > /dev/null 2>&1
+  artifacts:
+    paths:
+      - docs/entity-catalog/entity-catalog.pdf
+    expire_in: 30 days
+
+build-asset-catalog:
+  extends: .latex-base
+  script:
+    - cd docs/entity-catalog
+    - pdflatex -interaction=nonstopmode catalog.tex || (tail -50 catalog.log && exit 1)
+    - pdflatex -interaction=nonstopmode catalog.tex > /dev/null 2>&1
+  artifacts:
+    paths:
+      - docs/entity-catalog/catalog.pdf
+    expire_in: 30 days
+
+build-devlog:
+  extends: .latex-base
+  script:
+    - cd docs/build-log
+    - pdflatex -interaction=nonstopmode build-log.tex > /dev/null 2>&1
+    - pdflatex -interaction=nonstopmode build-log.tex > /dev/null 2>&1
+  artifacts:
+    paths:
+      - docs/build-log/build-log.pdf
+    expire_in: 30 days
+
+# Stage 4: Godot Export
+
+.godot-export:
+  stage: export
+  image: barichello/godot-ci:${GODOT_VERSION}
+  before_script:
+    - mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+    - godot --headless --path game --import 2>/dev/null || true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - when: manual
+      allow_failure: true
+
+export-windows:
+  extends: .godot-export
+  script:
+    - mkdir -p build/windows
+    - godot --headless --path game --export-release "Windows Desktop" ../build/windows/ExampleProject.exe
+  artifacts:
+    name: "ExampleProject-Win-${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - build/windows/
+    expire_in: 7 days
+
+export-macos:
+  extends: .godot-export
+  script:
+    - mkdir -p build/macos
+    - godot --headless --path game --export-release "macOS" ../build/macos/ExampleProject.zip
+  artifacts:
+    name: "ExampleProject-Mac-${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - build/macos/
+    expire_in: 7 days

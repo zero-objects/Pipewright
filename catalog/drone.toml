@@ -1,0 +1,244 @@
+# catalog/drone.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "drone"
+config_file = ".drone.yml"
+tier = 2
+source = "json-schema"
+
+[allConditions]
+branch = { type = "list<string> | map<string>" }
+cron = { type = "list<string> | map<string>" }
+event = { type = "list<string> | map<string>" }
+instance = { type = "list<string> | map<string>" }
+paths = { type = "list<string> | map<string>" }
+ref = { type = "list<string> | map<string>" }
+repo = { type = "list<string> | map<string>" }
+status = { type = "list<string>" }
+target = { type = "list<string> | map<string>" }
+
+[concurrency]
+limit = { type = "number", required = true }
+
+[kind_pipeline]
+clone = { type = "map<string>" }
+concurrency = { type = "concurrency" }
+depends_on = { type = "list<string>" }
+kind = { type = "string" }
+name = { type = "string", required = true }
+platform = { type = "platform" }
+steps = { type = "list<step>", required = true }
+trigger = { type = "allConditions" }
+type = { type = "enum", options = ["docker", "kubernetes", "ssh", "exec", "digitalocean", "macstadium", "vm"], required = true }
+workspace = { type = "map<string>" }
+
+[kind_secret]
+data = { type = "string" }
+get = { type = "map<string>" }
+kind = { type = "string" }
+name = { type = "string", required = true }
+
+[kind_signature]
+hmac = { type = "string", required = true }
+kind = { type = "string" }
+
+[kind_template]
+data = { type = "map<string>" }
+load = { type = "string", required = true }
+
+[pipeline]
+kind = { type = "enum", options = ["signature", "secret", "template", "pipeline"], required = true }
+
+[pipeline_digitalocean]
+clone = { type = "string" }
+concurrency = { type = "concurrency" }
+depends_on = { type = "string" }
+kind = { type = "string" }
+name = { type = "string" }
+platform = { type = "string" }
+steps = { type = "list<step>" }
+token = { type = "secret | string", required = true }
+trigger = { type = "string" }
+type = { type = "string" }
+workspace = { type = "string" }
+
+[pipeline_docker]
+clone = { type = "string" }
+concurrency = { type = "concurrency" }
+depends_on = { type = "string" }
+environment = { type = "map<boolean | number | secret | string>" }
+image_pull_secrets = { type = "list<string>" }
+kind = { type = "string" }
+name = { type = "string" }
+node = { type = "map<string>" }
+platform = { type = "string" }
+services = { type = "list<step>" }
+steps = { type = "list<step>" }
+trigger = { type = "string" }
+type = { type = "string" }
+volumes = { type = "list<string>" }
+workspace = { type = "string" }
+
+[pipeline_exec]
+clone = { type = "string" }
+concurrency = { type = "concurrency" }
+depends_on = { type = "string" }
+kind = { type = "string" }
+name = { type = "string" }
+node = { type = "map<string>" }
+platform = { type = "string" }
+steps = { type = "list<step>" }
+trigger = { type = "string" }
+type = { type = "string" }
+workspace = { type = "string" }
+
+[pipeline_kubernetes]
+clone = { type = "string" }
+concurrency = { type = "concurrency" }
+depends_on = { type = "string" }
+dns_config = { type = "string" }
+host_aliases = { type = "list<string>" }
+image_pull_secrets = { type = "list<string>" }
+kind = { type = "string" }
+metadata = { type = "string" }
+name = { type = "string" }
+node = { type = "map<string>" }
+node_selector = { type = "string" }
+platform = { type = "string" }
+service_account_name = { type = "string" }
+services = { type = "list<step>" }
+steps = { type = "list<step>" }
+tolerations = { type = "list<string>" }
+trigger = { type = "string" }
+type = { type = "string" }
+volumes = { type = "list<string>" }
+workspace = { type = "string" }
+
+[pipeline_macstadium]
+clone = { type = "string" }
+depends_on = { type = "string" }
+kind = { type = "string" }
+name = { type = "string" }
+platform = { type = "string" }
+steps = { type = "list<step>" }
+trigger = { type = "string" }
+type = { type = "string" }
+workspace = { type = "string" }
+
+[pipeline_ssh]
+clone = { type = "string" }
+concurrency = { type = "concurrency" }
+depends_on = { type = "string" }
+kind = { type = "string" }
+name = { type = "string" }
+platform = { type = "string" }
+server = { type = "string", required = true }
+steps = { type = "list<step>" }
+trigger = { type = "string" }
+type = { type = "string" }
+workspace = { type = "string" }
+
+[pipeline_vm]
+clone = { type = "string" }
+concurrency = { type = "concurrency" }
+depends_on = { type = "string" }
+environment = { type = "map<boolean | number | secret | string>" }
+image_pull_secrets = { type = "list<string>" }
+kind = { type = "string" }
+name = { type = "string" }
+node = { type = "map<string>" }
+platform = { type = "string" }
+pool = { type = "map<string>" }
+services = { type = "list<step>" }
+steps = { type = "list<step>" }
+trigger = { type = "string" }
+type = { type = "string" }
+volumes = { type = "list<string>" }
+workspace = { type = "string" }
+
+[platform]
+arch = { type = "enum", options = ["arm", "arm64", "amd64", "386"] }
+os = { type = "enum", options = ["linux", "windows", "darwin", "freebsd", "netbsd", "openbsd", "dragonfly", "solaris"] }
+variant = { type = "string" }
+version = { type = "string" }
+
+[secret]
+from_secret = { type = "string", required = true }
+
+[step]
+commands = { type = "list<string>" }
+depends_on = { type = "list<string>" }
+detach = { type = "boolean" }
+environment = { type = "map<boolean | number | secret | string>" }
+failure = { type = "enum", options = ["always", "ignore"] }
+name = { type = "string", required = true }
+when = { type = "allConditions" }
+
+[step_digitalocean]
+commands = { type = "string" }
+depends_on = { type = "string" }
+detach = { type = "boolean" }
+environment = { type = "string" }
+failure = { type = "string" }
+name = { type = "string", required = true }
+when = { type = "string" }
+
+[step_docker]
+commands = { type = "string" }
+depends_on = { type = "string" }
+detach = { type = "boolean" }
+environment = { type = "string" }
+failure = { type = "string" }
+image = { type = "string", required = true }
+name = { type = "string", required = true }
+network_mode = { type = "enum", options = ["bridge", "host"] }
+privileged = { type = "boolean" }
+pull = { type = "enum", options = ["always", "never", "if-not-exists"] }
+settings = { type = "map<string>" }
+user = { type = "string" }
+volumes = { type = "list<map<string>>" }
+when = { type = "string" }
+
+[step_exec]
+commands = { type = "string" }
+depends_on = { type = "string" }
+detach = { type = "boolean" }
+environment = { type = "string" }
+failure = { type = "string" }
+name = { type = "string", required = true }
+when = { type = "string" }
+
+[step_kubernetes]
+commands = { type = "string" }
+depends_on = { type = "string" }
+detach = { type = "boolean" }
+environment = { type = "string" }
+failure = { type = "string" }
+image = { type = "string", required = true }
+name = { type = "string", required = true }
+privileged = { type = "boolean" }
+pull = { type = "enum", options = ["always", "never", "if-not-exists"] }
+resources = { type = "string" }
+settings = { type = "map<string>" }
+volumes = { type = "list<map<string>>" }
+when = { type = "string" }
+
+[step_macstadium]
+commands = { type = "string" }
+depends_on = { type = "string" }
+detach = { type = "boolean" }
+environment = { type = "string" }
+failure = { type = "string" }
+name = { type = "string", required = true }
+when = { type = "string" }
+
+[step_ssh]
+commands = { type = "string" }
+depends_on = { type = "string" }
+detach = { type = "boolean" }
+environment = { type = "string" }
+failure = { type = "string" }
+name = { type = "string", required = true }
+when = { type = "string" }

@@ -1,0 +1,24 @@
+# Travis CI — representative Rust CI with a staged jobs.include
+# matrix.
+language: rust
+rust:
+  - stable
+
+install:
+  - rustup component add clippy rustfmt
+
+jobs:
+  include:
+    - stage: check
+      name: Format & lint
+      script:
+        - cargo fmt --all -- --check
+        - cargo clippy --all-targets -- -D warnings
+    - stage: test
+      name: Unit tests
+      script:
+        - cargo test --all
+        - cargo test --all --release
+    - stage: deploy
+      name: Publish to crates.io
+      script: cargo publish --dry-run

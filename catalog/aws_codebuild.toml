@@ -1,0 +1,65 @@
+# catalog/aws_codebuild.toml — construct inventory, hand-crafted
+# from the AWS CodeBuild buildspec reference. No official JSON-
+# Schema is published.
+
+[meta]
+platform = "aws_codebuild"
+config_file = "buildspec.yml"
+tier = 3
+source = "hand-crafted"
+
+[buildspec]
+version = { type = "number" }
+"run-as" = { type = "string" }
+env = { type = "env" }
+proxy = { type = "map<string>" }
+# `phases:` is a map<job>: each phase (install / pre_build / build /
+# post_build) is a job keyed by its phase name, its `commands:` its steps.
+# Modeled as map<job> — like circleci/travis `jobs` — so pipeline.jobs
+# containment generates; the [phase] section below documents the inner fields,
+# which the ir.toml job-field mappings carry onto the job.
+phases = { type = "map<job>", required = true }
+reports = { type = "map<report>" }
+artifacts = { type = "artifacts" }
+cache = { type = "cache" }
+batch = { type = "map<string>" }
+
+[env]
+shell = { type = "string" }
+variables = { type = "map<string>" }
+"parameter-store" = { type = "map<string>" }
+"secrets-manager" = { type = "map<string>" }
+"exported-variables" = { type = "list<string>" }
+"git-credential-helper" = { type = "bool" }
+
+[phases]
+install = { type = "phase" }
+pre_build = { type = "phase" }
+build = { type = "phase" }
+post_build = { type = "phase" }
+
+[phase]
+"run-as" = { type = "string" }
+"on-failure" = { type = "enum", options = ["ABORT", "CONTINUE"] }
+"runtime-versions" = { type = "map<string>" }
+commands = { type = "list<string>", required = true }
+finally = { type = "list<string>" }
+
+[artifacts]
+files = { type = "list<string>", required = true }
+name = { type = "string" }
+"base-directory" = { type = "string" }
+"discard-paths" = { type = "bool" }
+"exclude-paths" = { type = "list<string>" }
+"enable-symlinks" = { type = "bool" }
+"s3-prefix" = { type = "string" }
+"secondary-artifacts" = { type = "map<artifacts>" }
+
+[cache]
+paths = { type = "list<string>", required = true }
+
+[report]
+files = { type = "list<string>", required = true }
+"base-directory" = { type = "string" }
+"discard-paths" = { type = "bool" }
+"file-format" = { type = "enum", options = ["JUNITXML", "CUCUMBERJSON", "TESTNGXML", "VISUALSTUDIOTRX", "NUNITXML", "NUNIT3XML", "CLOVERXML", "JACOCOXML", "SIMPLECOV"] }

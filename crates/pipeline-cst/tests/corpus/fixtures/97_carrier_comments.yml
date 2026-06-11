@@ -1,0 +1,5 @@
+# @hub:pipeline.name="My Carrier Pipeline"
+# @hub:pipeline.description="set via carrier"
+build:
+  script:
+    - cargo build

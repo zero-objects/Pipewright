@@ -1,0 +1,44 @@
+# catalog/dagger.toml — construct inventory, hand-crafted.
+#
+# Dagger is the outlier: pipelines are *code* (Go / Python /
+# TypeScript SDK functions), not a declarative config. There is no
+# pipeline file to parse — only `dagger.json`, the module manifest.
+# The build logic lives in functions and is not declaratively
+# inventoriable; a CST-based forward adapter does not fit (tier 4).
+# This inventory therefore covers the module manifest plus the
+# conceptual API surface, flagged as non-declarative.
+
+[meta]
+platform = "dagger"
+config_file = "dagger.json (+ SDK code)"
+tier = 4
+source = "hand-crafted"
+
+[module]
+# dagger.json — the module manifest (the only declarative file)
+name = { type = "string", required = true }
+sdk = { type = "string", required = true }
+source = { type = "string" }
+engineVersion = { type = "string" }
+dependencies = { type = "list<map<string>>" }
+include = { type = "list<string>" }
+exclude = { type = "list<string>" }
+codegenIgnore = { type = "list<string>" }
+
+[function]
+# conceptual — defined in SDK code, NOT declaratively. Listed so the
+# normalization can see Dagger's pipeline-equivalent surface.
+name = { type = "string", required = true }
+args = { type = "list<map<string>>" }
+returns = { type = "string" }
+description = { type = "string" }
+
+[container]
+# the core code-level pipeline primitive (Container API)
+from = { type = "string" }
+withExec = { type = "list<string>" }
+withDirectory = { type = "map<string>" }
+withMountedCache = { type = "map<string>" }
+withEnvVariable = { type = "map<string>" }
+withWorkdir = { type = "string" }
+withServiceBinding = { type = "map<string>" }

@@ -1,0 +1,19 @@
+[package]
+name = "pipeline-jenkinsfile-cst"
+description = "M8.5: Jenkinsfile declarative-pipeline DSL → pipeline_cst::Document"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+pipeline-cst = { path = "../pipeline-cst" }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+pretty_assertions = { workspace = true }

@@ -1,0 +1,463 @@
+# catalog/rules/google_cloudbuild.toml — generated TGG rule manifest.
+# Each [[rule]] maps one platform key to one IR field;
+# `shape` is derived from the key type + IR field kind.
+
+[meta]
+platform = "google_cloudbuild"
+rule_count = 76
+
+[[rule]]
+to = "artifact.coordinates"
+from = "artifactId"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.coordinates"
+from = "groupId"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.location"
+from = "location"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.location"
+from = "repositoryLocation"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "paths"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "artifact.paths"
+from = "path"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "objects"
+shape = "block_attr"
+type = "ArtifactObjects"
+
+[[rule]]
+to = "artifact.paths"
+from = "sourcePath"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "packagePath"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.paths"
+from = "modulePath"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.repository"
+from = "repository"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.repository"
+from = "repositoryName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.repository"
+from = "repositoryProject_id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.subtypes"
+from = "goModules"
+shape = "seq_mapping_nodes"
+type = "list<GoModules>"
+
+[[rule]]
+to = "artifact.subtypes"
+from = "mavenArtifacts"
+shape = "seq_mapping_nodes"
+type = "list<MavenArtifacts>"
+
+[[rule]]
+to = "artifact.subtypes"
+from = "npmPackages"
+shape = "seq_mapping_nodes"
+type = "list<NpmPackages>"
+
+[[rule]]
+to = "artifact.subtypes"
+from = "pythonPackages"
+shape = "seq_mapping_nodes"
+type = "list<PythonPackages>"
+
+[[rule]]
+to = "artifact.version"
+from = "version"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "artifact.version"
+from = "moduleVersion"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.allow_failure"
+from = "allowFailure"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "job.allow_failure"
+from = "allowExitCodes"
+shape = "seq_attr"
+type = "list<integer>"
+
+[[rule]]
+to = "job.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.image"
+from = "name"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.needs"
+from = "waitFor"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.options"
+from = "automapSubstitutions"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "job.options"
+from = "volumes"
+shape = "seq_attr"
+type = "list<Volume>"
+
+[[rule]]
+to = "job.secrets"
+from = "secretEnv"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.steps"
+from = "args"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.steps"
+from = "script"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.steps"
+from = "entrypoint"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "job.timeout"
+from = "timeout"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "job.variables"
+from = "env"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "job.working_dir"
+from = "dir"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.agent"
+from = "pool"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.agent"
+from = "machineType"
+shape = "scalar_node"
+type = "enum"
+
+[[rule]]
+to = "pipeline.agent"
+from = "diskSizeGb"
+shape = "union"
+type = "integer | string"
+
+[[rule]]
+to = "pipeline.agent"
+from = "serviceAccount"
+shape = "scalar_node"
+type = "string"
+
+[[rule]]
+to = "pipeline.artifacts"
+from = "artifacts"
+shape = "mapping_node"
+type = "Artifacts"
+
+[[rule]]
+to = "pipeline.artifacts"
+from = "images"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.logs"
+from = "logsBucket"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.options"
+from = "options"
+shape = "block_attr"
+type = "BuildOptions"
+
+[[rule]]
+to = "pipeline.options"
+from = "automapSubstitutions"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "pipeline.options"
+from = "defaultLogsBucketBehavior"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.options"
+from = "dynamicSubstitutions"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "pipeline.options"
+from = "logStreamingOption"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.options"
+from = "logging"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.options"
+from = "requestedVerifyOption"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.options"
+from = "sourceProvenanceHash"
+shape = "seq_attr"
+type = "list<enum>"
+
+[[rule]]
+to = "pipeline.options"
+from = "substitutionOption"
+shape = "scalar_attr"
+type = "enum"
+
+[[rule]]
+to = "pipeline.secrets"
+from = "secrets"
+shape = "seq_mapping_nodes"
+type = "list<Secret>"
+
+[[rule]]
+to = "pipeline.secrets"
+from = "secretEnv"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.steps"
+from = "steps"
+shape = "seq_mapping_nodes"
+type = "list<BuildStep>"
+
+[[rule]]
+to = "pipeline.tags"
+from = "tags"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.timeout"
+from = "timeout"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.timeout"
+from = "queueTtl"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "pipeline.variables"
+from = "substitutions"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "pipeline.variables"
+from = "env"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "pipeline.volumes"
+from = "volumes"
+shape = "seq_attr"
+type = "list<Volume>"
+
+[[rule]]
+to = "secret.key_ref"
+from = "kmsKeyName"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "secret.value"
+from = "secretEnv"
+shape = "map_nodes"
+type = "map<string>"
+
+[[rule]]
+to = "step.continue_on_error"
+from = "allowFailure"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "step.continue_on_error"
+from = "allowExitCodes"
+shape = "seq_attr"
+type = "list<integer>"
+
+[[rule]]
+to = "step.depends_on"
+from = "waitFor"
+shape = "seq_scalar_nodes"
+type = "list<string>"
+
+[[rule]]
+to = "step.env"
+from = "env"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.env"
+from = "secretEnv"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.id"
+from = "id"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "script"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.run"
+from = "args"
+shape = "seq_attr"
+type = "list<string>"
+
+[[rule]]
+to = "step.run"
+from = "entrypoint"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.timeout"
+from = "timeout"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "step.volume_mounts"
+from = "volumes"
+shape = "seq_attr"
+type = "list<Volume>"
+
+[[rule]]
+to = "step.with"
+from = "automapSubstitutions"
+shape = "scalar_attr"
+type = "boolean"
+
+[[rule]]
+to = "step.working_dir"
+from = "dir"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.mount_path"
+from = "path"
+shape = "scalar_attr"
+type = "string"
+
+[[rule]]
+to = "workspace.name"
+from = "name"
+shape = "scalar_attr"
+type = "string"

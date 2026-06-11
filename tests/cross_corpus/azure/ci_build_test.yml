@@ -1,0 +1,14 @@
+jobs:
+  - job: build
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      CARGO_HOME: .cargo
+    steps:
+      - script: cargo build --release
+  - job: test
+    dependsOn: build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - script: cargo test

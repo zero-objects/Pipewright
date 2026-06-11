@@ -1,0 +1,33 @@
+recipe_id: go-ci
+recipe_version: 1.0.0
+description: vet, test and build a Go module
+tags: [go, golang, ci, test, build]
+doc: |
+  Three sequential jobs on the `golang:1.23` image: **vet** runs `go vet`;
+  **test** runs `go test ./...` after vet; **build** compiles the module after
+  test. Wire `source` (a checkout) in; take `binary` out.
+input_ports:
+  - name: source
+    kind: checkout
+output_ports:
+  - name: binary
+    kind: build-artifact
+platform_requirements:
+  - docker
+jobs:
+  vet:
+    image: golang:1.23
+    steps:
+      - go vet ./...
+  test:
+    image: golang:1.23
+    needs:
+      - vet
+    steps:
+      - go test ./...
+  build:
+    image: golang:1.23
+    needs:
+      - test
+    steps:
+      - go build ./...

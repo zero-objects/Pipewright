@@ -1,0 +1,19 @@
+pipeline:
+  name: ci
+  stages:
+    - name: Build
+      actions:
+        - name: BuildAction
+          actionTypeId:
+            category: Build
+            owner: AWS
+            provider: CodeBuild
+            version: "1"
+    - name: Test
+      actions:
+        - name: TestAction
+          actionTypeId:
+            category: Test
+            owner: AWS
+            provider: CodeBuild
+            version: "1"

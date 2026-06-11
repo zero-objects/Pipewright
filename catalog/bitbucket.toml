@@ -1,0 +1,261 @@
+# catalog/bitbucket.toml — construct inventory, generated from the JSON-Schema.
+# One [section] per construct; each key carries type / options / required.
+# A type that is a bare construct name is a nesting into that section.
+
+[meta]
+platform = "bitbucket"
+config_file = "bitbucket-pipelines.yml"
+tier = 1
+source = "json-schema"
+
+[agent_config]
+overrides = { type = "map<string>" }
+path = { type = "string" }
+
+[agent_definition]
+config = { type = "agent_config" }
+permissions = { type = "agent_permissions" }
+prompt = { type = "string", required = true }
+provider = { type = "enum", options = ["rovodev", "claude"] }
+
+[agent_permissions]
+on-ask = { type = "enum", options = ["allow", "deny"] }
+
+[agent_task]
+agent = { type = "string", required = true }
+config = { type = "agent_config" }
+permissions = { type = "agent_permissions" }
+prompt = { type = "string" }
+provider = { type = "enum", options = ["rovodev", "claude"] }
+
+[artifacts_expanded]
+download = { type = "boolean | list<string>" }
+paths = { type = "list<string>" }
+upload = { type = "list<artifacts_upload> | list<string>" }
+
+[artifacts_upload]
+capture-on = { type = "enum", options = ["success", "failed", "always"] }
+depth = { type = "integer" }
+ignore-paths = { type = "list<string>" }
+name = { type = "string", required = true }
+paths = { type = "list<string>", required = true }
+type = { type = "enum", options = ["shared", "scoped", "test-reports"] }
+
+[cache_expanded]
+key = { type = "map<string>" }
+path = { type = "string", required = true }
+
+[clone]
+depth = { type = "enum | integer" }
+enabled = { type = "boolean" }
+lfs = { type = "boolean" }
+skip-ssl-verify = { type = "boolean" }
+
+[cloud]
+arch = { type = "enum", options = ["x86", "arm"] }
+atlassian-ip-ranges = { type = "boolean" }
+instance-type = { type = "string" }
+version = { type = "string" }
+
+[condition]
+changesets = { type = "map<string>" }
+state = { type = "string" }
+
+[final_item]
+final = { type = "final_step" }
+
+[final_step]
+after-script = { type = "list<agent_task | pipe | string>" }
+artifacts = { type = "artifacts_expanded | list<string>" }
+auth = { type = "step_auth" }
+caches = { type = "list<string>" }
+clone = { type = "clone" }
+concurrency-group = { type = "string" }
+custom = { type = "string" }
+deployment = { type = "string" }
+environment = { type = "string" }
+fail-fast = { type = "string" }
+image = { type = "image_aws_auth | image_basic_auth | image_no_auth | string" }
+input-variables = { type = "map<string>" }
+max-time = { type = "integer" }
+name = { type = "string" }
+oidc = { type = "boolean" }
+runs-on = { type = "list<string> | string" }
+runtime = { type = "runtime" }
+script = { type = "list<agent_task | pipe | string>" }
+services = { type = "list<string>" }
+size = { type = "enum", options = ["1x", "2x", "4x", "8x", "16x", "32x"] }
+trigger = { type = "enum", options = ["automatic"] }
+type = { type = "enum", options = ["inline", "pipeline"] }
+
+[image_aws_auth]
+aws = { type = "map<string>", required = true }
+name = { type = "string", required = true }
+run-as-user = { type = "integer" }
+
+[image_base]
+name = { type = "string", required = true }
+run-as-user = { type = "integer" }
+
+[image_basic_auth]
+name = { type = "string", required = true }
+password = { type = "string", required = true }
+run-as-user = { type = "integer" }
+username = { type = "string", required = true }
+
+[image_no_auth]
+aws = { type = "string" }
+name = { type = "string", required = true }
+password = { type = "string" }
+run-as-user = { type = "integer" }
+username = { type = "string" }
+
+[import_inline_pipeline]
+import = { type = "string", required = true }
+variables = { type = "list<map<string>>" }
+
+[import_source]
+import = { type = "string", required = true }
+
+[import_source_pipeline]
+import = { type = "string", required = true }
+variables = { type = "list<map<string>>" }
+
+[parallel_expanded]
+fail-fast = { type = "boolean" }
+steps = { type = "list<step_item>", required = true }
+
+[parallel_item]
+parallel = { type = "list<step_item> | parallel_expanded" }
+
+[pipe]
+pipe = { type = "string", required = true }
+variables = { type = "map<list<string> | string>" }
+
+[pipeline]
+clone = { type = "clone" }
+definitions = { type = "map<string>" }
+services = { type = "map<service>" }
+export = { type = "boolean" }
+image = { type = "image_aws_auth | image_basic_auth | image_no_auth | string" }
+labels = { type = "map<string>" }
+options = { type = "map<string>" }
+pipelines = { type = "pipeline" }
+triggers = { type = "map<list<trigger_configuration>>" }
+
+[pipelines_configuration]
+clone = { type = "clone" }
+definitions = { type = "map<string>" }
+services = { type = "map<service>" }
+export = { type = "boolean" }
+image = { type = "image_aws_auth | image_basic_auth | image_no_auth | string" }
+labels = { type = "map<string>" }
+options = { type = "map<string>" }
+pipelines = { type = "pipeline" }
+triggers = { type = "map<list<trigger_configuration>>" }
+
+[runtime]
+cloud = { type = "cloud" }
+self-hosted = { type = "self-hosted" }
+
+[self-hosted]
+cpu = { type = "integer" }
+memory = { type = "integer" }
+storage = { type = "map<string>" }
+volumes = { type = "list<string>" }
+
+[service]
+image = { type = "image_aws_auth | image_basic_auth | image_no_auth | string" }
+memory = { type = "integer" }
+type = { type = "enum", options = ["docker"] }
+variables = { type = "map<string>" }
+
+[stage]
+condition = { type = "condition" }
+deployment = { type = "string" }
+environment = { type = "string" }
+name = { type = "string" }
+steps = { type = "list<map<string>>", required = true }
+trigger = { type = "enum", options = ["automatic", "manual"] }
+
+[stage_item]
+stage = { type = "stage" }
+
+[step]
+after-script = { type = "list<agent_task | pipe | string>" }
+artifacts = { type = "artifacts_expanded | list<string>" }
+auth = { type = "step_auth" }
+caches = { type = "list<string>" }
+clone = { type = "clone" }
+concurrency-group = { type = "string" }
+condition = { type = "condition" }
+custom = { type = "string" }
+deployment = { type = "string" }
+environment = { type = "string" }
+fail-fast = { type = "boolean" }
+image = { type = "image_aws_auth | image_basic_auth | image_no_auth | string" }
+input-variables = { type = "map<string>" }
+max-time = { type = "integer" }
+name = { type = "string" }
+oidc = { type = "boolean" }
+runs-on = { type = "list<string> | string" }
+runtime = { type = "runtime" }
+script = { type = "list<agent_task | pipe | string>" }
+services = { type = "list<string>" }
+size = { type = "enum", options = ["1x", "2x", "4x", "8x", "16x", "32x"] }
+trigger = { type = "enum", options = ["automatic", "manual"] }
+type = { type = "enum", options = ["inline", "pipeline"] }
+
+[step_auth]
+system = { type = "map<string>" }
+
+[step_base]
+after-script = { type = "list<agent_task | pipe | string>" }
+artifacts = { type = "artifacts_expanded | list<string>" }
+auth = { type = "step_auth" }
+caches = { type = "list<string>" }
+clone = { type = "clone" }
+concurrency-group = { type = "string" }
+custom = { type = "string" }
+deployment = { type = "string" }
+environment = { type = "string" }
+fail-fast = { type = "boolean" }
+image = { type = "image_aws_auth | image_basic_auth | image_no_auth | string" }
+input-variables = { type = "map<string>" }
+max-time = { type = "integer" }
+name = { type = "string" }
+oidc = { type = "boolean" }
+runs-on = { type = "list<string> | string" }
+runtime = { type = "runtime" }
+script = { type = "list<agent_task | pipe | string>" }
+services = { type = "list<string>" }
+size = { type = "enum", options = ["1x", "2x", "4x", "8x", "16x", "32x"] }
+trigger = { type = "enum", options = ["automatic", "manual"] }
+type = { type = "enum", options = ["inline", "pipeline"] }
+
+[step_item]
+step = { type = "step" }
+
+[storage_aws_auth]
+access-key = { type = "string" }
+bucket = { type = "string", required = true }
+oidc-role = { type = "string" }
+region = { type = "string", required = true }
+secret-key = { type = "string" }
+
+[storage_gcp_auth]
+bucket = { type = "string", required = true }
+key-file = { type = "string", required = true }
+
+[trigger_configuration]
+condition = { type = "string", required = true }
+pipelines = { type = "list<string>", required = true }
+
+[trigger_context]
+parent_pipeline_run_uuid = { type = "string" }
+parent_pipeline_uuid = { type = "string" }
+parent_step_uuid = { type = "string" }
+type = { type = "enum", options = ["parent_step"] }
+
+[variables_item]
+variables = { type = "list<map<string>>" }

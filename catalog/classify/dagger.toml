@@ -1,0 +1,9 @@
+# catalog/classify/dagger.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "dagger"
+key_count = 0
+
+[classify]

@@ -1,0 +1,16 @@
+# catalog/classify/jenkins.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "jenkins"
+key_count = 7
+
+[classify]
+agent = "agent"
+matrix = "matrix"
+parameters = "parameter"
+retry = "retry"
+stages = "stage"
+steps = "step"
+triggers = "trigger"

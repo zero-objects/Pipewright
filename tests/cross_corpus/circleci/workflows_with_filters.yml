@@ -1,0 +1,115 @@
+version: 2.1
+
+orbs:
+  rust: cci-orb/rust@2.0
+  codecov: codecov/codecov@4.0
+
+parameters:
+  rust_version:
+    type: string
+    default: '1.75'
+  run_nightly:
+    type: boolean
+    default: false
+
+commands:
+  install-rust:
+    parameters:
+      version:
+        type: string
+    steps:
+      - run:
+          name: install rust << parameters.version >>
+          command: rustup install << parameters.version >>
+
+executors:
+  rust-executor:
+    docker:
+      - image: cimg/rust:<< pipeline.parameters.rust_version >>
+        environment:
+          CARGO_TERM_COLOR: always
+
+jobs:
+  lint:
+    executor: rust-executor
+    resource_class: medium
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - cargo-{{ checksum "Cargo.lock" }}
+            - cargo-
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets -- -D warnings
+      - save_cache:
+          paths:
+            - ~/.cargo/registry
+            - target
+          key: cargo-{{ checksum "Cargo.lock" }}
+
+  test:
+    parameters:
+      rust:
+        type: string
+    docker:
+      - image: cimg/rust:<< parameters.rust >>
+    parallelism: 4
+    steps:
+      - checkout
+      - run:
+          name: test
+          command: |
+            cargo test --workspace --release
+          environment:
+            RUST_BACKTRACE: full
+      - store_test_results:
+          path: target/test-results
+      - codecov/upload:
+          file: target/coverage.xml
+
+  publish:
+    executor: rust-executor
+    steps:
+      - checkout
+      - run: cargo publish --token $CARGO_REGISTRY_TOKEN
+
+workflows:
+  build-test-deploy:
+    when:
+      not: << pipeline.parameters.run_nightly >>
+    jobs:
+      - lint:
+          filters:
+            branches:
+              only:
+                - main
+                - develop
+                - /release\/.*/
+      - test:
+          matrix:
+            parameters:
+              rust:
+                - '1.75'
+                - 'stable'
+          requires:
+            - lint
+      - publish:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+  nightly:
+    when: << pipeline.parameters.run_nightly >>
+    triggers:
+      - schedule:
+          cron: '0 2 * * *'
+          filters:
+            branches:
+              only: main
+    jobs:
+      - test:
+          rust: nightly

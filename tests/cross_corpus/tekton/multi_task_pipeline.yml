@@ -1,0 +1,101 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: rust-release
+  labels:
+    app.kubernetes.io/name: release
+spec:
+  description: build, test, and publish the rust workspace
+  params:
+    - name: repo-url
+      type: string
+      description: source git repository
+    - name: revision
+      type: string
+      default: main
+    - name: image-name
+      type: string
+  workspaces:
+    - name: shared-workspace
+    - name: cargo-cache
+      optional: true
+  results:
+    - name: image-digest
+      description: published image digest
+  tasks:
+    - name: fetch
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.revision)
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+    - name: lint
+      runAfter:
+        - fetch
+      taskSpec:
+        steps:
+          - name: fmt
+            image: rust:1.75
+            workingDir: $(workspaces.source.path)
+            script: |
+              cargo fmt --check
+          - name: clippy
+            image: rust:1.75
+            workingDir: $(workspaces.source.path)
+            script: |
+              cargo clippy --all-targets -- -D warnings
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: test
+      runAfter:
+        - lint
+      taskSpec:
+        steps:
+          - name: cargo-test
+            image: rust:1.75
+            workingDir: $(workspaces.source.path)
+            env:
+              - name: CARGO_HOME
+                value: $(workspaces.cache.path)
+              - name: RUST_BACKTRACE
+                value: full
+            script: |
+              cargo test --workspace --release
+        workspaces:
+          - name: source
+          - name: cache
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: cache
+          workspace: cargo-cache
+    - name: build-image
+      runAfter:
+        - test
+      when:
+        - input: $(params.revision)
+          operator: in
+          values: ['main']
+      taskRef:
+        name: kaniko
+      params:
+        - name: IMAGE
+          value: $(params.image-name)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+  finally:
+    - name: notify
+      taskSpec:
+        steps:
+          - name: notify
+            image: alpine:3.18
+            script: echo "pipeline complete"

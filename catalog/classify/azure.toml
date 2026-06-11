@@ -1,0 +1,27 @@
+# catalog/classify/azure.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "azure"
+key_count = 15
+
+[classify]
+artifact = "artifact"
+branches = "include_exclude_filter"
+condition = "condition"
+jobs = "job"
+parameters = "map:parameter"
+paths = "include_exclude_filter"
+pr = "pull_request"
+resources = "map:resource"
+schedules = "schedule"
+services = "map:service"
+stages = "stage"
+steps = "step"
+tags = "include_exclude_filter"
+trigger = "trigger"
+variables = "map:variable"
+
+# keys whose value-mapping construct is context-dependent:
+#   pool: ['agent', 'resource']

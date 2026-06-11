@@ -1,0 +1,22 @@
+[package]
+name = "pipeline-tgg-seeder"
+description = "Catalog-driven CST → seesaw TypedGraph seeder shared by all YAML platforms"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+pipeline-cst = { path = "../pipeline-cst" }
+seesaw-core = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+pipeline-jenkinsfile-cst = { path = "../pipeline-jenkinsfile-cst" }
+pipeline-earthfile-cst = { path = "../pipeline-earthfile-cst" }
+pipeline-hub-ir = { path = "../pipeline-hub-ir" }

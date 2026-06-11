@@ -1,0 +1,12 @@
+# catalog/classify/aws_codepipeline.toml — construct classification,
+# derived from ir.toml: an entry with one of these keys has
+# a value-mapping of the named IR construct.
+
+[meta]
+platform = "aws_codepipeline"
+key_count = 3
+
+[classify]
+stages = "stage"
+triggers = "map:trigger"
+variables = "variable"
