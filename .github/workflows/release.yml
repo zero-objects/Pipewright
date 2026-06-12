@@ -4,38 +4,27 @@ on:
   push:
     tags:
       - "v*.*.*"
+  workflow_dispatch: {}   # build the artifacts without tagging, to verify
+
+permissions:
+  contents: write
 
 jobs:
-  build:
-    name: build / package on ${{ matrix.os }}
+  # ── Primary artifact: the pipewright CLI (no Qt), for all three OSes ──────
+  cli:
+    name: cli / ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [macos-14, ubuntu-22.04, windows-2022]
     runs-on: ${{ matrix.os }}
-
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache cargo
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ matrix.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
-      # ── Primary artifact: the pipewright CLI (no Qt dependency) ──────────
-      - name: Build CLI binary
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Build CLI
         run: cargo build --release -p pipeline-cli --locked
-
-      - name: Stage CLI binary
+      - name: Stage CLI
         shell: bash
         run: |
           mkdir -p dist
@@ -44,100 +33,93 @@ jobs:
           else
             cp target/release/pipewright "dist/pipewright-${{ matrix.os }}"
           fi
-
-      - name: Upload CLI binary
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: cli-${{ matrix.os }}
           path: dist/*
 
-      # ── Secondary artifact: the Qt desktop UI installer (best-effort) ────
-      # Qt cross-platform packaging is fiddly; these steps are non-blocking so
-      # a Qt hiccup can't sink the whole release (the CLI is already uploaded).
-      - name: Install Qt6 (Linux)
-        if: runner.os == 'Linux'
-        continue-on-error: true
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y qt6-base-dev qt6-declarative-dev libqt6svg6-dev cmake
-
-      - name: Install Qt6 (macOS)
-        if: runner.os == 'macOS'
-        continue-on-error: true
+  # ── macOS desktop UI: self-contained .dmg (macdeployqt bundles Qt) ───────
+  ui-macos:
+    name: ui / macos (.dmg)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Qt + CMake
         run: brew install qt cmake
+      - name: Build
+        run: |
+          cmake -S ui/qt6 -B ui/qt6/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build ui/qt6/build -j
+      - name: Package
+        run: cd ui/qt6/build && cpack -G DragNDrop -C Release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ui-macos
+          path: ui/qt6/build/*.dmg
 
-      - name: Install Qt6 (Windows)
-        if: runner.os == 'Windows'
-        continue-on-error: true
+  # ── Linux desktop UI: .deb depending on the distro's Qt6. Runs inside a
+  #    Debian-13 container (Qt 6.8) — Ubuntu 22.04's Qt is too old (< 6.5).
+  ui-linux:
+    name: ui / linux (.deb)
+    runs-on: ubuntu-22.04
+    container: rust:1.88-trixie
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Qt + build deps
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends qt6-base-dev qt6-declarative-dev \
+            libqt6svg6-dev qml6-module-qtquick-controls cmake ninja-build file git \
+            build-essential libxkbcommon-dev
+      - name: Build
+        run: |
+          cmake -S ui/qt6 -B ui/qt6/build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build ui/qt6/build -j
+      - name: Package
+        run: cd ui/qt6/build && cpack -G DEB -C Release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ui-linux
+          path: ui/qt6/build/*.deb
+
+  # ── Windows desktop UI: NSIS .exe (windeployqt bundles the Qt DLLs).
+  #    windows-2022 ships Visual Studio; Qt comes from install-qt-action.
+  #    qtdeclarative/qtsvg are part of the base install, so no `modules:`.
+  ui-windows:
+    name: ui / windows (.exe)
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: "6.8.1"
-          modules: "qtdeclarative qtsvg"
-
-      - name: Configure
-        continue-on-error: true
-        run: cmake -S ui/qt6 -B ui/qt6/build -DCMAKE_BUILD_TYPE=Release
-
+          version: "6.8.3"
+          arch: win64_msvc2022_64
+      - name: Install NSIS
+        run: choco install -y nsis --no-progress
       - name: Build
-        continue-on-error: true
-        run: cmake --build ui/qt6/build --config Release -j
-
+        run: |
+          cmake -S ui/qt6 -B ui/qt6/build -G "Visual Studio 17 2022" -A x64
+          cmake --build ui/qt6/build --config Release
       - name: Package
-        continue-on-error: true
         run: |
+          $env:PATH = "C:\Program Files (x86)\NSIS;$env:PATH"
           cd ui/qt6/build
-          cpack -C Release
-
-      - name: Sign macOS .dmg
-        if: runner.os == 'macOS' && env.APPLE_DEV_ID != ''
-        continue-on-error: true
-        env:
-          APPLE_DEV_ID: ${{ secrets.APPLE_DEV_ID }}
-          APPLE_NOTARY_USER: ${{ secrets.APPLE_NOTARY_USER }}
-          APPLE_NOTARY_PWD: ${{ secrets.APPLE_NOTARY_PWD }}
-        run: |
-          cd ui/qt6/build
-          for dmg in *.dmg; do
-            codesign --force --deep --sign "$APPLE_DEV_ID" "$dmg"
-            xcrun notarytool submit "$dmg" --apple-id "$APPLE_NOTARY_USER" \
-                --password "$APPLE_NOTARY_PWD" --team-id "$APPLE_TEAM_ID" --wait
-            xcrun stapler staple "$dmg"
-          done
-
-      - name: Sign Windows .msi
-        if: runner.os == 'Windows' && env.WINDOWS_PFX_BASE64 != ''
-        continue-on-error: true
-        env:
-          WINDOWS_PFX_BASE64: ${{ secrets.WINDOWS_PFX_BASE64 }}
-          WINDOWS_PFX_PASS:   ${{ secrets.WINDOWS_PFX_PASS }}
-        shell: pwsh
-        run: |
-          $pfx = [Convert]::FromBase64String($env:WINDOWS_PFX_BASE64)
-          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP/cert.pfx", $pfx)
-          Get-ChildItem ui/qt6/build/*.msi | ForEach-Object {
-            & "C:/Program Files (x86)/Windows Kits/10/bin/x64/signtool.exe" sign `
-              /f "$env:RUNNER_TEMP/cert.pfx" /p $env:WINDOWS_PFX_PASS `
-              /tr http://timestamp.digicert.com /td sha256 /fd sha256 $_.FullName
-          }
-
-      - name: Upload installer
-        uses: actions/upload-artifact@v4
+          cpack -C Release -G NSIS
+      - uses: actions/upload-artifact@v4
         with:
-          name: installer-${{ matrix.os }}
-          if-no-files-found: ignore
-          path: |
-            ui/qt6/build/*.dmg
-            ui/qt6/build/*.deb
-            ui/qt6/build/*.rpm
-            ui/qt6/build/*.msi
+          name: ui-windows
+          path: ui/qt6/build/*.exe
 
+  # ── Publish: collect every artifact into the GitHub Release ──────────────
   release:
-    needs: build
+    needs: [cli, ui-macos, ui-linux, ui-windows]
     runs-on: ubuntu-22.04
-    if: always() && startsWith(github.ref, 'refs/tags/v')
-    # Creating the GitHub Release needs write access to repo contents.
-    permissions:
-      contents: write
+    if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/download-artifact@v4
         with:

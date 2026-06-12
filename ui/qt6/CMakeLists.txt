@@ -119,14 +119,28 @@ endif()
 
 # --- Installer (CPack) ----------------------------------------------
 # Per-OS installer generators:
-#   macOS → .dmg via productbuild + create-dmg (CI signs/notarises)
-#   Linux → .deb (Debian/Ubuntu) and .rpm (Fedora/RHEL)
-#   Win   → .msi via WIX Toolset (CI signs with signtool)
+#   macOS → .dmg (DragNDrop; macdeployqt bundles the Qt frameworks)
+#   Linux → .deb (Debian/Ubuntu; depends on the distro's Qt6 packages)
+#   Win   → NSIS .exe installer (windeployqt bundles the Qt DLLs)
 include(InstallRequiredSystemLibraries)
 install(TARGETS pipewright-ui
     BUNDLE  DESTINATION .          COMPONENT app
     RUNTIME DESTINATION bin        COMPONENT app
 )
+
+# Bundle the Qt runtime + QML imports into the install tree so the packaged
+# app is self-contained — macOS (macdeployqt) and Windows (windeployqt) only.
+# On Linux the .deb depends on the distro's Qt6 packages instead
+# (CPACK_DEBIAN_PACKAGE_DEPENDS), so we deliberately skip the deploy script
+# there: it would try to copy + RPATH the system QML plugins and fail.
+if(APPLE OR WIN32)
+    qt_generate_deploy_qml_app_script(
+        TARGET pipewright-ui
+        OUTPUT_SCRIPT deploy_script
+        NO_UNSUPPORTED_PLATFORM_ERROR
+    )
+    install(SCRIPT ${deploy_script})
+endif()
 
 set(CPACK_PACKAGE_NAME              "pipewright")
 set(CPACK_PACKAGE_VENDOR            "Zero Objects")
@@ -142,11 +156,17 @@ if(APPLE)
     set(CPACK_GENERATOR "DragNDrop")
     set(CPACK_DMG_VOLUME_NAME "Pipewright ${PROJECT_VERSION}")
 elseif(WIN32)
-    set(CPACK_GENERATOR "WIX")
-    set(CPACK_WIX_UPGRADE_GUID "B23F4B0F-1B0E-4F2A-9B5D-4A8B0F1E2D3C")
+    # NSIS .exe installer — robust on CI (just needs makensis on PATH), no WiX
+    # toolset required. windeployqt has already bundled the Qt DLLs.
+    set(CPACK_GENERATOR "NSIS")
+    set(CPACK_NSIS_PACKAGE_NAME "Pipewright")
+    set(CPACK_NSIS_DISPLAY_NAME "Pipewright ${PROJECT_VERSION}")
+    set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
 elseif(UNIX)
-    set(CPACK_GENERATOR "DEB;RPM")
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6core6, libqt6gui6, libqt6quickcontrols2-6, libqt6svg6")
-    set(CPACK_RPM_PACKAGE_REQUIRES "qt6-qtbase >= 6.5, qt6-qtdeclarative >= 6.5, qt6-qtsvg >= 6.5")
+    # DEB only — RPM needs rpmbuild, which isn't on Debian/Ubuntu runners.
+    # We depend on the distro's Qt6 (libs + the QML runtime modules the UI
+    # imports) rather than bundling.
+    set(CPACK_GENERATOR "DEB")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6core6, libqt6gui6, libqt6qml6, libqt6quick6, libqt6quickcontrols2-6, libqt6svg6, qml6-module-qtquick-controls, qml6-module-qtquick-layouts, qml6-module-qtquick-dialogs")
 endif()
 include(CPack)

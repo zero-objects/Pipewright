@@ -340,7 +340,8 @@ async fn docker_desktop_socket() -> Option<bollard::Docker> {
     let home = std::env::var_os("HOME")?;
     let sock = format!("{}/.docker/run/docker.sock", home.to_string_lossy());
     if std::path::Path::new(&sock).exists() {
-        if let Ok(d) = bollard::Docker::connect_with_unix(&sock, 120, bollard::API_DEFAULT_VERSION) {
+        if let Ok(d) = bollard::Docker::connect_with_unix(&sock, 120, bollard::API_DEFAULT_VERSION)
+        {
             if d.ping().await.is_ok() {
                 return Some(d);
             }
