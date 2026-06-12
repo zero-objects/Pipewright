@@ -11,7 +11,7 @@ Pipewright ships as:
   toolkit into other host languages
 
 This page covers building each from source. Pre-built installers
-(`.dmg` / `.deb` / `.rpm` / `.msi`) are produced by the release
+(`.dmg` / `.deb` / NSIS `.exe`) are produced by the release
 pipeline on tagged releases; once a tag is cut they appear on the
 project's Releases page.
 
@@ -43,7 +43,7 @@ From the repo root:
 cargo build --release -p pipeline-cli
 ```
 
-The binary lands at `target/release/pipeline`. Put it on your PATH or
+The binary lands at `target/release/pipewright`. Put it on your PATH or
 invoke it by path. To check it works:
 
 ```bash
@@ -97,11 +97,23 @@ cpack -C Release
 CPack will produce, depending on platform:
 
 - macOS — `pipewright-<version>-Darwin-arm64.dmg` (DragNDrop)
-- Linux — `.deb` and `.rpm`
-- Windows — `.msi` (WIX Toolset required)
+- Linux — `.deb` (DEB generator)
+- Windows — `.exe` (NSIS required)
 
-Signed/notarised builds are produced by the GitHub Actions release
-workflow (`.github/workflows/release.yml`) when secrets are present.
+### A note on unsigned binaries
+
+The release builds are currently **not code-signed or notarised** —
+there is no signing certificate in the pipeline yet. Practically:
+
+- **macOS** blocks the app on first launch ("cannot verify the
+  developer"). Either right-click → *Open* → *Open*, or clear the
+  quarantine flag: `xattr -d com.apple.quarantine /Applications/pipewright-ui.app`
+- **Windows** SmartScreen may warn on the NSIS installer — *More
+  info* → *Run anyway*, or check the SHA-256 against `SHA256SUMS.txt`
+  on the release page first.
+
+If you'd rather not trust unsigned downloads (fair!), build from
+source as described above — it's one `cargo build` / `cmake` away.
 
 ## Verify the install
 

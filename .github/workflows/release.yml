@@ -16,10 +16,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-14, ubuntu-22.04, windows-2022]
+        include:
+          - os: macos-14
+            asset: macos-arm64
+          - os: ubuntu-22.04
+            asset: linux-x86_64
+          - os: windows-2022
+            asset: windows-x86_64
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Build CLI
@@ -29,9 +35,9 @@ jobs:
         run: |
           mkdir -p dist
           if [ "${{ runner.os }}" = "Windows" ]; then
-            cp target/release/pipewright.exe "dist/pipewright-${{ matrix.os }}.exe"
+            cp target/release/pipewright.exe "dist/pipewright-cli-${{ matrix.asset }}.exe"
           else
-            cp target/release/pipewright "dist/pipewright-${{ matrix.os }}"
+            cp target/release/pipewright "dist/pipewright-cli-${{ matrix.asset }}"
           fi
       - uses: actions/upload-artifact@v4
         with:
@@ -43,7 +49,7 @@ jobs:
     name: ui / macos (.dmg)
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Install Qt + CMake
@@ -66,7 +72,7 @@ jobs:
     runs-on: ubuntu-22.04
     container: rust:1.88-trixie
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install Qt + build deps
         run: |
           apt-get update -qq
@@ -91,7 +97,7 @@ jobs:
     name: ui / windows (.exe)
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Install Qt
@@ -124,7 +130,15 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+      - name: Checksums
+        run: |
+          cd artifacts
+          find . -type f ! -name SHA256SUMS.txt -exec sha256sum {} + \
+            | sed 's| \./[^/]*/| |' | sort -k2 > SHA256SUMS.txt
+          cat SHA256SUMS.txt
       - uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/**/*
+          files: |
+            artifacts/**/*
+            artifacts/SHA256SUMS.txt
           generate_release_notes: true

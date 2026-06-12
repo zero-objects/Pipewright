@@ -12,10 +12,10 @@ the sections that matter for it:
 
 | You are… | Your task | Read |
 |---|---|---|
-| **Migration engineer** | "We're moving from platform A to platform B — what do we have, what survives, what needs manual work?" | [Capabilities tab](#capabilities-tab), [Migrate tab](#migrate-tab), [`pipewright migrate`](#pipeline-migrate) |
+| **Migration engineer** | "We're moving from platform A to platform B — what do we have, what survives, what needs manual work?" | [Capabilities tab](#capabilities-tab), [Migrate tab](#migrate-tab), [`pipewright migrate`](#pipewright-migrate) |
 | **Developer joining a project** | "What does this pipeline actually do?" | [Loading a pipeline](#loading-a-pipeline), [Runbook tab](#runbook-tab), [DAG tab](#dag-tab) |
 | **Pipeline author** | Build or change a pipeline — visually, from recipes, or in source | [Source tab](#source-tab), [DAG tab](#dag-tab), [Recipes tab](#recipes-tab) |
-| **Local tester** | "Will this run on my laptop? Run it." | [Run tab](#run-tab), [`pipewright plan` / `run`](#pipeline-plan) |
+| **Local tester** | "Will this run on my laptop? Run it." | [Run tab](#run-tab), [`pipewright plan` / `run`](#pipewright-plan) |
 | **Automation / CI engineer** | Script everything headlessly | [CLI reference](#cli-reference) |
 | **Embedder** | Call the engine from another language | [C-ABI](#c-abi-for-embedders) |
 

@@ -115,14 +115,14 @@ docs/                            user/, interop-matrix
 | Area | State |
 |---|---|
 | Platforms (parse / forward / backward) | **17**, all bidirectional |
-| Round-trip verification | real-config corpus 59/59 · chaos stress 17×30 seeds, 0 failures · byte-identical CST round-trip |
+| Round-trip verification | real-config corpus 59/59 · chaos stress 17×30 seeds, 0 failures · byte-identical CST round-trip (full sweep is a nightly CI gate; a fast sample gates every push) |
 | Cross-platform interop | **all 272 ordered pairs** faithful + stable ([matrix](docs/interop-matrix.md)) |
 | Local Docker runner | live for the 11 container-shell platforms — mounts the repo (**read-only by default**; `--rw-copy`/`--rw` opt into writes), passes env, evaluates `rules:if`/`when`, starts `services:` as sidecars; streamed logs. k8s-CRD / service-orchestration / code-defined platforms are translate-only (the tool says so, doesn't pretend) |
 | Migration friction report | derived (re-parse + capability diff), not declared — surfaced in the UI and on the CLI |
 | Recipes | standard library + user sources (dir/git), port-aware apply/compose |
-| Qt6 desktop UI | 7 tabs incl. editable DAG; en/de; headless smoke test in CI |
+| Qt6 desktop UI | 7 tabs incl. editable DAG; en/de; headless smoke test (nightly CI gate) |
 | Workspace tests | 300 passing + heavy gates on schedule |
-| GitLab CI | dogfoods the tool on its own pipeline |
+| CI | GitHub Actions — fmt + clippy, tests, round-trip sample gate, MSRV, supply-chain audit on every push; full gates + UI smoke nightly |
 
 ## How this was built
 
