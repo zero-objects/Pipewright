@@ -40,7 +40,8 @@ rust-version = "1.88"
 # needed (removed in 5352d88). 1.0.0 = the released engine: blake3 GhostIds,
 # the cached cascade path (run_cascade_cached, levers D/3/4/5 + const-hasher)
 # that linearises both directions, and the NAC/SetAttr reverse-pole fixes.
-seesaw-core = { version = "1.0.0", package = "seesaw-tgg" }
+# 1.0.1 = quick-xml bumped to >=0.41 (RUSTSEC-2026-0194/0195 DoS advisories).
+seesaw-core = { version = "1.0.1", package = "seesaw-tgg" }
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
